@@ -36,7 +36,6 @@ const Login = (props: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  
   return (
     <div
       style={{ padding: '4rem 0', backgroundColor: '#60BD9B', width: '100%', minHeight: '100vh' }}
