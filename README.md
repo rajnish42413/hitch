@@ -28,8 +28,7 @@
 Run the following commands in your terminal
 
 ```bash
-git clone https://github.com/LucasBassetti/react-typescript-antd-boilerplate.git
-cd react-typescript-antd-boilerplate
+
 yarn install
 yarn start
 ```
