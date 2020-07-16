@@ -1,6 +1,4 @@
-# React TypeScript Ant Design Boilerplate
-
-React Boilerplate using TypeScript and Ant Design. This boilerplate uses [Create React App](https://github.com/facebook/create-react-app)
+# Builed with React TypeScript Ant Design 
 
 ## Features
 
@@ -45,7 +43,3 @@ Then open [http://localhost:3000/](http://localhost:3000/) on your web browser.
 ## Deploying
 
 For deployment, run `npm run build` and upload `build/` to your server.
-
-## License
-
-MIT · [Lucas Bassetti](http://lucasbassetti.com.br)
