@@ -28,7 +28,6 @@
 Run the following commands in your terminal
 
 ```bash
-
 yarn install
 yarn start
 ```
@@ -38,6 +37,15 @@ Then open [http://localhost:3000/](http://localhost:3000/) on your web browser.
 ### Testing
 
 1. Run `npm test` for test.
+
+### Analyzing the Bundle Size
+
+Run the following commands in your terminal
+
+```bash
+yarn build
+yarn analyze
+```
 
 ## Deploying
 
