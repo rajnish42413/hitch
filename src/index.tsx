@@ -9,6 +9,8 @@ import Media from './screens/user/Media';
 import Axios from 'axios';
 import cookie from 'js-cookie';
 import { message } from 'antd';
+import * as serviceWorker from './serviceWorker';
+
 
 Axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 Axios.defaults.headers.common['Accept'] = 'application/json';
@@ -48,3 +50,6 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.register();
+
+
