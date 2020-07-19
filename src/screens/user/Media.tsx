@@ -51,9 +51,6 @@ const Media: React.FC<Props> = () => {
     setPage(page);
   }
 
-  function handleButtonClick(e:any) {
-    console.log('click left button', e);
-  }
 
   function handleMenuClick(e:any) {
     console.log('click', e);

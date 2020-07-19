@@ -1,8 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Radio, Typography, DatePicker, message } from 'antd';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import { Form, Input, Button, Row, Col, Radio, Typography, DatePicker, Modal, Steps } from 'antd';
+const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
 const layout = {
   labelCol: { span: 8 },
@@ -10,8 +8,9 @@ const layout = {
 };
 
 
-export default function Signup() {
+export default function CreateUserStepOne() {
   const [form] = Form.useForm();
+
   const onFinish = async(values: any) => {
     const user = {
       "name": values.firstName + ' ' + values.lastName,
@@ -21,23 +20,45 @@ export default function Signup() {
       "date_of_birth": values.dob?.format('DD-MM-YYYY')
     };
     console.log(user);
-    const {data} =  await axios.post(`/register`, user);
-    console.log(data);
-    if(data){
-      console.log(data);
-      form.resetFields();
-      message.success("Your account is successfully created")
-    }
+    if(user) showConfirm(user);
+    // const {data} =  await axios.post(`/register`, user);
+    // console.log(data);
+    // if(data){
+    //   console.log(data);
+    //   form.resetFields();
+    //   message.success("Your account is successfully created")
+    // }
   };
+
+  const showConfirm=(user:any) =>{
+    confirm({
+      title: ' Please confirm your info ',
+      content: ` ${getAge(user.date_of_birth)} years old , Born ${user.date_of_birth}`,
+      cancelText: 'Edit',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
   return (
-    <div style={{ marginTop: '4rem' }}>
+    <div style={{ marginTop: '2rem' }}>
       <Row justify="center" align="middle">
         <Col xs={20} sm={20} md={12} lg={12} xl={12}>
+        <Steps current={0} direction="horizontal" className="newuser-steps">
+            <Steps.Step title="" description="" />
+            <Steps.Step  />
+            <Steps.Step  />
+            <Steps.Step  />
+       </Steps>
+       <div className="mt-4"></div>
           <Form
             {...layout}
             name="basic"
@@ -118,15 +139,20 @@ export default function Signup() {
           </Form>
         </Col>
       </Row>
-      <br />
-      <br />
-      <p style={{ textAlign: 'center', color: '#60BD9C' }}>
-        <b>
-          <Link to="/login" style={{ color: '#60BD9C' }}>
-            Login Now
-          </Link>
-        </b>
-      </p>
     </div>
   );
+}
+
+
+function getAge(dateString:string) 
+{
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
 }

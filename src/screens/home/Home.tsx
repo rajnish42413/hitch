@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-
-import Login from '../login/Login';
+import React from 'react';
+import Login from '../auth/Login';
 
 type Props = {};
 
