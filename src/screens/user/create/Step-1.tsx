@@ -1,5 +1,9 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Radio, Typography, DatePicker, Modal, Steps } from 'antd';
+import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Steps } from 'antd';
+import { useHistory } from 'react-router-dom';
+
+import AuthLayout from '../../../layouts/auth';
+
 const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
 const layout = {
@@ -10,7 +14,7 @@ const layout = {
 
 export default function CreateUserStepOne() {
   const [form] = Form.useForm();
-
+  const history = useHistory();
   const onFinish = async(values: any) => {
     const user = {
       "name": values.firstName + ' ' + values.lastName,
@@ -37,6 +41,7 @@ export default function CreateUserStepOne() {
       cancelText: 'Edit',
       onOk() {
         console.log('OK');
+        history.push('/user/create/step-1');
       },
       onCancel() {
         console.log('Cancel');
@@ -49,16 +54,13 @@ export default function CreateUserStepOne() {
   };
 
   return (
-    <div style={{ marginTop: '2rem' }}>
-      <Row justify="center" align="middle">
-        <Col xs={20} sm={20} md={12} lg={12} xl={12}>
+    <AuthLayout>
         <Steps current={0} direction="horizontal" className="newuser-steps">
             <Steps.Step title="" description="" />
             <Steps.Step  />
             <Steps.Step  />
             <Steps.Step  />
        </Steps>
-       <div className="mt-4"></div>
           <Form
             {...layout}
             name="basic"
@@ -137,9 +139,7 @@ export default function CreateUserStepOne() {
               </Button>
             </Form.Item>
           </Form>
-        </Col>
-      </Row>
-    </div>
+    </AuthLayout>
   );
 }
 

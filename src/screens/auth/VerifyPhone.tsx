@@ -42,75 +42,66 @@ const VerifyPhone = (props: any) => {
 
   return (
     <AuthLayout>
-      <Row justify="center" align="middle" style={{ height: '100vh' }}>
-        <Col xs={20} sm={20} md={12} lg={12} xl={10} className="h-100">
-          <Form
-            {...layout}
-            name="basic"
-            initialValues={{ remember: true }}
-            size="large"
-            form={form}
-            className="h-100"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{ remember: true }}
+        size="large"
+        form={form}
+        className="h-100"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <br />
+
+        <div className="mt-5">
+          <Typography>
+            <Title level={4} style={{ textAlign: 'center' }}>
+              Enter your verification code
+            </Title>
+            <Paragraph style={{ textAlign: 'center', color: colors['mutted-color'] }}>
+              Sent to 98XXX-XXXXX
+            </Paragraph>
+          </Typography>
+          <br />
+
+          <Form.Item
+            name="otp"
+            rules={[
+              { required: true, message: 'Enter 6 digit OTP' },
+              { max: 6, min: 6, message: 'Please enter valid phone number!' }
+            ]}
           >
-            <br />
+            <Input
+              style={{ width: '100%' }}
+              placeholder="6 digit OTP"
+              maxLength={6}
+              type="number"
+            />
+          </Form.Item>
 
-            <div className="mt-5">
-              <Typography>
-                <Title level={4} style={{ textAlign: 'center' }}>
-                  Enter your verification code
-                </Title>
-                <Paragraph style={{ textAlign: 'center', color: colors['mutted-color'] }}>
-                  Sent to 98XXX-XXXXX
-                </Paragraph>
-              </Typography>
-              <br />
+          {counter ? (
+            <Button type="link" className="button-resend" onClick={resendOTP}>
+              Resend OTP
+            </Button>
+          ) : (
+            <Countdown title="" value={deadline} onFinish={onFinishDeadLine} className="counter" />
+          )}
+        </div>
 
-              <Form.Item
-                name="otp"
-                rules={[
-                  { required: true, message: 'Enter 6 digit OTP' },
-                  { max: 6, min: 6, message: 'Please enter valid phone number!' }
-                ]}
-              >
-                <Input
-                  style={{ width: '100%' }}
-                  placeholder="6 digit OTP"
-                  maxLength={6}
-                  type="number"
-                />
-              </Form.Item>
-
-              {counter ? (
-                <Button type="link" className="button-resend" onClick={resendOTP}>
-                  Resend OTP
-                </Button>
-              ) : (
-                <Countdown
-                  title=""
-                  value={deadline}
-                  onFinish={onFinishDeadLine}
-                  className="counter"
-                />
-              )}
-            </div>
-
-            <div className="loginOptions">
-              <Form.Item>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  size="large"
-                  icon={<RightOutlined />}
-                  style={{ float: 'right' }}
-                  htmlType="submit"
-                />
-              </Form.Item>
-            </div>
-          </Form>
-        </Col>
-      </Row>
+        <div className="loginOptions">
+          <Form.Item>
+            <Button
+              type="primary"
+              shape="circle"
+              size="large"
+              icon={<RightOutlined />}
+              style={{ float: 'right' }}
+              htmlType="submit"
+            />
+          </Form.Item>
+        </div>
+      </Form>
     </AuthLayout>
   );
 };

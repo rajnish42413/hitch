@@ -1,0 +1,48 @@
+.mt-4 {
+  margin-top: 4rem;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 10px;
+}
+.text-danger {
+  text-align: center;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 1rem;
+}
+
+.image-upload-box {
+  background: #ffffff;
+  border: 0.5px dashed #e74c3c;
+  border-radius: 6px;
+  height: 90px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+.image-upload-hint {
+  border: 0.5px solid #c1c1c1;
+  border-radius: 6px;
+  box-sizing: border-box;
+  padding: 0.8em 0.5rem;
+  margin-top: 2rem;
+  .ant-typography {
+    text-align: center;
+    color: #000000;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+}
+
+
+.buttom-bottom-last{
+    width: 100%;
+    position: absolute;
+    bottom: 1rem;
+}

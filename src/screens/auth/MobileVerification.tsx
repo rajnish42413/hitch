@@ -35,59 +35,55 @@ const MobileVerification = (props: any) => {
 
   return (
     <AuthLayout>
-      <Row justify="center" align="middle" style={{ height: '100vh' }}>
-        <Col xs={20} sm={20} md={12} lg={12} xl={10} className="h-100">
-          <Form
-            {...layout}
-            name="basic"
-            initialValues={{ remember: true }}
-            size="large"
-            form={form}
-            className="h-100"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{ remember: true }}
+        size="large"
+        form={form}
+        className="h-100"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <br />
+
+        <div className="mt-5">
+          <Typography>
+            <Title level={4} style={{ textAlign: 'center' }}>
+              What’s your phone number?
+            </Title>
+          </Typography>
+          <br />
+
+          <Form.Item
+            name="phone"
+            rules={[
+              { required: true, message: 'Please input your phone number!' },
+              { max: 10, min: 10, message: 'Please enter valid phone number!' }
+            ]}
           >
-            <br />
+            <Input
+              addonBefore={prefixSelector}
+              style={{ width: '100%' }}
+              placeholder="Phone number"
+              maxLength={10}
+            />
+          </Form.Item>
+        </div>
 
-            <div className="mt-5">
-              <Typography>
-                <Title level={4} style={{ textAlign: 'center' }}>
-                  What’s your phone number?
-                </Title>
-              </Typography>
-              <br />
-
-              <Form.Item
-                name="phone"
-                rules={[
-                  { required: true, message: 'Please input your phone number!' },
-                  { max: 10, min: 10, message: 'Please enter valid phone number!' }
-                ]}
-              >
-                <Input
-                  addonBefore={prefixSelector}
-                  style={{ width: '100%' }}
-                  placeholder="Phone number"
-                  maxLength={10}
-                />
-              </Form.Item>
-            </div>
-
-            <div className="loginOptions">
-              <Form.Item>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  size="large"
-                  icon={<RightOutlined />}
-                  style={{ float: 'right' }}
-                  htmlType="submit"
-                />
-              </Form.Item>
-            </div>
-          </Form>
-        </Col>
-      </Row>
+        <div className="loginOptions">
+          <Form.Item>
+            <Button
+              type="primary"
+              shape="circle"
+              size="large"
+              icon={<RightOutlined />}
+              style={{ float: 'right' }}
+              htmlType="submit"
+            />
+          </Form.Item>
+        </div>
+      </Form>
     </AuthLayout>
   );
 };

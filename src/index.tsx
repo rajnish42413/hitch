@@ -10,10 +10,16 @@ import Axios from 'axios';
 import cookie from 'js-cookie';
 import { message } from 'antd';
 import * as serviceWorker from './serviceWorker';
+
+// screens
 import MobileVerification from './screens/auth/MobileVerification';
 import VerifyPhone from './screens/auth/VerifyPhone';
 import Welcome from './screens/user/Welcome';
 import CreateUserStepOne from './screens/user/create/Step-1';
+import CreateUserStepTwo from './screens/user/create/Step-2';
+import UserCreatedWelcome from './screens/user/Welcome-Screen-2';
+import UserImage from './screens/media/image';
+import MediaUpload from './screens/media/upload';
 
 
 Axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
@@ -45,8 +51,17 @@ ReactDOM.render(
     <Route exact path="/" component={Home} />
       <Route  path="/phone-number" component={MobileVerification} />
       <Route  path="/verify-phone-number" component={VerifyPhone} />
-      <Route  path="/user/welcome" component={Welcome} />
+
       <Route  path="/user/create/step-1" component={CreateUserStepOne} />
+      <Route  path="/user/create/step-2" component={CreateUserStepTwo} />
+      <Route  path="/user/create/success" component={UserCreatedWelcome} />
+
+      <Route  path="/user/welcome" component={Welcome} />
+      <Route  path="/user/images" component={UserImage} />
+      <Route  path="/upload-image" component={MediaUpload} />
+
+
+
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/media" component={Media} />
