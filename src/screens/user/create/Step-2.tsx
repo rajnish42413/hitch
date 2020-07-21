@@ -1,5 +1,17 @@
-import React from 'react';
-import { Form, Input, Button, Radio, Typography, Modal, Steps, Select, Switch } from 'antd';
+import React, { useState } from 'react';
+import {
+  Form,
+  Input,
+  Button,
+  Radio,
+  Typography,
+  Modal,
+  Steps,
+  Select,
+  Switch,
+  AutoComplete
+} from 'antd';
+import axios from 'axios';
 import {
   HomeOutlined,
   LineOutlined,
@@ -10,17 +22,35 @@ import {
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import AuthLayout from '../../../layouts/auth';
+import { occupations } from '../../../constants/occupation.json';
+
 const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
+
+interface IOption{
+   value:string;
+}
+
 
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 }
 };
 
+
 export default function CreateUserStepTwo() {
   const [form] = Form.useForm();
   const history = useHistory();
+
+  const [organization ,setOrganization] = useState( [] as Array<IOption>);
+  const [occupationsData ,setOccupations] = useState(occupations);
+
+
+  const onSearchOrganization=(searchText: string)=>{
+    console.log(searchText);
+    occupations?.find((x:IOption ,i:number) =>x.value?.toLocaleLowerCase() === searchText?.toLocaleLowerCase());
+  }
+
   const onFinish = async (values: any) => {
     const data = {
       city: values.city,
@@ -58,6 +88,21 @@ export default function CreateUserStepTwo() {
     console.log('Failed:', errorInfo);
   };
 
+  const organizationList = async (string: string) => {
+    if(string?.length <= 2) return ;
+      const {data} = await axios.get(`https://crunchbase-crunchbase-v1.p.rapidapi.com/odm-organizations?query=${string}`, {
+        "headers": {
+          "x-rapidapi-host": "crunchbase-crunchbase-v1.p.rapidapi.com",
+          "x-rapidapi-key": "30d4f44f9amsh4be02b077a8efeap141676jsn26324e109037"
+        }
+      });
+      if(data?.data?.items?.length){
+        setOrganization(optionListFromCrushbase(data.data.items));
+        console.log(organization);
+      }
+  };
+
+
   return (
     <AuthLayout>
       <Steps current={1} direction="horizontal" className="newuser-steps">
@@ -66,6 +111,9 @@ export default function CreateUserStepTwo() {
         <Steps.Step />
         <Steps.Step />
       </Steps>
+      <br />
+      <br />
+
       <Form
         {...layout}
         name="basic"
@@ -133,7 +181,13 @@ export default function CreateUserStepTwo() {
           name="height"
           rules={[{ required: true, message: 'Please input your height in cm!' }]}
         >
-          <Input placeholder="178cm" type="number" min="100" max="300" />
+          <Select placeholder="Select height">
+            {Array.apply(0, Array(96)).map((x, i) => (
+              <Select.Option value={1 + 120} key={i}>
+                {i + 120} cm
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Switch
           checkedChildren="Visible"
@@ -195,7 +249,7 @@ export default function CreateUserStepTwo() {
           name="college_name"
           rules={[{ required: true, message: 'Please input your college name!' }]}
         >
-          <Input placeholder="College" />
+          <AutoComplete options={[]} placeholder="College" />
         </Form.Item>
         <Switch
           checkedChildren="Visible"
@@ -219,7 +273,7 @@ export default function CreateUserStepTwo() {
           name="workplace"
           rules={[{ required: true, message: 'Please input your workplace!' }]}
         >
-          <Input placeholder="Workplace" />
+          <AutoComplete options={organization} placeholder="workplace" onChange={(value:string) => organizationList(value)} />
         </Form.Item>
         <Switch
           checkedChildren="Visible"
@@ -237,7 +291,7 @@ export default function CreateUserStepTwo() {
           name="designation"
           rules={[{ required: true, message: 'Please input your designation!' }]}
         >
-          <Input placeholder="Designation" />
+          <AutoComplete options={occupationsData} placeholder="designation" onSearch={onSearchOrganization} />
         </Form.Item>
         <Switch
           checkedChildren="Visible"
@@ -287,3 +341,15 @@ export default function CreateUserStepTwo() {
     </AuthLayout>
   );
 }
+
+
+
+const optionListFromCrushbase = (data:any) =>{
+  if(!data) return [];
+  let result:Array<{value:string}> = [];
+   data?.map((item:any) => 
+    result.push({value:`${item?.properties?.name} (${item?.properties?.homepage_url})`})
+   );
+ return result ?? [];
+}
+

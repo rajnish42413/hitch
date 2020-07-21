@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Steps } from 'antd';
+import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Steps, Select } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../../layouts/auth';
@@ -41,7 +41,7 @@ export default function CreateUserStepOne() {
       cancelText: 'Edit',
       onOk() {
         console.log('OK');
-        history.push('/user/create/step-1');
+        history.push('/user/create/step-2');
       },
       onCancel() {
         console.log('Cancel');
@@ -61,6 +61,7 @@ export default function CreateUserStepOne() {
             <Steps.Step  />
             <Steps.Step  />
        </Steps>
+       <br/><br/>
           <Form
             {...layout}
             name="basic"
@@ -116,20 +117,21 @@ export default function CreateUserStepOne() {
             <br />
 
             <Typography>
-              <Title level={2}>Email & Password</Title>
+              <Title level={2}>Signing up as ...</Title>
             </Typography>
             <Form.Item
-              name="email"
-              rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-              <Input placeholder="Enter Valid Email" />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password placeholder="Password" />
-            </Form.Item>
+          name="community"
+          rules={[{ required: true, message: 'Please Select signing up a!' }]}
+        >
+          <Select placeholder="Select Signing up a">
+            <Select.Option value="Father" >Father</Select.Option> 
+            <Select.Option value="Mother">Mother</Select.Option>
+            <Select.Option value="Brother">Brother</Select.Option>
+            <Select.Option value="Sister">Sister</Select.Option>
+            <Select.Option value="Self">Self</Select.Option>
+            <Select.Option value="Guardian">Guardian</Select.Option>
+          </Select>
+        </Form.Item>
 
             <br />
 

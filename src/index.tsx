@@ -7,8 +7,8 @@ import Login from './screens/auth/Login';
 import Signup from './screens/signup/Signup';
 import Media from './screens/user/Media';
 import Axios from 'axios';
-import cookie from 'js-cookie';
 import { message } from 'antd';
+
 import * as serviceWorker from './serviceWorker';
 
 // screens
@@ -20,19 +20,11 @@ import CreateUserStepTwo from './screens/user/create/Step-2';
 import UserCreatedWelcome from './screens/user/Welcome-Screen-2';
 import UserImage from './screens/media/image';
 import MediaUpload from './screens/media/upload';
+import UserIntro from './screens/user/intro';
 
 
-Axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 Axios.defaults.headers.common['Accept'] = 'application/json';
 Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
-const token = cookie.get('token');
-if (token) {
-  Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-} else {
-  Axios.defaults.headers.common['Authorization'] = '';
-  delete Axios.defaults.headers.common['Authorization'];
-}
 
 Axios.interceptors.response.use(response => {
   return response;
@@ -59,6 +51,7 @@ ReactDOM.render(
       <Route  path="/user/welcome" component={Welcome} />
       <Route  path="/user/images" component={UserImage} />
       <Route  path="/upload-image" component={MediaUpload} />
+      <Route  path="/user/introduction" component={UserIntro} />
 
 
 

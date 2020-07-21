@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col, Typography, Input, Statistic, Modal, message } from 'antd';
+import { Form, Button, Typography, Input, Statistic, Modal, message } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import './Auth.scss';
 import { RightOutlined } from '@ant-design/icons';

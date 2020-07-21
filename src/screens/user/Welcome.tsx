@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Row, Col, Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import welcomeImage from '.././../assets/images/hitch-welcome-screen.svg';
 import { useHistory } from 'react-router';

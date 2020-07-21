@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Row, Col, Typography, Input, Select } from 'antd';
+import { Form, Button, Typography, Input, Select } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import './Auth.scss';
 import { useHistory } from 'react-router-dom';
