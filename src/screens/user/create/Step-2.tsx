@@ -8,7 +8,6 @@ import {
   Modal,
   Steps,
   Select,
-  Switch,
   AutoComplete
 } from 'antd';
 import axios from 'axios';
@@ -17,8 +16,7 @@ import {
   LineOutlined,
   UserOutlined,
   SafetyCertificateOutlined,
-  ShoppingOutlined,
-  LockOutlined
+  ShoppingOutlined  
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import AuthLayout from '../../../layouts/auth';
@@ -47,8 +45,10 @@ export default function CreateUserStepTwo() {
 
 
   const onSearchOrganization=(searchText: string)=>{
-    console.log(searchText);
-    occupations?.find((x:IOption ,i:number) =>x.value?.toLocaleLowerCase() === searchText?.toLocaleLowerCase());
+   let data = occupations?.filter((element:IOption) => {
+      return element.value.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setOccupations(data);
   }
 
   const onFinish = async (values: any) => {
@@ -189,13 +189,13 @@ export default function CreateUserStepTwo() {
             ))}
           </Select>
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
         <br />
 
         <Typography>
@@ -233,13 +233,13 @@ export default function CreateUserStepTwo() {
             <Radio.Button value="Doctrate">Doctrate</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
         <br />
 
         <Typography>
@@ -251,13 +251,13 @@ export default function CreateUserStepTwo() {
         >
           <AutoComplete options={[]} placeholder="College" />
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
         <br />
         <Typography>
           <Title level={3} className="text-center text-muted">
@@ -275,13 +275,13 @@ export default function CreateUserStepTwo() {
         >
           <AutoComplete options={organization} placeholder="workplace" onChange={(value:string) => organizationList(value)} />
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
         <br />
 
         <Typography>
@@ -293,13 +293,13 @@ export default function CreateUserStepTwo() {
         >
           <AutoComplete options={occupationsData} placeholder="designation" onSearch={onSearchOrganization} />
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
         <br />
 
         <Typography>
@@ -324,13 +324,13 @@ export default function CreateUserStepTwo() {
             <Select.Option value="500K">500K +</Select.Option>
           </Select>
         </Form.Item>
-        <Switch
+        {/* <Switch
           checkedChildren="Visible"
           unCheckedChildren={<LockOutlined />}
           defaultChecked
           className="form-switch"
           disabled={true}
-        />
+        /> */}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

@@ -15,28 +15,15 @@ const Welcome = (props: any) => {
 
   return (
     <AuthLayout>
-      <div className="mx-3 mt-4">
-        <Typography>
-          <Title level={3}>
-            Welcome to Hitch! <br />
-            <p style={{ marginTop: '2rem' }}> App for the life partner you are searching for </p>
-          </Title>
-        </Typography>
-      </div>
+      <Typography>
+        <Title level={3}>
+          Welcome to Hitch! <br />
+          <p style={{ marginTop: '2rem' }}> App for the life partner you are searching for </p>
+        </Title>
+      </Typography>
 
-      <img
-        src={welcomeImage}
-        alt="welcomeImage"
-        height="auto"
-        className="image-w100 image-top-fit"
-      />
-      <Button
-        type="primary"
-        size="large"
-        block
-        onClick={onFinish}
-        className="button-bottom button-bottom-fit"
-      >
+      <img src={welcomeImage} alt="welcomeImage" height="auto" className="image-w100" />
+      <Button type="primary" size="large" block onClick={onFinish} className="button-bottom">
         Continue
       </Button>
     </AuthLayout>

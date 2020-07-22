@@ -8,6 +8,10 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
+body {
+  background-color: #f0f2f5;
+}
+
 @media (max-width: $breakpoint-xl) {
   .main {
     width: 100%;

@@ -3,8 +3,7 @@ import { Row, Col, Card, Layout, Pagination ,Menu, Dropdown, message, Button,Mod
 import axios from 'axios';
 import { IMedia, IImage } from 'src/schemas/Media';
 import Loader from '../loader/Loader';
-import {DownOutlined,  UserOutlined } from '@ant-design/icons';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {DownOutlined,  UserOutlined ,ExclamationCircleOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import cookie from 'js-cookie';
 

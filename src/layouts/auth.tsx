@@ -1,3 +1,4 @@
+import { colors } from '@constants/general';
 import { Col, Row } from 'antd';
 import React from 'react';
 import './style.scss';
@@ -9,7 +10,7 @@ interface Iprops{
 export default function AuthLayout(props: Iprops) {
   return (
     <main className="main">
-       <div style={{ backgroundColor: props?.backgroundColor ?? '', width: '100%', height: '100vh' }}>
+       <div style={{ backgroundColor: props?.backgroundColor ?? colors['white-color'], width: '100%', minHeight: '100vh' }}>
        <Row justify="center" align="middle">
         <Col
           xs={20}

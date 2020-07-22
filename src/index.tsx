@@ -21,10 +21,12 @@ import UserCreatedWelcome from './screens/user/Welcome-Screen-2';
 import UserImage from './screens/media/image';
 import MediaUpload from './screens/media/upload';
 import UserIntro from './screens/user/intro';
+import Shortlist from './screens/shortlist/index';
 
 
-Axios.defaults.headers.common['Accept'] = 'application/json';
-Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// Axios.defaults.headers.common['Accept'] = 'application/json';
+// Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// Axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 
 Axios.interceptors.response.use(response => {
   return response;
@@ -40,7 +42,7 @@ Axios.interceptors.response.use(response => {
 ReactDOM.render(
   <Router>
     <Switch>
-    <Route exact path="/" component={Home} />
+    <Route exact path="/" component={Login} />
       <Route  path="/phone-number" component={MobileVerification} />
       <Route  path="/verify-phone-number" component={VerifyPhone} />
 
@@ -53,6 +55,8 @@ ReactDOM.render(
       <Route  path="/upload-image" component={MediaUpload} />
       <Route  path="/user/introduction" component={UserIntro} />
 
+      <Route  path="/home" component={Home} />
+      <Route  path="/shortlisted" component={Shortlist} />
 
 
       <Route path="/login" component={Login} />

@@ -10,6 +10,7 @@ const UserIntro = (props: any) => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     message.success('Hooray ! Welcome to HITCH familiy ', 2);
+    history.push('/home');
   };
 
   return (
