@@ -64,7 +64,7 @@ const Login = (props: any) => {
               }}
               block
             >
-              Continue with Facebook
+              <Link to="/home">Continue with Facebook</Link>
             </Button>
           </Form.Item>
 
