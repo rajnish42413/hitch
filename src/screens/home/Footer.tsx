@@ -34,14 +34,16 @@ const BottomFooter = (props: any) => {
                 </Link>
               </Col>
               <Col span={8}>
-                <Button
-                  type="text"
-                  block
-                  size="large"
-                  style={{ height: '60px', lineHeight: '60px' }}
-                >
-                  Profile
-                </Button>
+                <Link to="/profile">
+                  <Button
+                    type="text"
+                    block
+                    size="large"
+                    style={{ height: '60px', lineHeight: '60px' }}
+                  >
+                    Profile
+                  </Button>
+                </Link>
               </Col>
             </Row>
           </Col>

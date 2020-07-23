@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Layout, Row } from 'antd';
+import { Button, Card, Col, Divider, Layout, Row, Switch } from 'antd';
 import AppLayout from '../../layouts/app';
 import BottomFooter from '../home/Footer';
 import { HeaderSkelaton } from '../home/Header';
@@ -10,26 +10,47 @@ import Loader from '../loader/Loader';
 
 const { Content } = Layout;
 const MenuIcon = (props: any) => <Icon component={MenuSvg} {...props} />;
+enum PType { "shortlist","likes" };
 
 const Shortlist = (props: any) => {
-  const [data, setData] = useState([] as Array<IShortList>);
+  const [shortlistedData, setShortlistedData] = useState([] as Array<IShortList>);
+  const [likesData, setLikesData] = useState([] as Array<IShortList>);
   const [loading, setLoading] = useState(true);
+  const [listingType, setListingType] = useState(PType.shortlist);
 
-  const getData = async () => {
+
+  const getShortlisted = async () => {
     setLoading(true);
     const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shortlist`);
-    setData(data);
+    setShortlistedData(data);
     setLoading(false);
   };
 
+  const getLikes = async () => {
+    setLoading(true);
+    const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shortlist`);
+    setLikesData(data);
+    setLoading(false);
+  };
+
+
   useEffect(() => {
-    getData();
-  }, []);
+  if(listingType === PType.shortlist)  getShortlisted();
+  if(listingType === PType.likes) getLikes();
+  }, [listingType]);
 
   return (
     <AppLayout>
       <TopHeader />
-      {loading ? <Loader /> : <Content>{renderDataList(data)}</Content>}
+        <Switch
+          checkedChildren="shotlisted"
+          unCheckedChildren="Likes"
+          defaultChecked
+          style={{display:"block",margin:'1rem'}}
+          onChange={()=>setListingType(listingType===PType.shortlist ? PType.likes:PType.shortlist)}
+        /> 
+      <Divider />
+      {loading ? <Loader /> : <Content>{renderDataList(listingType === PType.likes ? likesData : shortlistedData)}</Content>}
       <BottomFooter />
     </AppLayout>
   );
@@ -70,7 +91,7 @@ const renderDataList=(data:Array<IShortList>)=>{
 
 const shortListcard = (data:IShortList) => {
   return (
-    <Card loading={data?false:true} style={{ margin: '20px', padding: 0,marginBottom:'2rem' }} className="shortlist-box">
+    <Card key={data.id} loading={data?false:true} style={{ margin: '20px', padding: 0,marginBottom:'2rem' }} className="shortlist-box">
       <div className="shortlist-card">
         <div className="shortlist-card-left">
           <img

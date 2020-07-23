@@ -74,14 +74,6 @@ const UserImage = (props: any) => {
       <SortableList items={photos} onSortEnd={onSortEnd} />
 
       <Row gutter={16} className="mt-1">
-        {/* {[1, 2, 3, 4, 5, 6].map((i: number) => (
-          <Col span={8} className="mb-1">
-            <Button type="text" block className="image-upload-box">
-              <PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} />
-            </Button>
-          </Col>
-        ))} */}
-
         <Col span={24}>
           <Typography className="image-upload-hint">
             <Paragraph>

@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.less';
 import Home from './screens/home/Home';
 import Login from './screens/auth/Login';
-import Signup from './screens/signup/Signup';
-import Media from './screens/user/Media';
+import Media from './screens/user/media';
 import Axios from 'axios';
 import { message } from 'antd';
 
@@ -14,14 +13,16 @@ import * as serviceWorker from './serviceWorker';
 // screens
 import MobileVerification from './screens/auth/MobileVerification';
 import VerifyPhone from './screens/auth/VerifyPhone';
-import Welcome from './screens/user/Welcome';
+import Welcome from './screens/user/welcome';
 import CreateUserStepOne from './screens/user/create/Step-1';
 import CreateUserStepTwo from './screens/user/create/Step-2';
-import UserCreatedWelcome from './screens/user/Welcome-Screen-2';
+import UserCreatedWelcome from './screens/user/success';
 import UserImage from './screens/media/image';
 import MediaUpload from './screens/media/upload';
 import UserIntro from './screens/user/intro';
 import Shortlist from './screens/shortlist/index';
+import UserProfile from './screens/user/profile/index';
+import UserImageManage from './screens/user/profile/imageManage';
 
 
 // Axios.defaults.headers.common['Accept'] = 'application/json';
@@ -56,11 +57,12 @@ ReactDOM.render(
       <Route  path="/user/introduction" component={UserIntro} />
 
       <Route  path="/home" component={Home} />
+      <Route  path="/profile/image/:id" component={UserImageManage} />
+      <Route  path="/profile" component={UserProfile} />
       <Route  path="/shortlisted" component={Shortlist} />
 
 
       <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
       <Route path="/media" component={Media} />
     </Switch>
   </Router>,

@@ -46,8 +46,6 @@ export default TopHeader;
 const MenuSvg = () => (
   <svg width="5" height="35" viewBox="0 0 5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
       d="M0 34.5518H5V28.7932H0V34.5518ZM0 20.155H5V14.3964H0V20.155ZM0 0V5.75864H5V0H0Z"
       fill="black"
     />

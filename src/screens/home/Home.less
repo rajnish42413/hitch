@@ -85,7 +85,7 @@
   padding: 0;
   padding: 0 1rem;
   width: 100%;
-  div {
+  .span {
     border-bottom: 0.5px solid #f0f0f0;
     font-size: 1em;
     font-weight: 300;
@@ -94,6 +94,40 @@
     line-height: 60px;
     text-align: center;
     width: 50%;
+  }
+  .w-50 {
+    width: 50% !important;
+  }
+  .w-100 {
+    width: 100% !important;
+  }
+
+  .user-card-collapase {
+    align-items: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    width: 100%;
+    .ant-collapse-content-box {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .ant-collapse-item {
+      border: none !important;
+      width: 100%;
+    }
+    .ant-collapse-header {
+      border: none !important;
+      .ant-collapse-arrow {
+        bottom: 20px;
+        left: 45%;
+        transform: rotate(90deg);
+      }
+    }
   }
 }
 
@@ -175,5 +209,14 @@
         }
       }
     }
+  }
+}
+
+.profile-buttons {
+  margin: 20px 0 !important;
+  .ant-list-item a {
+    color: #000;
+    font-weight: 300;
+    letter-spacing: -0.333333px;
   }
 }

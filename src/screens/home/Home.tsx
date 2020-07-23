@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { Card, Layout, Button } from 'antd';
+import { Card, Layout, Button, Collapse } from 'antd';
 import AppLayout from '../../layouts/app';
 import './Home.less';
-import { LeftOutlined, RightOutlined ,DownOutlined} from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { colors } from '@constants/general';
 import BottomFooter from './Footer';
 import TopHeader from './Header';
 
 const { Content } = Layout;
-
+const { Panel } = Collapse;
 
 const Home = (props: any) => {
 
@@ -28,11 +28,16 @@ const Home = (props: any) => {
        <Content>
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 1"}} />
          
-         <UserDetailCard arrowDown={true}>
-           <div>21 yrs</div>
-           <div>X  X</div>
-           <div>created by fater</div>
-           <div>Sun Singh</div>
+         <UserDetailCard 
+           collapseData={<>
+                    <div className="span">Maritial_status</div>
+                    <div className="span">Maritial_status</div>
+                    <div className="span w-100">Maritial_status</div>
+                  </>}>
+           <div className="span">21 yrs</div>
+           <div className="span">X  X</div>
+           <div className="span">created by fater</div>
+           <div className="span">Sun Singh</div>
          </UserDetailCard>
 
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 2"}} />
@@ -45,17 +50,22 @@ const Home = (props: any) => {
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 3"}} />
 
          <UserDetailCard>
-           <div>Community</div>
-           <div>Location</div>
+           <div className="span">Community</div>
+           <div className="span">Location</div>
          </UserDetailCard>
 
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 4"}} />
 
-         <UserDetailCard arrowDown={true}>
-           <div>Workplace</div>
-           <div>Job_title</div>
-           <div>Edu Level</div>
-           <div>College</div>
+         <UserDetailCard 
+         collapseData={<>
+          <div className="span">Maritial_status</div>
+          <div className="span">Maritial_status</div>
+          <div className="span w-100">Maritial_status</div>
+        </>}>
+           <div className="span">Workplace</div>
+           <div className="span">Job_title</div>
+           <div className="span">Edu Level</div>
+           <div className="span">College</div>
          </UserDetailCard>
 
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 5"}} />
@@ -91,6 +101,7 @@ const UserPagination = (props:any) => {
 };
 
 const UserImageCard=(props:any):JSX.Element=>{
+  
   if(!props?.image?.url) return <></>
   return(
     <Card
@@ -114,7 +125,14 @@ const UserDetailCard =(props:any) =>{
   return(
     <Card  style={{ margin: '20px' }} className="user-detail-card" loading={props.loading ?? false}>
      {props.children}
-     {props.arrowDown && <span style={{margin:'5px auto'}}><DownOutlined/></span>}
+     {props.collapseData && 
+
+      <Collapse defaultActiveKey={[]} className="user-card-collapase" >
+         <Panel header=" " key="1">
+           {props.collapseData}
+         </Panel>
+      </Collapse>
+     }
     </Card>
   )
 }
