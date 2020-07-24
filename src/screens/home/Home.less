@@ -15,6 +15,12 @@
   padding-top: 2rem;
 }
 
+.shortlist-button {
+  bottom: 5rem;
+  position: fixed;
+  right: rem;
+  z-index: 9;
+}
 .home-header {
   background-color: #fff;
   border-bottom: 1px solid #f0f2f5;
@@ -32,9 +38,12 @@
   }
 }
 .home-footer {
+  align-items: center;
   background-color: #fff;
   border-top: 1px solid #f0f2f5;
   bottom: 0;
+  display: flex;
+  height: 60px;
   left: 0;
   padding: 0 !important;
   position: fixed;
@@ -46,12 +55,16 @@
   padding: 0 1rem;
   h3 {
     align-items: center;
-    color: #000;
-    display: flex;
+    color: #000 !important;
+    display: inline-block;
     font-size: 24px;
     font-style: normal;
     font-weight: bold;
     letter-spacing: 0.05em;
+  }
+  .anticon {
+    color: #000 !important;
+    margin-right: 10px;
   }
 }
 
@@ -183,12 +196,25 @@
     }
   }
 }
+
+.user-image-card {
+  height: 100%;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .shortlist-button {
+    right: 1rem;
+  }
+}
 @media (max-width: 480px) {
   .shortlist-box {
     .shortlist-card {
       height: 142px;
       .shortlist-card-left {
         width: 142px;
+        div {
+          font-size: 0.8em;
+        }
         img {
           height: calc(142px - 28px);
           width: 142px;

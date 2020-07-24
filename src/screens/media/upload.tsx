@@ -26,10 +26,12 @@ const MediaUpload = (props: any) => {
          :  
          <Button
           type="text"
-          style={{padding:"6rem 0" ,border:'0.5px dashed #C1C1C1'}}
+          style={{border:'0.5px dashed #C1C1C1'}}
           onClick={()=>setUploadOption(true)}
+          className="preview-image-card"
          ><PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} /></Button>
   }
+
 
   return (
     <AuthLayout>
@@ -40,11 +42,11 @@ const MediaUpload = (props: any) => {
       />
 
       <Card
-        hoverable
         style={{ width: '100%' }}
         cover={renderImage(image)}
+        className="upload-card"
       >
-        <Input value={image.caption ?? "Caption here"} name="caption" size="large" style={{ border: 'none' }} />
+        <Input value={image.caption ?? "Caption here"} name="caption" size="large" style={{ border: 'none' }} placeholder="Add Caption here"/>
       </Card>
 
       <Typography className="image-upload-hint">

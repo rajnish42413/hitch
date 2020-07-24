@@ -76,7 +76,7 @@ const UserImage = (props: any) => {
       <Row gutter={16} className="mt-1">
         <Col span={24}>
           <Typography className="image-upload-hint">
-            <Paragraph>
+            <Paragraph style={{ color: colors['black-color'] }}>
               Tap a photo to add a caption and make your profile stand out even more{' '}
             </Paragraph>
           </Typography>

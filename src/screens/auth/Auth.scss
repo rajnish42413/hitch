@@ -39,8 +39,11 @@
 
 .image-w100 {
   width: 100%;
-  max-height: 420px;
-  z-index: -1;
+  height: 70vh;
+  /* z-index: -1; */
+  position: absolute;
+  bottom: 5rem;
+  left: 0;
 }
 
 .image-top-fit{
@@ -58,6 +61,7 @@
 }
 
 .counter {
+  margin-left: 2rem !important;
   .ant-statistic-content {
     font-size: 0.9em;
     color: #3498db;
@@ -67,12 +71,14 @@
 .button-resend {
   font-size: 0.9em;
   color: #3498db;
+  margin-left: 2rem !important;
 }
 
-.loginOptions {
+.loginOptions  , .buttom-buttom-1{
   width: 100%;
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
+  left: 0;
 }
 
 .text-muted{

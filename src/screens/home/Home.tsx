@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Card, Layout, Button, Collapse } from 'antd';
 import AppLayout from '../../layouts/app';
 import './Home.less';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined ,PlusOutlined} from '@ant-design/icons';
 import { colors } from '@constants/general';
 import BottomFooter from './Footer';
 import TopHeader from './Header';
@@ -71,6 +71,7 @@ const Home = (props: any) => {
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 5"}} />
          <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 6"}} />
        </Content>
+        <Button shape="circle" size="large" icon={<PlusOutlined/>} className="shortlist-button" type="primary"></Button>
       <BottomFooter />
     </AppLayout>
   );
@@ -106,13 +107,12 @@ const UserImageCard=(props:any):JSX.Element=>{
   return(
     <Card
     style={{ margin: '20px' }}
-    hoverable
     loading={props.image?.url ? false :true}
     cover={
       <img
         alt={'hello caption here'}
         src={props.image?.url}
-        height="350px"
+        className="user-image-card"
       />
     }
   >

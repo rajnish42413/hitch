@@ -22,7 +22,13 @@ const UserCreatedWelcome = (props: any) => {
       </div>
 
       <img src={welcomeImage} alt="welcomeImage" height="auto" className="image-w100" />
-      <Button type="primary" size="large" block onClick={onFinish} className="button-bottom">
+      <Button
+        type="primary"
+        size="large"
+        block
+        onClick={onFinish}
+        className="button-bottom buttom-buttom-1"
+      >
         Continue
       </Button>
     </AuthLayout>

@@ -22,7 +22,7 @@ export default function AppLayout(props: Iprops) {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: colors['white-color'],
-            margin: '5rem 0',
+            margin: '4rem 0',
             overflowX: 'hidden'
           }}
         >

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Typography, Button, PageHeader, Card, Input, Modal, message, Upload } from 'antd';
-import AuthLayout from '../layouts/auth';
-import AppLayout from '../layouts/app';
+import { Typography, Button, Card, Input, Modal, message, Upload } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { colors } from '@constants/general';
-
 const { Paragraph } = Typography;
 
 interface IImage{
@@ -14,13 +11,9 @@ interface IImage{
   caption: string ;
   id:number
 }
-enum ILayout {app,auth};
 
 interface IProps{
-    layout?:ILayout;
     bottomButtomRedirect?:string;
-    backTo:string;
-    title:string;
 }
 
 const ImageUploader = (props: IProps) => {
@@ -34,15 +27,10 @@ const ImageUploader = (props: IProps) => {
          :  
          <Button
           type="text"
-          style={{padding:"6rem 0" ,border:'0.5px dashed #C1C1C1'}}
+          style={{border:'0.5px dashed #C1C1C1'}}
           onClick={()=>setUploadOption(true)}
+          className="preview-image-card"
          ><PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} /></Button>
-  }
-
-  const goToBack=()=>{
-    if(props.backTo){
-      history.push(props.backTo);
-    }
   }
 
   const redirectTo=()=>{
@@ -52,19 +40,13 @@ const ImageUploader = (props: IProps) => {
   }
 
   return (
-    <RenderLayout >
-      <PageHeader
-        onBack={goToBack}
-        title={props.title}
-        style={{ padding: 0, marginBottom: '1rem' }}
-      />
-
+   <>
       <Card
-        hoverable
         style={{ width: '100%' }}
         cover={renderImage(image)}
+        className="upload-card"
       >
-        <Input value={image.caption ?? "Caption here"} name="caption" size="large" style={{ border: 'none' }} />
+        <Input value={image.caption ?? "Caption here"} name="caption" size="large" style={{ border: 'none' }} placeholder="Add Caption here" />
       </Card>
 
       <Typography className="image-upload-hint">
@@ -89,7 +71,7 @@ const ImageUploader = (props: IProps) => {
         setImage(image);
       }}
       />}
-     </RenderLayout>
+     </>
   );
 };
 
@@ -150,7 +132,3 @@ const UploadButton =(IUploadProps:any)=>{
   )
 };
 
-const  RenderLayout = (props:any) =>{
-  if(props.layout === ILayout.app) return <AppLayout>{props.children}</AppLayout>
-  return <AuthLayout>{props.children}</AuthLayout>
-}

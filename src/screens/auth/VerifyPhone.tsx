@@ -55,13 +55,9 @@ const VerifyPhone = (props: any) => {
         <br />
 
         <div className="mt-5">
-          <Typography>
-            <Title level={4} style={{ textAlign: 'center' }}>
-              Enter your verification code
-            </Title>
-            <Paragraph style={{ textAlign: 'center', color: colors['mutted-color'] }}>
-              Sent to 98XXX-XXXXX
-            </Paragraph>
+          <Typography style={{ paddingLeft: '2rem' }}>
+            <Title level={4}>Enter your verification code</Title>
+            <Paragraph style={{ color: colors['mutted-color'] }}>Sent to 98XXX-XXXXX</Paragraph>
           </Typography>
           <br />
 

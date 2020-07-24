@@ -15,15 +15,24 @@ const Welcome = (props: any) => {
 
   return (
     <AuthLayout>
-      <Typography>
+      <Typography style={{ paddingLeft: '2rem' }}>
         <Title level={3}>
           Welcome to Hitch! <br />
-          <p style={{ marginTop: '2rem' }}> App for the life partner you are searching for </p>
+          <p style={{ marginTop: '2rem' }}>
+            {' '}
+            App for the life partner <br /> you are searching for{' '}
+          </p>
         </Title>
       </Typography>
 
       <img src={welcomeImage} alt="welcomeImage" height="auto" className="image-w100" />
-      <Button type="primary" size="large" block onClick={onFinish} className="button-bottom">
+      <Button
+        type="primary"
+        size="large"
+        block
+        onClick={onFinish}
+        className="button-bottom buttom-buttom-1"
+      >
         Continue
       </Button>
     </AuthLayout>

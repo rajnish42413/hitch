@@ -21,6 +21,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import AuthLayout from '../../../layouts/auth';
 import { occupations } from '../../../constants/occupation.json';
+import { RightOutlined } from '@ant-design/icons';
 
 const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
@@ -125,15 +126,15 @@ export default function CreateUserStepTwo() {
       >
         <br />
         <Typography>
-          <Title level={3} className="text-center text-muted">
+          <Title level={4} className="text-center text-muted">
             {' '}
-            <HomeOutlined /> {} Let’s talk about home{' '}
+            <LineOutlined /> <HomeOutlined /> {} Let’s talk about home{' '}  <LineOutlined />
           </Title>
         </Typography>
         <br />
 
         <Typography>
-          <Title level={2}>Where do you live? </Title>
+          <Title level={4}>Where do you live? </Title>
         </Typography>
         <Form.Item
           name="city"
@@ -142,16 +143,11 @@ export default function CreateUserStepTwo() {
           <Input placeholder="Enter City Name" />
         </Form.Item>
 
-        <br />
-        <Typography>
-          <Title level={3} className="text-center text-muted">
-            <LineOutlined /> <UserOutlined /> Tell us about yourself <LineOutlined />
-          </Title>
-        </Typography>
+      
         <br />
 
         <Typography>
-          <Title level={2}>What’s your community?</Title>
+          <Title level={4}>What’s your community?</Title>
         </Typography>
         <Form.Item
           name="community"
@@ -170,9 +166,15 @@ export default function CreateUserStepTwo() {
         </Form.Item>
 
         <br />
+        <Typography>
+          <Title level={4} className="text-center text-muted">
+            <LineOutlined /> <UserOutlined /> Tell us about yourself <LineOutlined />
+          </Title>
+        </Typography>
+        <br />
 
         <Typography>
-          <Title level={2}>How tall are you? </Title>
+          <Title level={4}>How tall are you? </Title>
           <Paragraph>
             We have noticed that members do not respond to Profiles with hidden height{' '}
           </Paragraph>
@@ -199,7 +201,7 @@ export default function CreateUserStepTwo() {
         <br />
 
         <Typography>
-          <Title level={2}>What’s your marital status?</Title>
+          <Title level={4}>What’s your marital status?</Title>
         </Typography>
         <Form.Item
           name="marital_status"
@@ -216,14 +218,14 @@ export default function CreateUserStepTwo() {
 
         <br />
         <Typography>
-          <Title level={3} className="text-center text-muted">
+          <Title level={4} className="text-center text-muted">
             <LineOutlined /> <SafetyCertificateOutlined /> Academic Background <LineOutlined />
           </Title>
         </Typography>
         <br />
 
         <Typography>
-          <Title level={2}>What’s the highest level you attained?</Title>
+          <Title level={4}>What’s the highest level you attained?</Title>
         </Typography>
         <Form.Item name="highest_attained">
           <Radio.Group buttonStyle="solid" defaultValue="Undergrad">
@@ -243,7 +245,7 @@ export default function CreateUserStepTwo() {
         <br />
 
         <Typography>
-          <Title level={2}>Where did you go to college? </Title>
+          <Title level={4}>Where did you go to college? </Title>
         </Typography>
         <Form.Item
           name="college_name"
@@ -260,20 +262,20 @@ export default function CreateUserStepTwo() {
         /> */}
         <br />
         <Typography>
-          <Title level={3} className="text-center text-muted">
+          <Title level={4} className="text-center text-muted">
             <LineOutlined /> <ShoppingOutlined /> Work life details <LineOutlined />
           </Title>
         </Typography>
         <br />
 
         <Typography>
-          <Title level={2}>Where do you work? </Title>
+          <Title level={4}>Where do you work? </Title>
         </Typography>
         <Form.Item
           name="workplace"
           rules={[{ required: true, message: 'Please input your workplace!' }]}
         >
-          <AutoComplete options={organization} placeholder="workplace" onChange={(value:string) => organizationList(value)} />
+          <AutoComplete options={organization} placeholder="Workplace" onChange={(value:string) => organizationList(value)} />
         </Form.Item>
         {/* <Switch
           checkedChildren="Visible"
@@ -285,13 +287,13 @@ export default function CreateUserStepTwo() {
         <br />
 
         <Typography>
-          <Title level={2}>And what’s your designation? </Title>
+          <Title level={4}>And what’s your designation? </Title>
         </Typography>
         <Form.Item
           name="designation"
           rules={[{ required: true, message: 'Please input your designation!' }]}
         >
-          <AutoComplete options={occupationsData} placeholder="designation" onSearch={onSearchOrganization} />
+          <AutoComplete options={occupationsData} placeholder="Designation" onSearch={onSearchOrganization} />
         </Form.Item>
         {/* <Switch
           checkedChildren="Visible"
@@ -303,14 +305,14 @@ export default function CreateUserStepTwo() {
         <br />
 
         <Typography>
-          <Title level={2}>Your salary range? </Title>
+          <Title level={4}>Your salary range? </Title>
         </Typography>
         <Form.Item
           name="salary_range"
           rules={[{ required: true, message: 'Please Select your salary range!' }]}
         >
           <Select placeholder="Select salary range">
-            <Select.Option value="10000">Under 10,000/month</Select.Option>
+            <Select.Option value="10000"> {'<'} 10,000/month</Select.Option>
             <Select.Option value="10000-30000">10,000 to 30,000</Select.Option>
             <Select.Option value="30000-60000">30,000 to 60,000</Select.Option>
             <Select.Option value="60000-90000">60,000 to 90,000</Select.Option>
@@ -321,7 +323,7 @@ export default function CreateUserStepTwo() {
             <Select.Option value="200K-300K">200K to 300K</Select.Option>
             <Select.Option value="300K-400K">300K to 400K</Select.Option>
             <Select.Option value="400K-500K">400K to 500K</Select.Option>
-            <Select.Option value="500K">500K +</Select.Option>
+         <Select.Option value="500K">500K {'<'}</Select.Option>
           </Select>
         </Form.Item>
         {/* <Switch
@@ -332,11 +334,11 @@ export default function CreateUserStepTwo() {
           disabled={true}
         /> */}
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+<Form.Item style={{display:'block'}}>
+              <Button type="primary" htmlType="submit" shape="circle"  
+                style={{float:'right'}}
+              icon={<RightOutlined />}></Button>
+            </Form.Item>
       </Form>
     </AuthLayout>
   );

@@ -8,9 +8,31 @@
   max-width: 100% !important;
   width: 100%;
 }
+.ant-card {
+  border-radius: 6px !important;
+}
+
+.ant-btn-lg {
+  font-weight: bold !important;
+  height: 50px !important;
+}
+.ant-btn-circle.ant-btn-lg,
+.ant-btn-circle-outline.ant-btn-lg {
+  min-width: 50px !important;
+}
 
 .loaded:not(.has-error) {
   animation: loaded 300ms ease-in-out;
+}
+
+.ant-typography {
+  div.ant-typography {
+    color: #bdc3c7;
+    font-size: '1rem';
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
 }
 
 @keyframes loaded {
@@ -19,5 +41,11 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-btn-lg {
+    height: 45px !important;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Steps, Select } from 'antd';
 import { useHistory } from 'react-router-dom';
-
+import { RightOutlined } from '@ant-design/icons';
 import AuthLayout from '../../../layouts/auth';
 
 const { confirm } = Modal;
@@ -72,7 +72,7 @@ export default function CreateUserStepOne() {
             form={form}
           >
             <Typography>
-              <Title level={2}>What is your name ?</Title>
+              <Title level={4}>What is your name ?</Title>
             </Typography>
             <Form.Item
               name="firstName"
@@ -90,7 +90,7 @@ export default function CreateUserStepOne() {
             <br />
 
             <Typography>
-              <Title level={2}>And your gender ?</Title>
+              <Title level={4}>And your gender ?</Title>
             </Typography>
             <Form.Item name="gender">
               <Radio.Group  buttonStyle="solid" defaultValue="male">
@@ -103,7 +103,7 @@ export default function CreateUserStepOne() {
             <br />
 
             <Typography>
-              <Title level={2}>What's your date of birth ?</Title>
+              <Title level={4}>What's your date of birth ?</Title>
               <Paragraph>This cannot be editable later .</Paragraph>
             </Typography>
 
@@ -117,7 +117,7 @@ export default function CreateUserStepOne() {
             <br />
 
             <Typography>
-              <Title level={2}>Signing up as ...</Title>
+              <Title level={4}>Signing up as ...</Title>
             </Typography>
             <Form.Item
           name="community"
@@ -135,10 +135,10 @@ export default function CreateUserStepOne() {
 
             <br />
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+            <Form.Item style={{display:'block'}}>
+              <Button type="primary" htmlType="submit" shape="circle"  
+                style={{float:'right'}}
+              icon={<RightOutlined />}></Button>
             </Form.Item>
           </Form>
     </AuthLayout>

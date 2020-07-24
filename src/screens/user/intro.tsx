@@ -43,10 +43,10 @@ const UserIntro = (props: any) => {
           name="intro"
           rules={[{ required: true, message: 'Please input your introduction!' }]}
         >
-          <Input.TextArea rows={4} placeholder="Here goes my introduction" maxLength={255} />
+          <Input.TextArea rows={5} placeholder="Here goes my introduction" maxLength={255} />
         </Form.Item>
         <br />
-        <Form.Item>
+        <Form.Item className="button-bottom buttom-buttom-1">
           <Button type="primary" htmlType="submit" block>
             Submit
           </Button>

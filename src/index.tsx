@@ -23,6 +23,7 @@ import UserIntro from './screens/user/intro';
 import Shortlist from './screens/shortlist/index';
 import UserProfile from './screens/user/profile/index';
 import UserImageManage from './screens/user/profile/imageManage';
+import UserDetail from './screens/user/profile/deatil';
 
 
 // Axios.defaults.headers.common['Accept'] = 'application/json';
@@ -59,6 +60,7 @@ ReactDOM.render(
       <Route  path="/home" component={Home} />
       <Route  path="/profile/image/:id" component={UserImageManage} />
       <Route  path="/profile" component={UserProfile} />
+      <Route  path="/user/detail" component={UserDetail} />
       <Route  path="/shortlisted" component={Shortlist} />
 
 

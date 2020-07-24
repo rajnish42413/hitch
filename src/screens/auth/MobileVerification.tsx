@@ -48,10 +48,8 @@ const MobileVerification = (props: any) => {
         <br />
 
         <div className="mt-5">
-          <Typography>
-            <Title level={4} style={{ textAlign: 'center' }}>
-              What’s your phone number?
-            </Title>
+          <Typography style={{ paddingLeft: '2rem' }}>
+            <Title level={4}>What’s your phone number?</Title>
           </Typography>
           <br />
 

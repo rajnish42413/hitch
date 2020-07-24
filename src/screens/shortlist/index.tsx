@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Divider, Layout, Row, Switch } from 'antd';
+import { Button, Card, Col, Layout, Row, Switch } from 'antd';
 import AppLayout from '../../layouts/app';
 import BottomFooter from '../home/Footer';
 import { HeaderSkelaton } from '../home/Header';
-import Icon from '@ant-design/icons';
+import Icon ,{PhoneOutlined ,CloseOutlined} from '@ant-design/icons';
 import { colors } from '@constants/general';
 import Axios from 'axios';
 import Loader from '../loader/Loader';
@@ -43,13 +43,12 @@ const Shortlist = (props: any) => {
     <AppLayout>
       <TopHeader />
         <Switch
-          checkedChildren="shotlisted"
+          checkedChildren="My List"
           unCheckedChildren="Likes"
           defaultChecked
           style={{display:"block",margin:'1rem'}}
           onChange={()=>setListingType(listingType===PType.shortlist ? PType.likes:PType.shortlist)}
         /> 
-      <Divider />
       {loading ? <Loader /> : <Content>{renderDataList(listingType === PType.likes ? likesData : shortlistedData)}</Content>}
       <BottomFooter />
     </AppLayout>
@@ -91,7 +90,9 @@ const renderDataList=(data:Array<IShortList>)=>{
 
 const shortListcard = (data:IShortList) => {
   return (
-    <Card key={data.id} loading={data?false:true} style={{ margin: '20px', padding: 0,marginBottom:'2rem' }} className="shortlist-box">
+    <Card key={data.id} loading={data?false:true} 
+    style={{ margin: '20px', padding: 0,marginBottom:'2rem' }}
+     className="shortlist-box">
       <div className="shortlist-card">
         <div className="shortlist-card-left">
           <img
@@ -129,12 +130,12 @@ const shortListcard = (data:IShortList) => {
         danger
         style={{ position: 'absolute', bottom: '-12px', left: '-12px' }}
       >
-        R
+        <CloseOutlined />
       </Button>
       <Button
         shape="circle"
         size="middle"
-        type="link"
+        type="primary"
         style={{
           position: 'absolute',
           bottom: '-12px',
@@ -142,7 +143,7 @@ const shortListcard = (data:IShortList) => {
           borderColor: colors['primary-color']
         }}
       >
-        C
+        <PhoneOutlined />
       </Button>
     </Card>
   );

@@ -6,7 +6,7 @@ import { HeaderSkelaton } from '../../home/Header';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { Link, useHistory } from 'react-router-dom';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, ArrowLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { colors } from '@constants/general';
 
 const { Content } = Layout;
@@ -62,7 +62,14 @@ const UserProfile = (props: any) => {
 
   return (
     <AppLayout>
-      <TopHeader />
+      <ProfileTopHeader
+        rightButton={
+          <>
+            <ShareAltOutlined /> Share{' '}
+          </>
+        }
+        rightButtonColor="#3498DB"
+      />
       <Content>
         <Row gutter={16} style={{ margin: '20px' }}>
           <SortableList items={photos} onSortEnd={onSortEnd} />
@@ -80,7 +87,9 @@ const UserProfile = (props: any) => {
               dataSource={listdata}
               renderItem={item => (
                 <List.Item>
-                  <Link to={item.link}>{item.name}</Link>
+                  <Link to={item.link}>
+                    <Button type="text">{item.name}</Button>
+                  </Link>
                 </List.Item>
               )}
               className="profile-buttons"
@@ -94,16 +103,39 @@ const UserProfile = (props: any) => {
 };
 export default UserProfile;
 
-const TopHeader = (props: any) => {
+interface IProfileHeaderProps {
+  title?: string;
+  goToback?: string;
+  rightButton?: any;
+  rightButtonColor?: string;
+}
+
+export const ProfileTopHeader = (props: IProfileHeaderProps) => {
+  const history = useHistory();
+  const goBack = () => {
+    if (props.goToback) {
+      history.push(props.goToback);
+    }
+  };
   return (
     <HeaderSkelaton>
       <Row>
         <Col span={16}>
-          <div className="user-name-tile">
-            <h3>Profile Settings</h3>
-          </div>
+          <Button type="link" className="user-name-tile" onClick={goBack}>
+            {props.goToback && <ArrowLeftOutlined />} <h3>{props.title || 'Profile Settings'}</h3>
+          </Button>
         </Col>
-        <Col className="right-menu-icon" span={8} />
+        <Col className="right-menu-icon" span={8}>
+          {props.rightButton && (
+            <Button
+              type="link"
+              style={{ color: props.rightButtonColor || colors['black-color'] }}
+              size="large"
+            >
+              {props.rightButton}
+            </Button>
+          )}
+        </Col>
       </Row>
     </HeaderSkelaton>
   );
@@ -147,8 +179,8 @@ const SortableItem = SortableElement(({ value }: any) => {
 });
 
 const listdata = [
-  { name: 'Profile', link: '/profile' },
-  { name: 'User Profile', link: '/user-profile' },
+  { name: 'Profile', link: '/user/detail' },
+  { name: 'Profile Users ', link: '/user-profile' },
   { name: 'Preference', link: '/preference' },
   { name: 'Account', link: '/accont' },
   { name: 'Help', link: '/help' }
