@@ -1,7 +1,11 @@
 import React from 'react';
 import { Card, Collapse } from 'antd';
+import { IProfile } from '../schemas/IProfile';
 
-export default function UserProfileDetail() {
+interface IProps{
+  profile?:IProfile;
+}
+export default function UserProfileDetail(props:IProps) {
   return <>
     <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 1"}} />
          
@@ -57,7 +61,6 @@ const UserImageCard=(props:any):JSX.Element=>{
     return(
       <Card
       style={{ margin: '20px' }}
-      hoverable
       loading={props.image?.url ? false :true}
       cover={
         <img

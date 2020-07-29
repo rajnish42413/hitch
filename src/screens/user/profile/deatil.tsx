@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Layout, Switch } from 'antd';
 import AppLayout from '../../../layouts/app';
 import BottomFooter from '../../home/Footer';
@@ -13,13 +13,6 @@ enum PType {
 }
 const UserDetail = (props: any) => {
   const [pageType, setPageType] = useState(PType.detail);
-
-  // const getData = async (page: number) => {
-  //   // const { data } = await axios.get<IMedia>(`http://127.0.0.1:8000/api/media?page=${page}`);
-  //   // setMedia(data);
-  // };
-
-  useEffect(() => {}, [pageType]);
 
   return (
     <AppLayout>

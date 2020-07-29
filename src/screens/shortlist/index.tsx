@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Layout, Row, Switch } from 'antd';
+import { Button, Card, Col, Dropdown, Layout, Row, Switch,Menu } from 'antd';
 import AppLayout from '../../layouts/app';
 import BottomFooter from '../home/Footer';
 import { HeaderSkelaton } from '../home/Header';
-import Icon ,{PhoneOutlined ,CloseOutlined} from '@ant-design/icons';
+import Icon ,{PhoneOutlined ,PhoneFilled,CloseOutlined ,HeartOutlined} from '@ant-design/icons';
 import { colors } from '@constants/general';
 import Axios from 'axios';
 import Loader from '../loader/Loader';
+import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 const MenuIcon = (props: any) => <Icon component={MenuSvg} {...props} />;
@@ -17,7 +18,6 @@ const Shortlist = (props: any) => {
   const [likesData, setLikesData] = useState([] as Array<IShortList>);
   const [loading, setLoading] = useState(true);
   const [listingType, setListingType] = useState(PType.shortlist);
-
 
   const getShortlisted = async () => {
     setLoading(true);
@@ -32,7 +32,6 @@ const Shortlist = (props: any) => {
     setLikesData(data);
     setLoading(false);
   };
-
 
   useEffect(() => {
   if(listingType === PType.shortlist)  getShortlisted();
@@ -49,7 +48,7 @@ const Shortlist = (props: any) => {
           style={{display:"block",margin:'1rem'}}
           onChange={()=>setListingType(listingType===PType.shortlist ? PType.likes:PType.shortlist)}
         /> 
-      {loading ? <Loader /> : <Content>{renderDataList(listingType === PType.likes ? likesData : shortlistedData)}</Content>}
+      {loading ? <Loader /> : <Content>{renderDataList(listingType === PType.likes ? likesData : shortlistedData ,listingType)}</Content>}
       <BottomFooter />
     </AppLayout>
   );
@@ -66,44 +65,36 @@ const TopHeader = (props: any) => {
           </div>
         </Col>
         <Col className="right-menu-icon" span={8}>
-          <Button type="text">
-            <MenuIcon />
-          </Button>
+           <Dropdown overlay={filterMenu} trigger={['click']} placement="bottomRight" >
+              <span onClick={e => e.preventDefault()}><MenuIcon /> </span>
+          </Dropdown>
         </Col>
       </Row>
     </HeaderSkelaton>
   );
 };
 
-const MenuSvg = () => (
-  <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M0 16H8V13.3333H0V16ZM0 0V2.66667H24V0H0ZM0 9.33333H16V6.66667H0V9.33333Z"
-      fill="black"
-    />
-  </svg>
-);
 
-const renderDataList=(data:Array<IShortList>)=>{
-   return data?.map((item:IShortList,i:number)=>shortListcard(item));
-}
 
-const shortListcard = (data:IShortList) => {
+const shortListcard = (data:IShortList,listType:PType) => {
   return (
     <Card key={data.id} loading={data?false:true} 
     style={{ margin: '20px', padding: 0,marginBottom:'2rem' }}
      className="shortlist-box">
       <div className="shortlist-card">
         <div className="shortlist-card-left">
-          <img
+          <Link to={listType === PType.shortlist ? `/shortlist/user/${data.id}` :`/likes/user/${data.id}`}>
+            <img
             alt={'hello caption here'}
             src={'https://source.unsplash.com/900x900/?indian,girl,model'}
           />
+          </Link>
           <div>Selected by {'Father'}</div>
         </div>
         <div className="shortlist-card-right">
           <div>
-            <h3>{data.name}</h3>
+          <Link to={listType === PType.shortlist ? "/shortlist/user/1" :"/likes/user/1"}>
+            <h3>{data.name}</h3></Link>
             <span>2 day ago</span>
           </div>
           <div>
@@ -124,27 +115,122 @@ const shortListcard = (data:IShortList) => {
           </div>
         </div>
       </div>
+      {listType === PType.shortlist && <>
       <Button
         shape="circle"
         size="middle"
+        className="button-shortlist-and-likes"
         danger
         style={{ position: 'absolute', bottom: '-12px', left: '-12px' }}
       >
         <CloseOutlined />
       </Button>
+   
+
+      <Dropdown overlay={callMenu} trigger={['click']} key={data.id} placement="bottomRight" >
       <Button
         shape="circle"
         size="middle"
-        type="primary"
+        type="link"
+        className="button-shortlist-and-likes"
         style={{
           position: 'absolute',
           bottom: '-12px',
           right: '-12px',
           borderColor: colors['primary-color']
         }}
+        onClick={e => e.preventDefault()}
       >
         <PhoneOutlined />
       </Button>
+      </Dropdown>
+      </>}
+
+      {listType === PType.likes && <>
+      <Button
+        shape="circle"
+        size="middle"
+        danger
+        style={{ position: 'absolute', bottom: '-12px', left: '-12px' }}
+        className="button-shortlist-and-likes"
+      >
+        <CloseOutlined />
+      </Button>
+   
+
+      <Button
+        shape="circle"
+        size="middle"
+        type="link"
+        style={{
+          position: 'absolute',
+          bottom: '-12px',
+          right: '-12px',
+        }}
+        className="button-shortlist-and-likes"
+        onClick={e => e.preventDefault()}
+      >
+        <HeartOutlined />
+      </Button>
+      </>}
     </Card>
   );
 };
+
+export const callMenu = (
+  <Menu className="filter-box">
+    <Menu.Item key="0">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Father</button>
+    </Menu.Item>
+    <Menu.Item key="1">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Mother</button>
+    </Menu.Item>
+    <Menu.Item key="2">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Sister</button>
+    </Menu.Item>
+    <Menu.Item key="3">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Brother</button>
+    </Menu.Item>
+    <Menu.Item key="4">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Guardian</button>
+    </Menu.Item>
+    <Menu.Item key="5">
+      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Rajnish</button>
+    </Menu.Item>
+  </Menu>
+);
+
+const filterMenu = (
+  <Menu className="filter-box">
+    <Menu.Item key="0">
+      <button  className="text-center">By Date</button>
+    </Menu.Item>
+    <Menu.Item key="1">
+      <button  className="text-center">By Age</button>
+    </Menu.Item>
+    <Menu.Item key="2">
+      <button  className="text-center">By Height</button>
+    </Menu.Item>
+    <Menu.Item key="3">
+      <button  className="text-center">By Community</button>
+    </Menu.Item>
+    <Menu.Item key="4">
+      <button  className="text-center">By Location</button>
+    </Menu.Item>
+  </Menu>
+);
+
+
+const MenuSvg = () => (
+  <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0 16H8V13.3333H0V16ZM0 0V2.66667H24V0H0ZM0 9.33333H16V6.66667H0V9.33333Z"
+      fill="black"
+    />
+  </svg>
+);
+
+const renderDataList=(data:Array<IShortList> ,listingType :PType )=>{
+   return data?.map((item:IShortList,i:number)=>shortListcard(item,listingType ));
+}
+

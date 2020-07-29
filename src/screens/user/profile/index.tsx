@@ -182,7 +182,7 @@ const listdata = [
   { name: 'Profile', link: '/user/detail' },
   { name: 'Profile Users ', link: '/user-profile' },
   { name: 'Preference', link: '/preference' },
-  { name: 'Account', link: '/accont' },
+  { name: 'Account', link: '/account' },
   { name: 'Help', link: '/help' }
 ];
 

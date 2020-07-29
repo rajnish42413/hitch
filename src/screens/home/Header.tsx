@@ -2,24 +2,28 @@ import React, { useState } from 'react';
 import { Row, Col, Modal, Button, Layout } from 'antd';
 import Icon from '@ant-design/icons';
 import './Home.less';
+import { IProfile } from '../../schemas/IProfile';
 
 const MenuIcon = (props: any) => <Icon component={MenuSvg} {...props} />;
-
-const TopHeader = (props: any) => {
+interface IProps {
+  profile: IProfile;
+}
+const TopHeader = (props: IProps) => {
   const [visible, setVisible] = useState(false);
   const handleCancel = (e: any) => {
     setVisible(false);
   };
+  const profile = props.profile;
   return (
     <>
       <HeaderSkelaton>
         <Row>
-          <Col span={16}>
+          <Col span={20}>
             <div className="user-name-tile">
-              <h3>Rajnish Singh</h3>
+              <h3>{profile && profile.name?.substring(1,20)}</h3>
             </div>
           </Col>
-          <Col className="right-menu-icon" span={8}>
+          <Col className="right-menu-icon" span={4}>
             <Button type="text" onClick={() => setVisible(true)}>
               <MenuIcon />
             </Button>

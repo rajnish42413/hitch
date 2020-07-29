@@ -1,5 +1,5 @@
 interface IShortList {
-    id: string;
+    id: number;
     createdAt: string;
     name: string;
     image: string;

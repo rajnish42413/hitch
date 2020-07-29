@@ -1,85 +1,69 @@
-import React, { useEffect } from 'react';
-import { Card, Layout, Button, Collapse } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Layout, Button } from 'antd';
 import AppLayout from '../../layouts/app';
 import './Home.less';
-import { LeftOutlined, RightOutlined ,PlusOutlined} from '@ant-design/icons';
+import { LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 import { colors } from '@constants/general';
 import BottomFooter from './Footer';
 import TopHeader from './Header';
+import UserProfileDetail from '../../components/UserProfileDetail';
+import Axios from 'axios';
+import { IProfile } from '../../schemas/IProfile';
+import Loader from '../loader/Loader';
 
 const { Content } = Layout;
-const { Panel } = Collapse;
 
 const Home = (props: any) => {
+  const [list, setlist] = useState([] as Array<IProfile>);
+  const [loading, setloading] = useState(true);
+  const [current, setCurrent] = useState(0);
 
-  const getData = async (page: number) => {
-    // const { data } = await axios.get<IMedia>(`http://127.0.0.1:8000/api/media?page=${page}`);
-    // setMedia(data);
+  const getData = async () => {
+    setloading(true);
+    const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shaadi`);
+    if(data?.length) setlist(data);
+    setloading(false);
   };
 
   useEffect(() => {
-    getData(1);
+    getData();
   }, []);
+
+  const onNext =()=>{
+    setCurrent(nextItem(current,list.length));
+  }
+
+  const onPrev =()=>{
+    setCurrent(prevItem(current,list.length));
+  }
 
   return (
     <AppLayout>
-      <TopHeader />
-      <UserPagination />
-       <Content>
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 1"}} />
-         
-         <UserDetailCard 
-           collapseData={<>
-                    <div className="span">Maritial_status</div>
-                    <div className="span">Maritial_status</div>
-                    <div className="span w-100">Maritial_status</div>
-                  </>}>
-           <div className="span">21 yrs</div>
-           <div className="span">X  X</div>
-           <div className="span">created by fater</div>
-           <div className="span">Sun Singh</div>
-         </UserDetailCard>
-
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 2"}} />
-
-         <UserDetailCard >
-           <p className="py-2">In publishing and graphic design, Lorem ipsum is a placeholder text commonly 
-             used to demonstrate the visual form of a document or a typeface without relying on meaningful content</p>
-         </UserDetailCard>
-
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 3"}} />
-
-         <UserDetailCard>
-           <div className="span">Community</div>
-           <div className="span">Location</div>
-         </UserDetailCard>
-
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 4"}} />
-
-         <UserDetailCard 
-         collapseData={<>
-          <div className="span">Maritial_status</div>
-          <div className="span">Maritial_status</div>
-          <div className="span w-100">Maritial_status</div>
-        </>}>
-           <div className="span">Workplace</div>
-           <div className="span">Job_title</div>
-           <div className="span">Edu Level</div>
-           <div className="span">College</div>
-         </UserDetailCard>
-
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 5"}} />
-         <UserImageCard image={{url:"https://source.unsplash.com/900x900/?indian,girl,model",caption:"Image Caption 6"}} />
-       </Content>
-        <Button shape="circle" size="large" icon={<PlusOutlined/>} className="shortlist-button" type="primary"></Button>
+      <TopHeader profile={list[current]} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <UserPagination onNext={onNext} onPrevous={onPrev} />
+          <Content>
+            <UserProfileDetail profile={list[current]}/>
+          </Content>
+          <Button
+            shape="circle"
+            size="large"
+            icon={<PlusOutlined />}
+            className="shortlist-button"
+            type="primary"
+          />
+        </>
+      )}
       <BottomFooter />
     </AppLayout>
   );
 };
 export default Home;
 
-
-const UserPagination = (props:any) => {
+const UserPagination = (props: any) => {
   return (
     <div className="user-pagination">
       <Button
@@ -87,6 +71,7 @@ const UserPagination = (props:any) => {
         icon={<LeftOutlined style={{ color: colors['white-color'] }} />}
         size="large"
         style={{ backgroundColor: '#C1C1C1' }}
+        onClick={props.onPrevous}
       />
       <div className="suggestion-box">
         <h3>Suggestion here</h3>
@@ -96,43 +81,25 @@ const UserPagination = (props:any) => {
         icon={<RightOutlined style={{ color: colors['white-color'] }} />}
         size="large"
         style={{ backgroundColor: '#C1C1C1' }}
+        onClick={props.onNext}
       />
     </div>
   );
 };
 
-const UserImageCard=(props:any):JSX.Element=>{
-  
-  if(!props?.image?.url) return <></>
-  return(
-    <Card
-    style={{ margin: '20px' }}
-    loading={props.image?.url ? false :true}
-    cover={
-      <img
-        alt={'hello caption here'}
-        src={props.image?.url}
-        className="user-image-card"
-      />
-    }
-  >
-    <Card.Meta title={props.image?.caption ?? " "} />
-  </Card>
-  )
+
+function nextItem(i:number,len:number) {
+  if (i >= len) { 
+    return len -1;
+}
+  i = i + 1;
+  return i; 
 }
 
-const UserDetailCard =(props:any) =>{
-  return(
-    <Card  style={{ margin: '20px' }} className="user-detail-card" loading={props.loading ?? false}>
-     {props.children}
-     {props.collapseData && 
-
-      <Collapse defaultActiveKey={[]} className="user-card-collapase" >
-         <Panel header=" " key="1">
-           {props.collapseData}
-         </Panel>
-      </Collapse>
-     }
-    </Card>
-  )
+function prevItem(i:number,len:number) {
+  if (i === 0) { 
+      i = 1;
+  }
+  i = i - 1;
+  return i; 
 }

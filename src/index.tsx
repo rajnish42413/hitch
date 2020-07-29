@@ -24,6 +24,11 @@ import Shortlist from './screens/shortlist/index';
 import UserProfile from './screens/user/profile/index';
 import UserImageManage from './screens/user/profile/imageManage';
 import UserDetail from './screens/user/profile/deatil';
+import Preference from './screens/user/profile/preference';
+import CandidateProfile from './screens/shortlist/candidateProfile';
+import CandidateLikeProfile from './screens/shortlist/candidateLikeProfile';
+import FAQ from './screens/contact/faq';
+import UserAccount from './screens/user/account';
 
 
 // Axios.defaults.headers.common['Accept'] = 'application/json';
@@ -61,10 +66,17 @@ ReactDOM.render(
       <Route  path="/profile/image/:id" component={UserImageManage} />
       <Route  path="/profile" component={UserProfile} />
       <Route  path="/user/detail" component={UserDetail} />
+
       <Route  path="/shortlisted" component={Shortlist} />
+      <Route  path="/shortlist/user/:id" component={CandidateProfile} />
+
+      <Route  path="/preference" component={Preference} />
+      <Route  path="/likes/user/:id" component={CandidateLikeProfile} />
+      <Route  path="/account" component={UserAccount} />
 
 
       <Route path="/login" component={Login} />
+      <Route  path="/help" component={FAQ} />
       <Route path="/media" component={Media} />
     </Switch>
   </Router>,

@@ -34,7 +34,7 @@
     align-self: center;
     display: flex;
     flex-direction: row-reverse;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
   }
 }
 .home-footer {
@@ -201,9 +201,79 @@
   height: 100%;
   width: 100%;
 }
+
+.profile-buttons {
+  margin: 20px 0 !important;
+  .ant-list-item a {
+    color: #000;
+    font-weight: 300;
+    letter-spacing: -0.333333px;
+  }
+}
+
+.form-edit-label {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  span {
+    color: #c1c1c1;
+  }
+}
+
+.filter-box {
+  li {
+    border-bottom: 1px solid #c1c1c1;
+    padding: 0;
+    button {
+      background-color: #fff;
+      color: #000;
+      display: block;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 1.25px;
+      padding: 1rem;
+      text-align: left;
+      width: 100%;
+    }
+    button.text-center {
+      text-align: center;
+    }
+  }
+  li:last-child {
+    border-bottom: none;
+  }
+}
+
+.button-shortlist-and-likes {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 10px rgba(0, 0, 0, 0.12),
+    0 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+.detail-likes-button-group {
+  bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  button {
+    margin-bottom: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .shortlist-button {
     right: 1rem;
+  }
+  .detail-likes-button-group {
+    flex-direction: row;
+    width: 100%;
+    button {
+      margin: 1rem;
+    }
   }
 }
 @media (max-width: 480px) {
@@ -235,14 +305,5 @@
         }
       }
     }
-  }
-}
-
-.profile-buttons {
-  margin: 20px 0 !important;
-  .ant-list-item a {
-    color: #000;
-    font-weight: 300;
-    letter-spacing: -0.333333px;
   }
 }

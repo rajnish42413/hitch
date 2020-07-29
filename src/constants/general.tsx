@@ -3,7 +3,8 @@ export const colors = {
   'white-color': '#FFFFFF',
   'black-color': '#000000',
   'border-color': '#C1C1C1',
-  'mutted-color': '#BDC3C7'
+  'mutted-color': '#BDC3C7',
+  'danger-color': '#E74C3C'
 };
 
 export const googleAPI = 'AIzaSyCAx3M9n9umwVD4PrHduYdTDc2FLf0c94o';

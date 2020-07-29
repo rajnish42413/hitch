@@ -185,7 +185,7 @@ export default function CreateUserStepTwo() {
         >
           <Select placeholder="Select height">
             {Array.apply(0, Array(96)).map((x, i) => (
-              <Select.Option value={1 + 120} key={i}>
+              <Select.Option value={i + 120} key={i}>
                 {i + 120} cm
               </Select.Option>
             ))}
