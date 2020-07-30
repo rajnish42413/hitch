@@ -15,6 +15,7 @@ import Icon, {
   RightOutlined
 } from '@ant-design/icons';
 import Chat from './chat';
+import Loader from '../loader/Loader';
 
 const { Content } = Layout;
 enum PType {
@@ -67,7 +68,8 @@ export default function CandidateLikeProfile(props: any) {
         style={{ display: 'block', margin: '1rem' }}
         onChange={() => setPageType(pageType === PType.chat ? PType.profile : PType.chat)}
       />
-      {pageType === PType.profile ? (
+      {loading ? <Loader /> :
+      pageType === PType.profile ? (
         <Content>
           <UserPagination onNext={onNext} onPrevous={onPrev} />
           <UserProfileDetail />
