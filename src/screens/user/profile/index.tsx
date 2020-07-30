@@ -180,7 +180,7 @@ const SortableItem = SortableElement(({ value }: any) => {
 
 const listdata = [
   { name: 'Profile', link: '/user/detail' },
-  { name: 'Profile Users ', link: '/user-profile' },
+  { name: 'Profile Users ', link: '/profile-users' },
   { name: 'Preference', link: '/preference' },
   { name: 'Account', link: '/account' },
   { name: 'Help', link: '/help' }

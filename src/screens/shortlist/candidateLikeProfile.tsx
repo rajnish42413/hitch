@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Dropdown, Layout, Row, Menu, Button } from 'antd';
+import { Col, Dropdown, Layout, Row, Menu, Button, Switch } from 'antd';
 import AppLayout from '../../layouts/app';
 import BottomFooter from '../home/Footer';
 import UserProfileDetail from '../../components/UserProfileDetail';
@@ -14,14 +14,19 @@ import Icon, {
   LeftOutlined,
   RightOutlined
 } from '@ant-design/icons';
-import Loader from '../loader/Loader';
+import Chat from './chat';
 
 const { Content } = Layout;
+enum PType {
+  'chat',
+  'profile'
+}
 
 export default function CandidateLikeProfile(props: any) {
   const [list, setlist] = useState([] as Array<IShortList>);
   const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
+  const [pageType, setPageType] = useState(PType.profile);
 
   const {
     match: { params }
@@ -55,11 +60,16 @@ export default function CandidateLikeProfile(props: any) {
   return (
     <AppLayout>
       <TopHeader profile={list[current]} />
-      <UserPagination onNext={onNext} onPrevous={onPrev} />
-      {loading ? (
-        <Loader />
-      ) : (
+      <Switch
+        checkedChildren="PROFILE"
+        unCheckedChildren="CHAT"
+        defaultChecked
+        style={{ display: 'block', margin: '1rem' }}
+        onChange={() => setPageType(pageType === PType.chat ? PType.profile : PType.chat)}
+      />
+      {pageType === PType.profile ? (
         <Content>
+          <UserPagination onNext={onNext} onPrevous={onPrev} />
           <UserProfileDetail />
           <div className="detail-likes-button-group">
             <Button shape="circle" size="large" danger className="button-shortlist-and-likes">
@@ -77,6 +87,8 @@ export default function CandidateLikeProfile(props: any) {
             </Button>
           </div>
         </Content>
+      ) : (
+        <Chat />
       )}
       <BottomFooter />
     </AppLayout>
@@ -93,7 +105,7 @@ const TopHeader = (props: IHeaderProps) => {
         <Col span={16}>
           <Link to="/shortlisted">
             <Button type="link" className="user-name-tile">
-              <ArrowLeftOutlined /> <h3>{props.profile.name || ' '}</h3>
+              <ArrowLeftOutlined /> <h3>{props.profile && props.profile.name}</h3>
             </Button>
           </Link>
         </Col>

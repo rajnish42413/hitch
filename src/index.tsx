@@ -29,6 +29,7 @@ import CandidateProfile from './screens/shortlist/candidateProfile';
 import CandidateLikeProfile from './screens/shortlist/candidateLikeProfile';
 import FAQ from './screens/contact/faq';
 import UserAccount from './screens/user/account';
+import ProfileUsers from './screens/user/profileUser';
 
 
 // Axios.defaults.headers.common['Accept'] = 'application/json';
@@ -66,6 +67,8 @@ ReactDOM.render(
       <Route  path="/profile/image/:id" component={UserImageManage} />
       <Route  path="/profile" component={UserProfile} />
       <Route  path="/user/detail" component={UserDetail} />
+      <Route  path="/profile-users" component={ProfileUsers} />
+
 
       <Route  path="/shortlisted" component={Shortlist} />
       <Route  path="/shortlist/user/:id" component={CandidateProfile} />

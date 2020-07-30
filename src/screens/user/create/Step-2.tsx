@@ -6,9 +6,8 @@ import {
   Radio,
   Typography,
   Modal,
-  Steps,
   Select,
-  AutoComplete
+  AutoComplete, Slider
 } from 'antd';
 import axios from 'axios';
 import {
@@ -22,6 +21,7 @@ import { useHistory } from 'react-router-dom';
 import AuthLayout from '../../../layouts/auth';
 import { occupations } from '../../../constants/occupation.json';
 import { RightOutlined } from '@ant-design/icons';
+import CustomStepper from '../../../components/CustomStepper';
 
 const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
@@ -106,13 +106,8 @@ export default function CreateUserStepTwo() {
 
   return (
     <AuthLayout>
-      <Steps current={1} direction="horizontal" className="newuser-steps">
-        <Steps.Step title="" description="" />
-        <Steps.Step />
-        <Steps.Step />
-        <Steps.Step />
-      </Steps>
-      <br />
+       <CustomStepper totalSteps={4} active={1} />
+
       <br />
 
       <Form
@@ -183,21 +178,8 @@ export default function CreateUserStepTwo() {
           name="height"
           rules={[{ required: true, message: 'Please input your height in cm!' }]}
         >
-          <Select placeholder="Select height">
-            {Array.apply(0, Array(96)).map((x, i) => (
-              <Select.Option value={i + 120} key={i}>
-                {i + 120} cm
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        {/* <Switch
-          checkedChildren="Visible"
-          unCheckedChildren={<LockOutlined />}
-          defaultChecked
-          className="form-switch"
-          disabled={true}
-        /> */}
+              <Slider min={4} max={7} tooltipVisible tipFormatter={formatter} step={0.1} />
+            </Form.Item>
         <br />
 
         <Typography>
@@ -355,3 +337,7 @@ const optionListFromCrushbase = (data:any) =>{
  return result ?? [];
 }
 
+
+const formatter = (value: any) => {
+  return `${value} ft`;
+};

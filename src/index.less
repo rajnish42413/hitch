@@ -10,25 +10,11 @@
   width: 100%;
 }
 
-.ant-card {
-  border-radius: 6px !important;
-}
-
 .card-p0 {
   .ant-card-body {
     padding: 0 !important;
   }
 }
-
-.ant-btn-lg {
-  font-weight: bold !important;
-  height: 50px !important;
-}
-.ant-btn-circle.ant-btn-lg,
-.ant-btn-circle-outline.ant-btn-lg {
-  min-width: 50px !important;
-}
-
 .loaded:not(.has-error) {
   animation: loaded 300ms ease-in-out;
 }
@@ -40,6 +26,29 @@
     font-style: normal;
     font-weight: bold;
     letter-spacing: 0.05em;
+  }
+}
+
+.steps {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  ul {
+    display: flex;
+    flex-direction: row;
+    padding-inline-start: 0;
+    li {
+      background-color: #c1c1c1;
+      border-radius: 3px;
+      height: 6px;
+      list-style-type: none;
+      margin: 10px;
+      width: 30px;
+    }
+    li.active {
+      background: #1abc9c;
+    }
   }
 }
 

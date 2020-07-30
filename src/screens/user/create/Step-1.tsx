@@ -1,8 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Steps, Select } from 'antd';
+import { Form, Input, Button, Radio, Typography, DatePicker, Modal, Select, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { RightOutlined } from '@ant-design/icons';
 import AuthLayout from '../../../layouts/auth';
+import moment from 'moment';
+import CustomStepper from '../../../components/CustomStepper';
 
 const { confirm } = Modal;
 const { Title, Paragraph } = Typography;
@@ -23,7 +25,13 @@ export default function CreateUserStepOne() {
       "gender": values.gender ?? 'male',
       "date_of_birth": values.dob?.format('DD-MM-YYYY')
     };
-    console.log(user);
+    const age = getAge(user.date_of_birth) || 0;
+
+    if(age< 18) {
+      message.error("Age must be greater than 18 year");
+      return ;
+    }
+
     if(user) showConfirm(user);
     // const {data} =  await axios.post(`/register`, user);
     // console.log(data);
@@ -48,6 +56,10 @@ export default function CreateUserStepOne() {
       },
     });
   }
+  const onSelectDate=(date: any, dateString: string)=>{
+    console.log(dateString);
+    console.log(getAge(dateString))
+  }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -55,13 +67,9 @@ export default function CreateUserStepOne() {
 
   return (
     <AuthLayout>
-        <Steps current={0} direction="horizontal" className="newuser-steps">
-            <Steps.Step title="" description="" />
-            <Steps.Step  />
-            <Steps.Step  />
-            <Steps.Step  />
-       </Steps>
-       <br/><br/>
+        <CustomStepper totalSteps={4} active={0} />
+
+       <br/>
           <Form
             {...layout}
             name="basic"
@@ -111,7 +119,7 @@ export default function CreateUserStepOne() {
               name="dob"
               rules={[{ required: true, message: 'Please Select your date of birth!' }]}
             >
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: '100%' }} showToday={false} onChange={onSelectDate}  disabledDate={disabledDate}/>
             </Form.Item>
 
             <br />
@@ -146,7 +154,7 @@ export default function CreateUserStepOne() {
 }
 
 
-function getAge(dateString:string) 
+function getAge(dateString:string):number
 {
     var today = new Date();
     var birthDate = new Date(dateString);
@@ -156,5 +164,9 @@ function getAge(dateString:string)
     {
         age--;
     }
-    return age;
+    return +(age);
+}
+
+function disabledDate(current:any) {
+  return current && current > moment().endOf('day');
 }

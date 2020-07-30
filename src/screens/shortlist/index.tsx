@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Dropdown, Layout, Row, Switch,Menu } from 'antd';
+import { Button, Card, Col, Dropdown, Layout, Row, Switch, Menu } from 'antd';
 import AppLayout from '../../layouts/app';
 import BottomFooter from '../home/Footer';
 import { HeaderSkelaton } from '../home/Header';
@@ -78,9 +78,12 @@ const TopHeader = (props: any) => {
 
 const shortListcard = (data:IShortList,listType:PType) => {
   return (
-    <Card key={data.id} loading={data?false:true} 
-    style={{ margin: '20px', padding: 0,marginBottom:'2rem' }}
-     className="shortlist-box">
+      <Card key={data.id} loading={data?false:true} 
+       style={{ margin: '20px', padding: 0,marginBottom:'2rem' }}
+       className="shortlist-box">
+
+       {listType === PType.shortlist && <div className="list-badge">New message <span>9</span></div>}
+
       <div className="shortlist-card">
         <div className="shortlist-card-left">
           <Link to={listType === PType.shortlist ? `/shortlist/user/${data.id}` :`/likes/user/${data.id}`}>

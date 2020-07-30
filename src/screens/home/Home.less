@@ -5,6 +5,10 @@
   margin-top: 2rem;
 }
 
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
 .my-2 {
   margin-bottom: 2rem;
   margin-top: 2rem;
@@ -117,28 +121,33 @@
 
   .user-card-collapase {
     align-items: center;
-    align-items: center;
     background-color: #fff;
     border: none;
     border-radius: 0;
     display: flex;
     width: 100%;
+    .ant-collapse-content {
+      border: none;
+    }
     .ant-collapse-content-box {
       align-items: center;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      padding: 0;
     }
     .ant-collapse-item {
       border: none !important;
       width: 100%;
     }
     .ant-collapse-header {
-      border: none !important;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
       .ant-collapse-arrow {
         bottom: 20px;
         left: 45%;
-        transform: rotate(90deg);
       }
     }
   }
@@ -254,6 +263,7 @@
 }
 
 .detail-likes-button-group {
+  background-color: #fff;
   bottom: 5rem;
   display: flex;
   flex-direction: column;
@@ -263,7 +273,30 @@
     margin-bottom: 1rem;
   }
 }
-
+.list-badge {
+  align-items: center;
+  background-color: #959595;
+  border-radius: 10px;
+  color: #fff;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: normal;
+  height: 1.3rem;
+  letter-spacing: -0.333333px;
+  padding-left: 0.7rem;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: -10px;
+  span {
+    background: red;
+    border-radius: 100%;
+    left: 3px;
+    padding: 3px 7px;
+    position: relative;
+  }
+}
 @media (max-width: 768px) {
   .shortlist-button {
     right: 1rem;

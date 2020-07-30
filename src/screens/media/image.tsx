@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Typography, Button, Steps } from 'antd';
+import { Row, Col, Typography, Button } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import './media.scss';
 import { PlusOutlined } from '@ant-design/icons';
@@ -8,6 +8,7 @@ import { RightOutlined } from '@ant-design/icons';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { Link, useHistory } from 'react-router-dom';
+import CustomStepper from '../../components/CustomStepper';
 
 const { Title, Paragraph } = Typography;
 
@@ -53,18 +54,7 @@ const UserImage = (props: any) => {
 
   return (
     <AuthLayout>
-      <Steps
-        current={2}
-        direction="horizontal"
-        className="newuser-steps"
-        style={{ marginBottom: '3rem' }}
-      >
-        <Steps.Step title="" description="" />
-        <Steps.Step />
-        <Steps.Step />
-        <Steps.Step />
-      </Steps>
-
+      <CustomStepper totalSteps={4} active={2} /> <br />
       <div>
         <Typography>
           <Title level={3}>Pair your photos with captions </Title>
@@ -72,7 +62,6 @@ const UserImage = (props: any) => {
         </Typography>
       </div>
       <SortableList items={photos} onSortEnd={onSortEnd} />
-
       <Row gutter={16} className="mt-1">
         <Col span={24}>
           <Typography className="image-upload-hint">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Collapse } from 'antd';
 import { IProfile } from '../schemas/IProfile';
-
+import { CaretRightOutlined } from '@ant-design/icons';
 interface IProps{
   profile?:IProfile;
 }
@@ -78,11 +78,11 @@ const UserImageCard=(props:any):JSX.Element=>{
   
   const UserDetailCard =(props:any) =>{
     return(
-      <Card  style={{ margin: '20px' }} className="user-detail-card" loading={props.loading ?? false}>
+      <Card  style={{ margin: '20px',paddingBottom:'1rem' }} className="user-detail-card" loading={props.loading ?? false}>
        {props.children}
        {props.collapseData && 
-  
-        <Collapse defaultActiveKey={[]} className="user-card-collapase" >
+        <Collapse defaultActiveKey={[]} className="user-card-collapase" 
+          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? -90 : 90} />}>
            <Collapse.Panel header=" " key="1">
              {props.collapseData}
            </Collapse.Panel>

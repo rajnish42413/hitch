@@ -38,9 +38,14 @@ module.exports = override(
       '@text-color': 'rgba(0, 0, 0, .65)',
       '@text-color-secondary ': 'rgba(0, 0, 0, .45)',
       '@disabled-color': 'rgba(0, 0, 0, .25)',
-      '@border-radius-base': '4px',
+      '@border-radius-base': '6px',
       '@border-color-base': '#d9d9d9',
       '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)',
+      '@input-height-lg' :'50px',
+      '@input-height-base' :'50px',
+      '@btn-height-base':'50px',
+      '@btn-height-lg': '50px',
+      '@select-single-item-height-lg':'50px'
     },
   }),
 );

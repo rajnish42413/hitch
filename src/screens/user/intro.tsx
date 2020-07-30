@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Form, Input, message, Steps, Typography } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import { useHistory } from 'react-router';
+import CustomStepper from '../../components/CustomStepper';
 
 const UserIntro = (props: any) => {
   const history = useHistory();
@@ -15,18 +16,7 @@ const UserIntro = (props: any) => {
 
   return (
     <AuthLayout>
-      <Steps
-        current={3}
-        direction="horizontal"
-        className="newuser-steps"
-        style={{ marginBottom: '3rem' }}
-      >
-        <Steps.Step title="" description="" />
-        <Steps.Step />
-        <Steps.Step />
-        <Steps.Step />
-      </Steps>
-
+      <CustomStepper totalSteps={4} active={3} /> <br />
       <Form
         name="basic"
         initialValues={{ remember: true }}

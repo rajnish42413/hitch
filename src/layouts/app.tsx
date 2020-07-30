@@ -18,7 +18,7 @@ export default function AppLayout(props: Iprops) {
           lg={14}
           xl={16}
           style={{
-            minHeight: '100vh',
+            minHeight: '85vh',
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: colors['white-color'],
