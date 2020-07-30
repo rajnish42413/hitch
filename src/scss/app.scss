@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Trochut&display=swap');
+
+$bgcolor: #fff;
+$textcolor:  rgba(0,0,0,.85);
+$fontsize: 1rem;
+$themecolor: #FF9800;
+$fontfamily : 'Comfortaa', cursive;
+$fontfamily-1 :'Trochut', cursive;;
+
+/* Using SCSS variables to store breakpoints */
+$breakpoint-lg: 1200px;
+$breakpoint-md: 992px;
+$breakpoint-sm: 768px;
+$breakpoint-xs: 576px;
+
+$antd-wave-shadow-color: #FF9800;
+$primary-color: #FF9800;
+
+.ant-btn-primary{
+ background-color:$themecolor;
+ border-color: $themecolor;
+ text-shadow: 0 -1px 0 rgba(255,152,0,0.19);
+ -webkit-box-shadow:0 10px 16px 0 rgba(255,152,0,0.2),0 6px 20px 0 rgba(255,152,0,0.19);
+  box-shadow:0 10px 16px 0 rgba(255,152,0,0.2),0 6px 20px 0 rgba(255,152,0,0.19);
+}
+
+.ant-btn:hover, .ant-btn:focus {
+    color: #fff;
+    background-color:$themecolor;
+    border-color: $themecolor;
+}
+
+header{
+    padding: 3rem 0;
+    text-align:center;
+    // background-image: url(https://backend-pizza.herokuapp.com/images/pizza-icons.png);
+    background-color:$themecolor;
+    h1{
+
+        color: #fff;
+        font-family: $fontfamily-1;
+        font-size: 3rem;
+
+    }
+
+     h1::before {
+       content: url(https://backend-pizza.herokuapp.com/images/pizza-slice-2.png);
+       padding-right: 1rem; 
+     }
+      h1::after {
+       content: url(https://backend-pizza.herokuapp.com/images/pizza-slice-3.png);
+       padding-left: 1rem;
+       position: relative;
+        top: 32px;
+     }
+}
+
+.ant-layout-content {
+  padding: 0 10%;
+  // background-image: url(https://backend-pizza.herokuapp.com/images/bg.png);
+  // background-repeat:no-repeat;
+  // background-size:contain;
+  // background-position:center;
+  background-color: $bgcolor;
+}
+
+
+@media (min-width: $breakpoint-lg){
+ .ant-layout-content {
+  padding: 0 10%;
+  }
+}
+
+@media (max-width: $breakpoint-lg){
+ .ant-layout-content {
+  padding: 0 5%;
+  }
+}
+
+
+@media (max-width: $breakpoint-md){
+ .ant-layout-content {
+  padding: 0 2%;
+  }
+}
+
+@media (max-width: $breakpoint-sm){
+ .ant-layout-content {
+  padding: 0 2%;
+  }
+}
+
+@media (max-width: $breakpoint-xs){
+.ant-layout-content {
+  padding: 0 .5rem;
+  }
+}
+
+
+#example {
+
+.ant-layout-footer{
+  padding: 8rem 25px; 
+  background-image: url(https://backend-pizza.herokuapp.com/images/footer.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+  background-color:$themecolor;
+  color: $bgcolor;
+  font-size: 1.2rem;
+ }
+
+}
+.ant-card-body{
+
+}
+
+.ant-card-meta-title{
+  font-family: $fontfamily-1;
+  font-size: 1.5em;
+  text-transform: capitalize;
+}
+
+.ant-card-hoverable:hover{
+  -webkit-box-shadow: 0 2px 8px $themecolor;
+   box-shadow: 0 2px 8px $themecolor;
+}
+.ant-card-hoverable:hover .ant-card-body ,.ant-card-hoverable:hover .ant-card-meta-title{
+   // background-color:$themecolor;
+   color: $themecolor;
+}
+
+.pizzamaker-box{
+   background: linear-gradient(rgba(255,152,0, 0.55), rgba(255,152,0, 0.55)),
+                rgba(255,152,0,0.55) url(https://backend-pizza.herokuapp.com/images/pizza-1.png) no-repeat center;
+   background-size: cover;
+  box-shadow:0 10px 16px 0 rgba(255,152,0,0.2),0 6px 20px 0 rgba(255,152,0,0.19) !important;
+  border-radius:10px;
+  margin: 3rem 0;
+.pizza-tittle{
+   text-align: center;
+   font-family: $fontfamily-1;
+   font-size:2em;
+   text-transform: uppercase;
+   font-weight: bold;
+ }
+ .pizzamaker-toppings{
+   background-color:#fff;
+   border-radius:0% 100% 29% 71% / 97% 6% 94% 3% ;
+   padding: 20px;
+   opacity: 0.98;
+   -webkit-box-shadow: 11px 0px 9px -2px rgba(0,0,0,0.29);
+-moz-box-shadow: 11px 0px 9px -2px rgba(0,0,0,0.29);
+box-shadow: 11px 0px 9px -2px rgba(0,0,0,0.29);
+ }
+}
+
+.topping-box{
+  margin: 1rem auto;
+  display: inline-block !important;
+  padding: 0 1.5rem;
+}
+
+.img-icon{
+  position: relative;
+  top:20px;
+ }
+ .select-size .ant-form-item-label{
+   width: 20% !important;
+ }
+// loader
+.loader{
+     width: 100%;
+     min-height: 400px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+
+.description{
+  height: 63px;
+ .ant-badge {
+  padding: 0 .5rem;
+}
+
+  .ant-badge-status-text{
+    font-size: 1em;
+    font-family: $fontfamily-1;
+    text-transform: capitalize;
+  }
+}
