@@ -1,8 +1,81 @@
-// ITCSS Configuration
-
 @import 'styles/generic';
 @import 'styles/base';
-@import 'styles/trumps';
+@import 'styles/settings';
+@import 'styles/tools';
+
+body {
+  .btn-dark {
+    background-color: #000;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .btn-text {
+    align-items: center;
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    color: #000;
+    display: flex;
+    gap: 1em;
+    padding: 0;
+  }
+  .btn-dark-text {
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+  .ant-typography {
+    h4 {
+      color: #000;
+      font-size: 21px;
+      font-style: normal;
+      font-weight: bold;
+    }
+    p {
+      font-size: 17px;
+      font-style: normal;
+      font-weight: normal;
+    }
+  }
+  .circle-icon {
+    align-items: center;
+    border: 1px solid;
+    border-radius: 100%;
+    display: flex;
+    display: inline-flex;
+    height: 40px;
+    justify-content: center;
+    margin-right: 1rem;
+    width: 40px;
+  }
+}
+.m-0 {
+  margin: 0 !important;
+}
+.mx-1 {
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
+}
+.p-0 {
+  padding: 0 !important;
+}
+.mt-4 {
+  margin-top: 4rem !important;
+}
+
+.mt-1 {
+  margin-top: 1rem !important;
+}
+.mb-1 {
+  margin-bottom: 10px !important;
+}
 
 .ant-col-16 {
   max-width: 100% !important;
@@ -15,8 +88,28 @@
     padding: 0 !important;
   }
 }
+
+.text-left {
+  text-align: left !important;
+}
+
 .loaded:not(.has-error) {
   animation: loaded 300ms ease-in-out;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-justify-start {
+  justify-content: flex-start !important;
 }
 
 .ant-typography {
@@ -61,8 +154,113 @@
   }
 }
 
+// routes progress bar styles
+
+@progress-color: #1abc9c;
+
+#nprogress .bar {
+  background: @progress-color;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px @progress-color, 0 0 5px @progress-color;
+}
+
+#nprogress .spinner-icon {
+  border-left-color: @progress-color;
+  border-top-color: @progress-color;
+}
+
+.text-danger {
+  color: #e74c3c;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.image-upload-box {
+  background: #fff;
+  border: 0.5px dashed #e74c3c;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  height: 231px;
+}
+
+.image-upload-image-box {
+  border-radius: 6px;
+  height: 231px;
+  width: 100%;
+}
+
+.image-upload-hint {
+  border: 0.5px solid #c1c1c1;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-top: 2rem;
+  padding: 0.8em 0.5rem;
+  .ant-typography {
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
+.buttom-bottom-last {
+  bottom: 1rem;
+  position: absolute;
+  width: 100%;
+}
+.upload-card {
+  .ant-card-body {
+    padding: 0;
+  }
+  input {
+    border: 0.5px solid #c1c1c1;
+    border-radius: 0 0 6px 6px;
+    box-sizing: border-box;
+    height: 45px;
+  }
+}
+
+.preview-image-card {
+  height: 70vh;
+  width: 100%;
+}
+
+.ant-upload.ant-upload-select {
+  display: block !important;
+}
+@media (max-width: 1200px) {
+  .preview-image-card {
+    height: 45vh;
+  }
+}
+@media (max-width: 768px) {
+  .preview-image-card {
+    height: 460px;
+  }
+}
+@media (max-width: 768px) {
+  .preview-image-card {
+    height: 460px;
+  }
+}
 @media (max-width: 480px) {
-  .ant-btn-lg {
-    height: 45px !important;
+  .preview-image-card {
+    height: 320px;
+  }
+  .image-upload-box {
+    height: 100px;
+  }
+  .image-upload-image-box {
+    height: 100px;
   }
 }

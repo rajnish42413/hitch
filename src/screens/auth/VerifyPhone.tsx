@@ -1,47 +1,155 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { Form, Button, Typography, Input, Statistic, Modal, message } from 'antd';
 import AuthLayout from '../../layouts/auth';
-import './Auth.scss';
-import { RightOutlined } from '@ant-design/icons';
 import { colors } from '../../constants/general';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import Axios from 'axios';
+import * as authToken from '@utils/userAuth';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { IUser } from '../../schemas/IUser';
+import { IAction, SetUser } from '@redux/actions';
+import { IAppState } from '@redux/reducers';
+import firebase from '../../firebase/config';
+import AuthFooter from '../../layouts/auth/footer';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 const { Countdown } = Statistic;
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 0 + 1000 * 30 * 3;
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
+  wrapperCol: { span: 16 },
 };
 
 const VerifyPhone = (props: any) => {
   const [form] = Form.useForm();
   const history = useHistory();
-  const [counter, setCounter] = useState(false);
+  const [counter, setCounter] = useState(true);
+  const location = useLocation();
+  const { phone } = location.state;
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [deviceToken, setDeviceToken] = useState('');
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    message.success('Verified and good to go!', 5);
+  const getToken = async () => {
+    if (firebase.messaging()) {
+      const msg = firebase.messaging();
+      msg
+        .requestPermission()
+        .then(() => {
+          return msg.getToken();
+        })
+        .then((data) => {
+          setDeviceToken(data);
+          console.log(data);
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (!phone) history.go(-1);
+    setCounter(true);
+    getToken();
+    return () => {
+      setCounter(false);
+    };
+  }, [phone, history]);
+
+  const handleRedirectToProfile = (profile: any, login_profile: any) => {
+    if (profile) {
+      Modal.confirm({
+        title: `Want to see  profile #PJ${profile}?`,
+        icon: <ExclamationCircleOutlined />,
+        content: 'Click on ok to see the profile .',
+        onOk() {
+          authToken.removeProfileRedirect();
+          history.replace(`/profiles/${profile}`);
+        },
+        onCancel() {
+          authToken.removeProfileRedirect();
+          handleLoginRedirect(login_profile);
+        },
+      });
+    } else {
+      handleLoginRedirect(login_profile);
+      return;
+    }
+  };
+
+  const handleLoginRedirect = (profile: any) => {
+    if (profile?.detail?.city && profile?.detail?.college_name) {
+      message.success('Verified and good to go!');
+      history.push('/home');
+      return;
+    }
+    message.success('Account Verified Successfully');
     history.push('/user/welcome');
+    return;
+  };
+
+  const onFinish = async (values: any) => {
+    setBtnLoading(true);
+    const { otp } = values;
+    let show = message.loading('Verifying OTP ...', 0);
+    try {
+      const { data } = await Axios.post(`login`, {
+        phone: phone,
+        otp: otp,
+        device_token: deviceToken,
+      });
+      setTimeout(show, 0);
+      const { user, token } = data;
+      const { profile } = user;
+      authToken.storeToken(token);
+      props.setUser(user);
+      const redirect_profile = authToken.getProfileRedirect();
+      handleRedirectToProfile(redirect_profile, profile);
+      return;
+    } catch (error) {
+      let otp_error = error.response?.data?.errors?.otp;
+      if (otp_error) message.warning(otp_error?.[0]);
+      setTimeout(show, 0);
+      setBtnLoading(false);
+    }
+  };
+
+  const resendOTP = async () => {
+    setBtnLoading(true);
+    let show = message.loading('Sending verification code again!', 0);
+    await Axios.post(`resend-otp`, {
+      phone: phone,
+      countryCode: location.state.countryCode,
+    });
+    setTimeout(show, 0);
+    setBtnLoading(false);
+    setCounter(true);
+    message.success('OTP send successfully');
   };
 
   function onFinishDeadLine() {
-    setCounter(true);
+    setCounter(false);
+    console.log(counter);
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  const resendOTP = () => {
-    Modal.success({
-      content: 'Sending verification code again!'
+  const confirmResendOTP = () => {
+    Modal.confirm({
+      title: 'Do you want to re-send OTP?',
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      onOk() {
+        resendOTP();
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
     });
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout header={true}>
       <Form
         {...layout}
         name="basic"
@@ -52,54 +160,73 @@ const VerifyPhone = (props: any) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <br />
+        <Typography>
+          <Title level={4}>
+            Enter OTP sent to you on <br />
+            +91-{phone}
+          </Title>
+        </Typography>
 
-        <div className="mt-5">
-          <Typography style={{ paddingLeft: '2rem' }}>
-            <Title level={4}>Enter your verification code</Title>
-            <Paragraph style={{ color: colors['mutted-color'] }}>Sent to 98XXX-XXXXX</Paragraph>
-          </Typography>
-          <br />
+        <Form.Item
+          name="otp"
+          rules={[
+            { required: true, message: 'Enter 6 digit OTP' },
+            { max: 6, min: 6, message: 'Please enter valid phone number!' },
+          ]}
+        >
+          <Input style={{ width: '100%' }} placeholder="6 digit OTP" type="number" />
+        </Form.Item>
 
-          <Form.Item
-            name="otp"
-            rules={[
-              { required: true, message: 'Enter 6 digit OTP' },
-              { max: 6, min: 6, message: 'Please enter valid phone number!' }
-            ]}
-          >
-            <Input
-              style={{ width: '100%' }}
-              placeholder="6 digit OTP"
-              maxLength={6}
-              type="number"
-            />
-          </Form.Item>
-
-          {counter ? (
-            <Button type="link" className="button-resend" onClick={resendOTP}>
+        <div className="flex-row">
+          {!counter ? (
+            <button
+              type="button"
+              className="btn-text"
+              style={{ color: colors['link-color'], fontSize: '0.9em' }}
+              onClick={confirmResendOTP}
+            >
               Resend OTP
-            </Button>
+            </button>
           ) : (
-            <Countdown title="" value={deadline} onFinish={onFinishDeadLine} className="counter" />
+            <Countdown
+              title=""
+              value={Date.now() + 1000 * 60 * 60 * 24 * 0 + 1000 * 30 * 3}
+              onFinish={onFinishDeadLine}
+              className="counter"
+            />
           )}
+          <button
+            type="button"
+            className="btn-text"
+            style={{ color: colors['link-color'], fontSize: '0.9em' }}
+            onClick={() => history.go(-1)}
+          >
+            Edit phone number
+          </button>
         </div>
 
-        <div className="loginOptions">
+        <AuthFooter>
           <Form.Item>
-            <Button
-              type="primary"
-              shape="circle"
-              size="large"
-              icon={<RightOutlined />}
-              style={{ float: 'right' }}
-              htmlType="submit"
-            />
+            <Button htmlType="submit" disabled={btnLoading} block className="btn-dark">
+              Continue
+            </Button>
           </Form.Item>
-        </div>
+        </AuthFooter>
       </Form>
     </AuthLayout>
   );
 };
 
-export default VerifyPhone;
+const mapStateToProps = ({ user }: IAppState) => {
+  return {
+    user: user.data,
+  };
+};
+
+const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
+  return {
+    setUser: (data: IUser) => dipatch(SetUser(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyPhone);

@@ -1,239 +1,264 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Dropdown, Layout, Row, Switch, Menu } from 'antd';
+import { Button, Layout, Result, Input, Typography, Row, Drawer, Checkbox } from 'antd';
 import AppLayout from '../../layouts/app';
-import BottomFooter from '../home/Footer';
-import { HeaderSkelaton } from '../home/Header';
-import Icon ,{PhoneOutlined ,PhoneFilled,CloseOutlined ,HeartOutlined} from '@ant-design/icons';
-import { colors } from '@constants/general';
+import { SearchOutlined } from '@ant-design/icons';
 import Axios from 'axios';
-import Loader from '../loader/Loader';
-import { Link } from 'react-router-dom';
+import Loader from '../../components/loader/Loader';
+import { IShortlist } from '../../schemas/Shortlist';
+import { IAppState } from '@redux/reducers';
+import { connect } from 'react-redux';
+import PJCard from '../../components/PJCard';
+import TopHeader from '../find/Header';
+import { ArrayIDS } from '@utils/helpers';
+import { IUser } from 'src/schemas/IUser';
 
 const { Content } = Layout;
-const MenuIcon = (props: any) => <Icon component={MenuSvg} {...props} />;
-enum PType { "shortlist","likes" };
+
+// enum PType {
+//   'shortlist',
+//   'likes',
+// }
+interface IData {
+  list: Array<IShortlist>;
+  likes_me: string;
+  liked_by_by: Array<number>;
+}
 
 const Shortlist = (props: any) => {
-  const [shortlistedData, setShortlistedData] = useState([] as Array<IShortList>);
-  const [likesData, setLikesData] = useState([] as Array<IShortList>);
-  const [loading, setLoading] = useState(true);
-  const [listingType, setListingType] = useState(PType.shortlist);
+  const [data, setData] = useState({} as IData);
 
-  const getShortlisted = async () => {
+  // for tem data
+  const [shortlistedData, setShortlistedData] = useState([] as Array<IShortlist>);
+  const [loading, setLoading] = useState(true);
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [drawerContent, setDrawerContent] = useState(null);
+
+  const members = props.user.profile.members;
+  const LikesByOptions = CheckboxOptions(members, props.user);
+
+  const [filterDRawer, setFilterDrawer] = useState(false);
+  const [likedBy, setLikedBy] = useState(ArrayIDS(members, props.user.id));
+
+  const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
+  const [likeMe, setLikeMe] = useState(true);
+
+  const getShortlisted = async (params?: Object) => {
     setLoading(true);
-    const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shortlist`);
-    setShortlistedData(data);
+    const { data } = await Axios.get(`shortlists`, { params: { ...params } });
+    setData(data);
+    setShortlistedData(data.list);
+    setLikeMe(data.likes_me);
+    setLikedBy(data.liked_by);
     setLoading(false);
   };
 
-  const getLikes = async () => {
-    setLoading(true);
-    const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shortlist`);
-    setLikesData(data);
-    setLoading(false);
+  const onSearch = (e: any) => {
+    let d = data?.list?.filter((o: IShortlist) => {
+      return o.profile.name.toLowerCase().includes(e.target.value);
+    });
+    setShortlistedData(d);
+  };
+
+  // const getLikes = async () => {
+  //   setLoading(true);
+  //   const { data } = await Axios.get(`likes`);
+  //   setLikesData(data);
+  //   setLoading(false);
+  // };
+
+  const reload = () => {
+    setDrawerOpened(false);
+    setDrawerContent(null);
+    getShortlisted();
   };
 
   useEffect(() => {
-  if(listingType === PType.shortlist)  getShortlisted();
-  if(listingType === PType.likes) getLikes();
-  }, [listingType]);
+    getShortlisted();
+  }, []);
+
+  const onFinish = () => {
+    const params = {
+      liked_by: likedBy,
+      likes_me: likeMe ? 1 : 0,
+    };
+    getShortlisted(params);
+  };
+
+  const onCheckAllChange = (e: any) => {
+    setLikeByMe(e.target.checked);
+    setLikedBy(e.target.checked ? ArrayIDS(members, props.user.id) : ([] as Array<number>));
+  };
+
+  const onchangeLikeMe = (e: any) => {
+    setLikeMe(e.target.checked);
+  };
+
+  const onChangeLikeBy = (checkedValues: any) => {
+    setLikedBy(checkedValues);
+    setLikeByMe(LikesByOptions.length === checkedValues.length);
+  };
 
   return (
     <AppLayout>
       <TopHeader />
-        <Switch
-          checkedChildren="My List"
-          unCheckedChildren="Likes"
-          defaultChecked
-          style={{display:"block",margin:'1rem'}}
-          onChange={()=>setListingType(listingType===PType.shortlist ? PType.likes:PType.shortlist)}
-        /> 
-      {loading ? <Loader /> : <Content>{renderDataList(listingType === PType.likes ? likesData : shortlistedData ,listingType)}</Content>}
-      <BottomFooter />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Content style={{ padding: '0 1rem', margin: '2rem 0' }}>
+          <Input
+            placeholder="Search for name, education etc."
+            prefix={<SearchOutlined />}
+            onChange={onSearch}
+            allowClear
+          />
+
+          <div className="flex-row mt-1">
+            <Typography.Title level={4} style={{ display: 'inline-block' }}>
+              Shortlists
+            </Typography.Title>
+            <button
+              type="button"
+              className="btn-text-primary"
+              onClick={() => setFilterDrawer(true)}
+            >
+              Filter
+            </button>
+          </div>
+          {renderDataList(
+            props.user?.profile ? props.user?.profile.id : props.user.id,
+            shortlistedData,
+            reload,
+            setDrawerOpened,
+            setDrawerContent
+          )}
+          <ContactMenu
+            visible={drawerOpened}
+            setVisibal={setDrawerOpened}
+            content={drawerContent}
+          />
+        </Content>
+      )}
+      <Drawer
+        onClose={() => setFilterDrawer(false)}
+        title="Filter"
+        placement="bottom"
+        closable={true}
+        visible={filterDRawer}
+      >
+        <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
+          Show the people I liked
+        </Checkbox>
+
+        <Checkbox.Group
+          options={LikesByOptions}
+          defaultValue={[...likedBy]}
+          onChange={onChangeLikeBy}
+          className="mx-1"
+        />
+
+        <Checkbox checked={likeMe} onClick={onchangeLikeMe}>
+          Show people who liked me
+        </Checkbox>
+        <Button className="btn-dark mt-1" block onClick={onFinish} type="text">
+          Apply
+        </Button>
+      </Drawer>
     </AppLayout>
   );
 };
-export default Shortlist;
+const mapStateToProps = ({ user, tour }: IAppState) => {
+  return {
+    user: user.data,
+    tourVisibal: tour.visible,
+  };
+};
+export default connect(mapStateToProps)(Shortlist);
 
-const TopHeader = (props: any) => {
+const renderDataList = (
+  profile_id: number,
+  data: Array<IShortlist>,
+  reload: Function,
+  setDrawerOpened: Function,
+  setDrawerContent: any
+) => {
+  if (!data.length)
+    return (
+      <Result
+        title={`No data available for shortlists or likes`}
+        extra={
+          <Button type="primary" key="console" size="middle">
+            Go To Find
+          </Button>
+        }
+      />
+    );
   return (
-    <HeaderSkelaton>
-      <Row>
-        <Col span={16}>
-          <div className="user-name-tile">
-            <h3>Shortlist</h3>
-          </div>
-        </Col>
-        <Col className="right-menu-icon" span={8}>
-           <Dropdown overlay={filterMenu} trigger={['click']} placement="bottomRight" >
-              <span onClick={e => e.preventDefault()}><MenuIcon /> </span>
-          </Dropdown>
-        </Col>
-      </Row>
-    </HeaderSkelaton>
+    <Row gutter={[16, 16]}>
+      {data?.map((item: IShortlist, index: number) => (
+        <PJCard
+          profile_id={profile_id}
+          data={item}
+          reload={reload}
+          setDrawerOpened={setDrawerOpened}
+          setDrawerContent={setDrawerContent}
+          key={index}
+        />
+      ))}
+    </Row>
   );
 };
 
-
-
-const shortListcard = (data:IShortList,listType:PType) => {
+interface ICSProps {
+  visible: boolean;
+  setVisibal: Function;
+  members?: Array<any>;
+  content: any;
+}
+const ContactMenu = (props: ICSProps) => {
   return (
-      <Card key={data.id} loading={data?false:true} 
-       style={{ margin: '20px', padding: 0,marginBottom:'2rem' }}
-       className="shortlist-box">
-
-       {listType === PType.shortlist && <div className="list-badge">New message <span>9</span></div>}
-
-      <div className="shortlist-card">
-        <div className="shortlist-card-left">
-          <Link to={listType === PType.shortlist ? `/shortlist/user/${data.id}` :`/likes/user/${data.id}`}>
-            <img
-            alt={'hello caption here'}
-            src={'https://source.unsplash.com/900x900/?indian,girl,model'}
-          />
-          </Link>
-          <div>Selected by {'Father'}</div>
-        </div>
-        <div className="shortlist-card-right">
-          <div>
-          <Link to={listType === PType.shortlist ? "/shortlist/user/1" :"/likes/user/1"}>
-            <h3>{data.name}</h3></Link>
-            <span>2 day ago</span>
-          </div>
-          <div>
-            <span>{data.age} yrs</span>
-            <span>X X</span>
-          </div>
-          <div>
-             <span>{data.workplace}</span>
-            <span>{data.slary} LPA</span>
-          </div>
-          <div>
-            <span>{data.edu_level}</span>
-            <span>Edu Level</span>
-          </div>
-          <div>
-            <span>Community</span>
-            <span>{data.location}</span>
-          </div>
-        </div>
-      </div>
-      {listType === PType.shortlist && <>
-      <Button
-        shape="circle"
-        size="middle"
-        className="button-shortlist-and-likes"
-        danger
-        style={{ position: 'absolute', bottom: '-12px', left: '-12px' }}
-      >
-        <CloseOutlined />
-      </Button>
-   
-
-      <Dropdown overlay={callMenu} trigger={['click']} key={data.id} placement="bottomRight" >
-      <Button
-        shape="circle"
-        size="middle"
-        type="link"
-        className="button-shortlist-and-likes"
-        style={{
-          position: 'absolute',
-          bottom: '-12px',
-          right: '-12px',
-          borderColor: colors['primary-color']
-        }}
-        onClick={e => e.preventDefault()}
-      >
-        <PhoneOutlined />
-      </Button>
-      </Dropdown>
-      </>}
-
-      {listType === PType.likes && <>
-      <Button
-        shape="circle"
-        size="middle"
-        danger
-        style={{ position: 'absolute', bottom: '-12px', left: '-12px' }}
-        className="button-shortlist-and-likes"
-      >
-        <CloseOutlined />
-      </Button>
-   
-
-      <Button
-        shape="circle"
-        size="middle"
-        type="link"
-        style={{
-          position: 'absolute',
-          bottom: '-12px',
-          right: '-12px',
-        }}
-        className="button-shortlist-and-likes"
-        onClick={e => e.preventDefault()}
-      >
-        <HeartOutlined />
-      </Button>
-      </>}
-    </Card>
+    <Drawer
+      onClose={() => props.setVisibal(false)}
+      title="Options"
+      placement="bottom"
+      closable={true}
+      visible={props.visible}
+    >
+      {props.content}
+    </Drawer>
   );
 };
 
-export const callMenu = (
-  <Menu className="filter-box">
-    <Menu.Item key="0">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Father</button>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Mother</button>
-    </Menu.Item>
-    <Menu.Item key="2">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Sister</button>
-    </Menu.Item>
-    <Menu.Item key="3">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Brother</button>
-    </Menu.Item>
-    <Menu.Item key="4">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Guardian</button>
-    </Menu.Item>
-    <Menu.Item key="5">
-      <button> <PhoneFilled style={{color:colors["primary-color"]}} /> {"  "}Rajnish</button>
-    </Menu.Item>
-  </Menu>
-);
+// const handleReject = async (id: number, type: PType, reload: Function) => {
+//   const url = type === PType.shortlist ? `shortlists/${id}` : `likes/${id}`;
+//   let show = message.loading('Action Proccess ...', 0);
+//   await Axios.delete(url);
+//   setTimeout(show, 0);
+//   reload();
+//   message.success('Removed Successfully');
+// };
 
-const filterMenu = (
-  <Menu className="filter-box">
-    <Menu.Item key="0">
-      <button  className="text-center">By Date</button>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <button  className="text-center">By Age</button>
-    </Menu.Item>
-    <Menu.Item key="2">
-      <button  className="text-center">By Height</button>
-    </Menu.Item>
-    <Menu.Item key="3">
-      <button  className="text-center">By Community</button>
-    </Menu.Item>
-    <Menu.Item key="4">
-      <button  className="text-center">By Location</button>
-    </Menu.Item>
-  </Menu>
-);
+// const handleAccept = async (id: number, reload: Function) => {
+//   let show = message.loading('Action Proccess ...', 0);
+//   await Axios.put(`likes/${id}`, { status: 1 });
+//   setTimeout(show, 0);
+//   reload();
+//   message.success('Profile Accepted');
+// };
 
-
-const MenuSvg = () => (
-  <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M0 16H8V13.3333H0V16ZM0 0V2.66667H24V0H0ZM0 9.33333H16V6.66667H0V9.33333Z"
-      fill="black"
-    />
-  </svg>
-);
-
-const renderDataList=(data:Array<IShortList> ,listingType :PType )=>{
-   return data?.map((item:IShortList,i:number)=>shortListcard(item,listingType ));
+interface IOption {
+  value: number;
+  label: string;
 }
 
+export const CheckboxOptions = (value: Array<IOption>, user: IUser): Array<IOption> => {
+  const data = [] as Array<IOption>;
+  if (user) {
+    data.push({ label: 'Liked by me', value: user.id });
+  }
+  if (value.length) {
+    value?.map((i: any) =>
+      data.push({ label: ` Liked by ${i.name ? i.name : i.sub_role}`, value: i.id })
+    );
+  }
+  return data;
+};

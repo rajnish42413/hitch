@@ -8,6 +8,9 @@
 .mb-1 {
   margin-bottom: 10px;
 }
+
+.ant-drawer-wrapper-body {
+}
 .text-danger {
   text-align: center;
   font-weight: bold;
@@ -19,7 +22,7 @@
   background: #ffffff;
   border: 0.5px dashed #e74c3c;
   border-radius: 6px;
-  height: 231px;
+  height: 100%;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
@@ -28,7 +31,7 @@
 
 .image-upload-image-box {
   border-radius: 6px;
-  height: 231px;
+  height: 100%;
   width: 100%;
 }
 
@@ -72,7 +75,21 @@ height: 45px;
 .ant-upload.ant-upload-select{
   display: block !important;
 }
-
+@media (max-width: 1200px) {
+  .preview-image-card{
+    height: 45vh;
+  }
+}
+@media (max-width: 768px) {
+  .preview-image-card{
+    height: 460px;
+  }
+}
+@media (max-width: 768px) {
+  .preview-image-card{
+    height: 460px;
+  }
+}
 @media (max-width: 480px) {
   .preview-image-card{
     height: 320px;

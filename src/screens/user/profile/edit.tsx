@@ -1,35 +1,93 @@
-import React, { useEffect } from 'react';
-import { Card, Col, DatePicker, Form, Input, Row, Select, Typography, Slider } from 'antd';
+import React, { useState } from 'react';
+import { Card, Col, Form, Input, Row, Typography, message, Modal } from 'antd';
+import { IUser } from '../../../schemas/IUser';
+import Axios from 'axios';
+import Workplace from '../../../components/form/Workplace';
+import Community from '../../../components/form/Community';
+import MaritialStatus from '../../../components/form/MaritialStatus';
+import EducationLevel from '../../../components/form/EducationLevel';
+import Height from '../../../components/form/Height';
+import { getHeightFromValue, getValueFromHeight } from '@utils/helpers';
+// import College from '../../../components/form/College';
+import NavigationPrompt from 'react-router-navigation-prompt';
+import Designation from '../../../components/form/Designation';
+import Salary from '../../../components/form/Salary';
 
-export default function EditProfile() {
+interface IProps {
+  user: IUser;
+  updateUser: any;
+  setDisable: any;
+}
+export default function EditProfile(props: IProps) {
   const [form] = Form.useForm();
-  const getData = async () => {
-    // const { data } = await axios.get<IMedia>(`http://127.0.0.1:8000/api/media?page=${page}`);
-    // setMedia(data);
+  const [changed, setChanged] = useState(false);
+
+  const onSubmit = (values: any) => {
+    setChanged(false);
+    const data = {
+      gender: profile?.gender ? profile?.gender : 'male',
+      full_name: profile?.name,
+      sub_role: profile?.sub_role,
+      dob: profile?.date_of_birth,
+    };
+    const height = getHeightFromValue(values.c_height);
+    values.height = height;
+    let updatedData = { ...data, ...values };
+    setChanged(false);
+    handleSubmit(updatedData);
   };
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const handleSubmit = async (values: any) => {
+    let show = message.loading('Action Proccess ...', 0);
+    try {
+      const { data } = await Axios.post('user/profile/update', values);
+      setTimeout(show, 0);
+      setChanged(false);
+      props.setDisable(false);
+      message.success('Profile updated successfully');
+      props.updateUser(data);
+    } catch (error) {
+      setTimeout(show, 0);
+      props.setDisable(false);
+      if (error.response.data.errors) {
+        setChanged(false);
+        const { max_education, salary_range, Workplace, height } = error.response.data.errors;
+        if (max_education) message.warning(max_education?.[0]);
+        if (salary_range) message.warning(salary_range?.[0]);
+        if (Workplace) message.warning(Workplace?.[0]);
+        if (height) message.warning(height?.[0]);
+      }
+    }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const { profile } = props.user;
+  const { detail } = profile ? profile : ({} as IUser);
 
   return (
     <Form
       name="basic"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
       size="large"
       form={form}
       style={{ padding: '20px' }}
+      onFinish={onSubmit}
+      onValuesChange={() => {
+        setChanged(true);
+        props.setDisable(true);
+      }}
     >
       <Form.Item
         name="intro"
         rules={[{ required: true, message: 'Please input your introduction!' }]}
+        initialValue={detail?.intro}
       >
-        <Input.TextArea rows={5} placeholder="Here goes my introduction" maxLength={255} />
+        <Input.TextArea
+          rows={5}
+          placeholder="Here goes my introduction"
+          maxLength={255}
+          minLength={100}
+          value={detail?.intro}
+        />
       </Form.Item>
 
       <Typography style={{ marginTop: '20px', paddingLeft: '20px' }}>
@@ -40,31 +98,15 @@ export default function EditProfile() {
         <Row>
           <Col span={8}>
             <p className="form-edit-label">
-              DOB <br />
-              <span>01/05/1997</span>
-            </p>
-          </Col>
-          <Col span={15}>
-            <Form.Item
-              name="dob"
-              rules={[{ required: true, message: 'Please Select your date of birth!' }]}
-            >
-              <DatePicker style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col span={8}>
-            <p className="form-edit-label">
               Location <br />
-              <span>Delhi</span>
+              <span>{detail?.city}</span>
             </p>
           </Col>
           <Col span={15}>
             <Form.Item
               name="city"
               rules={[{ required: true, message: 'Please input your city name!' }]}
+              initialValue={detail?.city}
             >
               <Input placeholder="Enter City Name" />
             </Form.Item>
@@ -75,25 +117,11 @@ export default function EditProfile() {
           <Col span={8}>
             <p className="form-edit-label">
               Community <br />
-              <span>Buddhists</span>
+              <span>{detail?.community}</span>
             </p>
           </Col>
           <Col span={15}>
-            <Form.Item
-              name="community"
-              rules={[{ required: true, message: 'Please Select community!' }]}
-            >
-              <Select placeholder="Select community">
-                <Select.Option value="Sikhs">Sikhs</Select.Option>
-                <Select.Option value="Hindu">Hindu</Select.Option>
-                <Select.Option value="Muslims">Muslims</Select.Option>
-                <Select.Option value="Christians">Christians</Select.Option>
-                <Select.Option value="Zoroastrians">Zoroastrians</Select.Option>
-                <Select.Option value="Buddhists">Buddhists</Select.Option>
-                <Select.Option value="Jains">Jains</Select.Option>
-                <Select.Option value="other">Other Community</Select.Option>
-              </Select>
-            </Form.Item>
+            <Community initialValue={detail?.community} />
           </Col>
         </Row>
 
@@ -101,22 +129,11 @@ export default function EditProfile() {
           <Col span={8}>
             <p className="form-edit-label">
               Status <br />
-              <span>Single</span>
+              <span>{detail?.marital_status}</span>
             </p>
           </Col>
           <Col span={15}>
-            <Form.Item
-              name="marital_status"
-              rules={[{ required: true, message: 'Please Select your marital status!' }]}
-            >
-              <Select placeholder="Select marital status">
-                <Select.Option value="Married">Married</Select.Option>
-                <Select.Option value="Widowed">Widowed</Select.Option>
-                <Select.Option value="Separated">Separated</Select.Option>
-                <Select.Option value="Divorced">Divorced</Select.Option>
-                <Select.Option value="Single">Single</Select.Option>
-              </Select>
-            </Form.Item>
+            <MaritialStatus initialValue={detail?.marital_status} />
           </Col>
         </Row>
       </Card>
@@ -124,21 +141,62 @@ export default function EditProfile() {
       <Typography style={{ marginTop: '20px', paddingLeft: '20px' }}>
         <Typography.Paragraph>Preffered</Typography.Paragraph>
       </Typography>
+
       <Card>
         <Row>
           <Col span={8}>
             <p className="form-edit-label">
               Height <br />
-              <span>5.3</span>
+              <span>{detail?.height}</span>
             </p>
           </Col>
           <Col span={15}>
-            <Form.Item
-              name="height"
-              rules={[{ required: true, message: 'Please input your height in cm!' }]}
-            >
-              <Slider min={4} max={7} tooltipVisible tipFormatter={formatter} step={0.1} />
-            </Form.Item>
+            <Height initialValue={getValueFromHeight(detail?.height)} />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <p className="form-edit-label">
+              Workplace <br />
+              <span>{detail?.workplace}</span>
+            </p>
+          </Col>
+          <Col span={15}>
+            <Workplace initialValue={detail?.workplace} />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span={8}>
+            <p className="form-edit-label">
+              College <br />
+              <span>{detail?.college_name}</span>
+            </p>
+          </Col>
+          <Col span={15}>{/* <College initialValue={detail?.college_name} /> */}</Col>
+        </Row>
+
+        <Row>
+          <Col span={8}>
+            <p className="form-edit-label">
+              Designation <br />
+              <span>{detail?.designation}</span>
+            </p>
+          </Col>
+          <Col span={15}>
+            <Designation initialValue={detail?.designation} />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span={8}>
+            <p className="form-edit-label">
+              Salary <br />
+              <span>{detail?.salary_range}</span>
+            </p>
+          </Col>
+          <Col span={15}>
+            <Salary initialValue={detail?.salary_range} />
           </Col>
         </Row>
 
@@ -146,25 +204,38 @@ export default function EditProfile() {
           <Col span={8}>
             <p className="form-edit-label">
               Education Level <br />
-              <span>Undergrad</span>
+              <span>{detail?.max_education}</span>
             </p>
           </Col>
           <Col span={15}>
-            <Form.Item name="highest_attained">
-              <Select>
-                <Select.Option value="School">School</Select.Option>
-                <Select.Option value="Undergrad">Undergrad</Select.Option>
-                <Select.Option value="Postgrad">Postgrad</Select.Option>
-                <Select.Option value="Doctrate">Doctrate</Select.Option>
-              </Select>
-            </Form.Item>
+            <EducationLevel initialValue={detail?.max_education} />
           </Col>
         </Row>
       </Card>
+      <NavigationPrompt when={changed}>
+        {({ isActive, onCancel, onConfirm }) => {
+          if (isActive) {
+            return (
+              <Modal
+                visible={changed}
+                title="Close without saving"
+                cancelText="Save"
+                okButtonProps={{ type: 'default' }}
+                cancelButtonProps={{ type: 'primary' }}
+                okText="Go"
+                onCancel={() => onSubmit(form.getFieldsValue())}
+                onOk={onConfirm}
+                centered
+                closable={false}
+              >
+                <p>
+                  You have unsaved changes. Are you sure you want to leave this page without saving?
+                </p>
+              </Modal>
+            );
+          }
+        }}
+      </NavigationPrompt>
     </Form>
   );
 }
-
-const formatter = (value: any) => {
-  return `${value} ft`;
-};

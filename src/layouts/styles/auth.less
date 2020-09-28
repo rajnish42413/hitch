@@ -1,0 +1,133 @@
+body {
+  background-color: #eee0ca;
+  .ant-layout,
+  .ant-layout-header,
+  .ant-layout-footer {
+    background-color: #eee0ca !important;
+  }
+  .ant-layout-header {
+    margin: 1.5rem 0 2rem 0;
+  }
+  .ant-layout-footer {
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    right: 0;
+    width: 100%;
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.facebook-login-button {
+  background-color: #425597;
+  border: none !important;
+  border-color: #425597 !important;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  height: 50px;
+  margin-top: 0.5rem;
+  padding: 11.4px 15px;
+  width: 100%;
+}
+
+.facebook-login-button:hover,
+.facebook-login-button:focus {
+  background-color: #425597;
+  border: none !important;
+  border-color: #425597;
+  color: #fff;
+}
+
+.image-w100 {
+  bottom: 5rem;
+  height: 70vh;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.image-top-fit {
+  position: relative;
+  top: -5rem;
+}
+
+.button-bottom {
+  width: 100%;
+}
+
+.button-bottom-fit {
+  bottom: 2rem;
+  position: relative;
+}
+
+.counter {
+  display: inline-block;
+  .ant-statistic-content {
+    color: #0a66c2;
+    font-size: 0.9em;
+  }
+}
+
+.loginOptions,
+.buttom-buttom-1 {
+  bottom: 1.5rem;
+  position: absolute;
+  width: calc(100% - 2rem);
+}
+
+.form-switch {
+  margin-bottom: 2rem !important;
+  position: relative;
+  top: 0;
+}
+
+.main form .ant-typography {
+  margin-top: 2rem;
+}
+
+.autocomplete-dropdown-container {
+  background-color: #fff;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  outline: none;
+  .location-search-input {
+    border-bottom: 1px solid #c4c4c4;
+  }
+}
+@media (max-width: 480px) {
+  .newuser-steps {
+    .ant-steps-item-icon {
+      background: #c4c4c4;
+      height: 6px;
+      margin-right: 0;
+      width: 30px;
+    }
+    .ant-steps-item-tail {
+      display: none !important;
+    }
+    .ant-steps-item-icon > .ant-steps-icon {
+      display: none !important;
+    }
+  }
+
+  .ant-steps-horizontal.ant-steps-label-horizontal {
+    flex-direction: row !important;
+  }
+  .ant-steps-horizontal.ant-steps-label-horizontal
+    > .ant-steps-item
+    > .ant-steps-item-container
+    > .ant-steps-item-tail {
+    display: none;
+  }
+
+  .main form .ant-typography {
+    margin-top: 0;
+  }
+}

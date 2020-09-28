@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Layout } from 'antd';
 
-export default function chat() {
+export default function Chat() {
   return (
     <Layout.Content style={{ padding: '20px' }}>
       <Card>

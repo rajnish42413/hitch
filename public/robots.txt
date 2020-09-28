@@ -1,0 +1,3 @@
+User-agent: *
+Allow:/
+Sitemap: https://pakkijodi.com/sitemap.xml

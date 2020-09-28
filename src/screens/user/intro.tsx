@@ -1,49 +1,115 @@
-import React from 'react';
+import React, { Dispatch, useState } from 'react';
 import { Button, Form, Input, message, Typography } from 'antd';
 import AuthLayout from '../../layouts/auth';
-import { useHistory } from 'react-router';
-import CustomStepper from '../../components/CustomStepper';
+import Axios from 'axios';
+import Loader from '../../components/loader/Loader';
+import { connect } from 'react-redux';
+import { IAppState } from '@redux/reducers';
+import { IAction, SetTourVisibility, SetUser } from '@redux/actions';
+import { IUser } from 'src/schemas/IUser';
+import AuthFooter from '../../layouts/auth/footer';
+import { useHistory } from 'react-router-dom';
 
 const UserIntro = (props: any) => {
-  const history = useHistory();
   const [form] = Form.useForm();
+  const history = useHistory();
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [updated, setUpdated] = useState(false);
+  const { user } = props;
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    message.success('Hooray ! Welcome to HITCH familiy ', 2);
-    history.push('/home');
+  const onFinish = async (values: any) => {
+    const profile_id = user.profile?.id;
+    const { intro } = values;
+    setBtnLoading(true);
+    let show = message.loading('Saving ...', 0);
+    try {
+      const { data } = await Axios.put(`/profiles/${profile_id}/introduction`, { intro: intro });
+      setTimeout(show, 0);
+      props.setUser(data);
+      props.setTourVisibal(true);
+      setBtnLoading(false);
+      redirectToHome();
+    } catch (error) {
+      setTimeout(show, 0);
+      if (error.response?.data?.errors) {
+        const { intro } = error.response.data.errors;
+        if (intro) message.warning(intro?.[0]);
+      }
+      setBtnLoading(false);
+    }
+  };
+
+  const redirectToHome = () => {
+    message.success('Hooray ! Your profile is updated!');
+    setUpdated(true);
   };
 
   return (
     <AuthLayout>
-      <CustomStepper totalSteps={4} active={3} /> <br />
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        size="large"
-        form={form}
-      >
-        <Typography style={{ textAlign: 'center' }}>
-          <Typography.Title level={3}>Write your introduction </Typography.Title>
-          <Typography.Paragraph>Good first impressions are nice to have </Typography.Paragraph>
-        </Typography>
-
-        <Form.Item
-          name="intro"
-          rules={[{ required: true, message: 'Please input your introduction!' }]}
+      {user ? (
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          size="large"
+          form={form}
+          className="mt-1"
         >
-          <Input.TextArea rows={5} placeholder="Here goes my introduction" maxLength={255} />
-        </Form.Item>
-        <br />
-        <Form.Item className="button-bottom buttom-buttom-1">
-          <Button type="primary" htmlType="submit" block>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+          <Typography style={{ textAlign: 'center' }}>
+            <Typography.Title level={3}>Write your introduction </Typography.Title>
+            <Typography.Paragraph>Good first impressions are nice to have </Typography.Paragraph>
+          </Typography>
+
+          <Form.Item
+            name="intro"
+            rules={[{ required: true, message: 'Please input your introduction!' }]}
+          >
+            <Input.TextArea rows={5} placeholder="Here goes my introduction" maxLength={255} />
+          </Form.Item>
+          <br />
+
+          <AuthFooter>
+            {updated && (
+              <>
+                <Button className="btn-dark" htmlType="button" block href={`/profiles/${user.id}`}>
+                  Profile Preview
+                </Button>
+
+                <button
+                  className="btn-dark-text"
+                  type="button"
+                  onClick={() => history.replace('/home')}
+                >
+                  Go to Home
+                </button>
+              </>
+            )}
+
+            {!updated && (
+              <Button className="btn-dark" htmlType="submit" block disabled={btnLoading}>
+                Submit
+              </Button>
+            )}
+          </AuthFooter>
+        </Form>
+      ) : (
+        <Loader />
+      )}
     </AuthLayout>
   );
 };
 
-export default UserIntro;
+const mapStateToProps = ({ user }: IAppState) => {
+  return {
+    user: user.data,
+  };
+};
+
+const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
+  return {
+    setUser: (data: IUser) => dipatch(SetUser(data)),
+    setTourVisibal: (data: boolean) => dipatch(SetTourVisibility(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserIntro);

@@ -8,7 +8,7 @@ export default function CustomStepper(props: IProps) {
     <div className="steps">
       <ul>
         {[...Array(props.totalSteps)].map((value: number, index: number) => (
-          <li className={props.active === index ? 'active' : ''} />
+          <li className={props.active === index ? 'active' : ''} key={index} />
         ))}
       </ul>
     </div>

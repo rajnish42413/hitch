@@ -1,32 +1,64 @@
-import React from 'react';
-import { Form, Button, Typography, Input, Select } from 'antd';
+import React, { useState } from 'react';
+import { Form, Button, Typography, Input, Select, message, notification } from 'antd';
 import AuthLayout from '../../layouts/auth';
-import './Auth.scss';
-import { useHistory } from 'react-router-dom';
-import { RightOutlined } from '@ant-design/icons';
+import { useHistory, useLocation } from 'react-router-dom';
+import Axios from 'axios';
+import { queryfie } from '@utils/helpers';
+import { SmileOutlined } from '@ant-design/icons';
+import { colors } from '@constants/general';
+import AuthFooter from '../../layouts/auth/footer';
 
 const { Title } = Typography;
 const { Option } = Select;
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
+  wrapperCol: { span: 16 },
 };
 
 const MobileVerification = (props: any) => {
   const [form] = Form.useForm();
+  const [countryCode, setCountryCode] = useState('+91');
+  const [btnLoading, setBtnLoading] = useState(false);
   const history = useHistory();
+  const { search, state } = useLocation();
+  const params = queryfie(search);
+  const social_data = state;
+
+  const handleSelectCountry = (value: string) => {
+    setCountryCode(value);
+  };
+
   const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }} defaultValue="91">
-        <Option value="91">+91</Option>
-        <Option value="87">+87</Option>
+    <Form.Item name="prefix" noStyle initialValue={countryCode}>
+      <Select onChange={handleSelectCountry}>
+        <Option value="+91">+91</Option>
       </Select>
     </Form.Item>
   );
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    history.push('/verify-phone-number');
+  const onFinish = async (values: any) => {
+    setBtnLoading(true);
+    let show = message.loading('Verifying Phone Number ...', 0);
+    const { phone } = values;
+    try {
+      const { data } = await Axios.post(`request-otp`, {
+        phone: phone,
+        countryCode: countryCode,
+        ref_code: params.ref ? params.ref : '',
+      });
+      if (data?.user) {
+        history.push('/verify-phone-number', data.user);
+      }
+      setTimeout(show, 0);
+      message.success('OTP send successfully');
+      setBtnLoading(false);
+    } catch (error) {
+      if (error.response.data?.errors) {
+        const { phone } = error.response?.data?.errors;
+        if (phone) message.warning(phone?.[0]);
+      }
+      setBtnLoading(false);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -34,7 +66,12 @@ const MobileVerification = (props: any) => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout header={true}>
+      {social_data &&
+        openNotification(
+          `${social_data.type ? social_data.type : ''} Login Successful`,
+          `${social_data?.name} ( ${social_data?.email} ) , Verify your phone number to proceed futher !`
+        )}
       <Form
         {...layout}
         name="basic"
@@ -48,42 +85,47 @@ const MobileVerification = (props: any) => {
         <br />
 
         <div className="mt-5">
-          <Typography style={{ paddingLeft: '2rem' }}>
-            <Title level={4}>What’s your phone number?</Title>
+          <Typography>
+            <Title level={4}>Enter your phone number</Title>
+            <p>Whatsapp number recommended</p>
           </Typography>
-          <br />
-
           <Form.Item
             name="phone"
             rules={[
               { required: true, message: 'Please input your phone number!' },
-              { max: 10, min: 10, message: 'Please enter valid phone number!' }
+              { max: 10, min: 10, message: 'Please enter valid phone number!' },
             ]}
+            initialValue={params.phone}
           >
             <Input
               addonBefore={prefixSelector}
               style={{ width: '100%' }}
               placeholder="Phone number"
               maxLength={10}
+              type="number"
             />
           </Form.Item>
         </div>
 
-        <div className="loginOptions">
+        <AuthFooter>
           <Form.Item>
-            <Button
-              type="primary"
-              shape="circle"
-              size="large"
-              icon={<RightOutlined />}
-              style={{ float: 'right' }}
-              htmlType="submit"
-            />
+            <Button htmlType="submit" disabled={btnLoading} block className="btn-dark">
+              Continue
+            </Button>
           </Form.Item>
-        </div>
+        </AuthFooter>
       </Form>
     </AuthLayout>
   );
 };
 
 export default MobileVerification;
+
+const openNotification = (title: string, description: string) => {
+  notification.open({
+    message: title,
+    duration: 10,
+    description: description,
+    icon: <SmileOutlined style={{ color: colors['link-color'] }} />,
+  });
+};

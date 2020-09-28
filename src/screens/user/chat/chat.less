@@ -1,0 +1,84 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  .chat-log {
+    margin-bottom: 70px;
+    scroll-snap-align: end;
+  }
+  .chat-message--right {
+    flex-direction: row-reverse;
+  }
+  .chat-message {
+    align-items: center;
+    display: flex;
+    margin-top: 1rem;
+    width: 100%;
+    .chat-message + .chat-message--right,
+    .chat-message--right + .chat-message {
+      margin-top: 1rem;
+    }
+    .chat-message__avatar-frame {
+      align-items: center;
+      display: flex;
+      height: 50px;
+      justify-content: center;
+      margin-right: 1rem;
+      overflow: hidden;
+      width: 50px;
+      img {
+        border-radius: 100%;
+        height: 50px;
+        width: 50px;
+      }
+    }
+    .chat-message__avatar-frame.right {
+      margin-left: 1rem;
+      margin-right: 0;
+    }
+    .chat-message__text {
+      align-items: center;
+      animation-duration: 0.3s;
+      animation-name: fly-in;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 0 6px 6px 6px;
+      box-sizing: border-box;
+      color: #000;
+      display: block;
+      display: flex;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px;
+      max-width: 75%;
+      padding: 1em;
+      word-break: break-word;
+    }
+  }
+}
+
+.chat-input-area {
+  bottom: 10px;
+  left: 0;
+  margin: 0 auto;
+  padding: 0 5px;
+  position: fixed;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .chat-input-area {
+    width: 50%;
+  }
+}
+
+@keyframes fly-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(10%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

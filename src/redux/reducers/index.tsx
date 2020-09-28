@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import { History } from 'history';
-import list from './list';
+import UserReducer from './user';
+import TourReducer from './tour';
 
-export default (history: History) =>
-  combineReducers<IReducerStates>({
-    list,
-    router: connectRouter(history)
-  });
+const rootReducer = combineReducers({
+  user: UserReducer,
+  tour: TourReducer,
+});
+
+export type IAppState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;

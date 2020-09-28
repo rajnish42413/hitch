@@ -1,88 +1,45 @@
-import React from 'react';
-import { Form, Button, Typography } from 'antd';
-import AuthLayout from '../../layouts/auth';
-import './Auth.scss';
-import { Link } from 'react-router-dom';
-import { colors } from '../../constants/general';
+import React, { Suspense, useState } from 'react';
+import { MenuOutlined } from '@ant-design/icons';
 
-const { Title, Paragraph } = Typography;
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
-};
+//lazy load
+const Ploader = React.lazy(() => import('../../components/loader/PLoader'));
+const Button = React.lazy(() => import('antd/lib/button'));
+const AuthLayout = React.lazy(() => import('../../layouts/auth'));
+const PopMenu = React.lazy(() => import('../home/popMenu'));
+const LoginButtons = React.lazy(() => import('../../components/form/LoginButtons'));
+const backgroundImage = require('../../assets/images/backgroound-pj-2.png');
+const logo = require('../../assets/images/pakkijodi-logo.svg');
 
 const Login = (props: any) => {
-  const [form] = Form.useForm();
+  const [visible, setVisible] = useState(false);
+  const style = {
+    background: `url(${backgroundImage}), linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, #000000 78.32%)`,
+    backgroundRepeat: 'no-repeat, repeat',
+    backgroundSize: 'cover',
+    height: '100vh',
+    overflow: 'hidden',
+  };
+
   return (
-    <AuthLayout backgroundColor={colors['primary-color']}>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        size="large"
-        form={form}
-        className="h-100"
-      >
-        <br />
+    <Suspense fallback={<Ploader />}>
+      <AuthLayout header={false} style={style}>
+        <Button
+          type="link"
+          onClick={() => setVisible(!visible)}
+          style={{ float: 'right', padding: 0 }}
+        >
+          <MenuOutlined style={{ fontSize: '30px', color: '#fff', alignSelf: 'right' }} />
+        </Button>
 
-        <div className="mt-5">
-          <Typography>
-            <Title
-              level={1}
-              style={{
-                textAlign: 'center',
-                color: 'white',
-                fontSize: '4rem',
-                marginBottom: 0
-              }}
-            >
-              Hitch
-            </Title>
-            <Paragraph style={{ textAlign: 'center', color: 'white', fontSize: 18 }}>
-              Let’s get you married
-            </Paragraph>
-          </Typography>
+        <div style={{ position: 'relative', top: '7rem' }}>
+          <img src={logo} alt="pakki jodi logo" />
+          <h4 style={{ fontWeight: 'bold', fontSize: '24px', color: '#fff' }}>Shadi Made Easy</h4>
         </div>
 
-        <div className="loginOptions">
-          <Form.Item>
-            <Button htmlType="submit" size="large" block className="button">
-              Google Sign In
-            </Button>
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              size="large"
-              className="button"
-              style={{
-                backgroundColor: '#425597',
-                color: colors['white-color'],
-                borderColor: '#425597'
-              }}
-              block
-            >
-              Continue with Facebook
-            </Button>
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              size="large"
-              block
-              type="link"
-              className="button"
-              style={{ color: colors['white-color'] }}
-            >
-              <Link to="/phone-number">Or continue with a number</Link>
-            </Button>
-          </Form.Item>
-        </div>
-      </Form>
-    </AuthLayout>
+        <LoginButtons />
+      </AuthLayout>
+      <PopMenu visible={visible} setVisible={(data: boolean) => setVisible(data)} />
+    </Suspense>
   );
 };
 

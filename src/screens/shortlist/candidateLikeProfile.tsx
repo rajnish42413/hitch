@@ -1,44 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Dropdown, Layout, Row, Menu, Button, Switch } from 'antd';
+import { Col, Dropdown, Layout, Row, Menu, Button, message, Result } from 'antd';
 import AppLayout from '../../layouts/app';
-import BottomFooter from '../home/Footer';
+import BottomFooter from '../find/Footer';
 import UserProfileDetail from '../../components/UserProfileDetail';
-import { HeaderSkelaton } from '../home/Header';
-import { Link } from 'react-router-dom';
+import { HeaderSkelaton } from '../find/Header';
+import { Link, useHistory } from 'react-router-dom';
 import { colors } from '@constants/general';
 import Axios from 'axios';
 import Icon, {
   CloseOutlined,
-  HeartOutlined,
+  HeartFilled,
   ArrowLeftOutlined,
   LeftOutlined,
-  RightOutlined
+  RightOutlined,
 } from '@ant-design/icons';
-import Chat from './chat';
-import Loader from '../loader/Loader';
+import Loader from '../../components/loader/Loader';
+import { IShortlist } from '../../schemas/Shortlist';
 
 const { Content } = Layout;
-enum PType {
-  'chat',
-  'profile'
-}
 
 export default function CandidateLikeProfile(props: any) {
-  const [list, setlist] = useState([] as Array<IShortList>);
+  const [list, setlist] = useState([] as Array<IShortlist>);
   const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
-  const [pageType, setPageType] = useState(PType.profile);
+  const history = useHistory();
 
   const {
-    match: { params }
+    match: { params },
   } = props;
+  console.log(params);
 
   const getData = async () => {
-    const { data } = await Axios.get(`https://5f11a9a565dd950016fbda11.mockapi.io/shortlist`);
+    const { data } = await Axios.get(`likes`);
     setlist(data);
-    if (data && params) {
-      setCurrent(data.findIndex((x: any) => x.id === params.id));
-    }
+    // if (data && params) {
+    //   setCurrent(data.findIndex((x: any) => x.id === params.id));
+    // }
+    console.log(data);
+    setCurrent(0);
     setLoading(false);
   };
 
@@ -58,23 +57,44 @@ export default function CandidateLikeProfile(props: any) {
     setLoading(false);
   };
 
+  const filterMenu = (
+    <Menu className="filter-box">
+      <Menu.Item key="0">
+        <button
+          className="text-center"
+          style={{ color: colors['danger-color'] }}
+          onClick={() => handleReject(list[current]?.id, reload)}
+        >
+          Remove
+        </button>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <button className="text-center">Report</button>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const reload = () => {
+    history.replace('/shortlisted');
+  };
+
   return (
     <AppLayout>
-      <TopHeader profile={list[current]} />
-      <Switch
-        checkedChildren="PROFILE"
-        unCheckedChildren="CHAT"
-        defaultChecked
-        style={{ display: 'block', margin: '1rem' }}
-        onChange={() => setPageType(pageType === PType.chat ? PType.profile : PType.chat)}
-      />
-      {loading ? <Loader /> :
-      pageType === PType.profile ? (
+      <TopHeader title={list[current]?.profile?.name} menu={filterMenu} />
+      {loading ? (
+        <Loader />
+      ) : list?.length ? (
         <Content>
           <UserPagination onNext={onNext} onPrevous={onPrev} />
-          <UserProfileDetail />
-          <div className="detail-likes-button-group">
-            <Button shape="circle" size="large" danger className="button-shortlist-and-likes">
+          <UserProfileDetail profile={list[current]?.profile} />
+          {/* <div className="detail-likes-button-group">
+            <Button
+              shape="circle"
+              size="large"
+              danger
+              className="button-shortlist-and-likes"
+              onClick={() => handleReject(list[current]?.id, reload)}
+            >
               <CloseOutlined />
             </Button>
 
@@ -83,14 +103,45 @@ export default function CandidateLikeProfile(props: any) {
               size="large"
               type="link"
               className="button-shortlist-and-likes"
-              onClick={e => e.preventDefault()}
+              onClick={() => handleAccept(list[current]?.id, getData)}
             >
-              <HeartOutlined />
+              <HeartFilled />
             </Button>
-          </div>
+          </div> */}
+          <Layout.Footer className="find-actions-buttons">
+            <div className="main">
+              <div className="actions-buttons">
+                <button
+                  className="btn-pass"
+                  onClick={() => handleReject(list[current]?.id, reload)}
+                >
+                  <CloseOutlined />
+                </button>
+                <button
+                  className="btn-accept"
+                  onClick={() => handleAccept(list[current]?.id, getData)}
+                >
+                  {' '}
+                  <HeartFilled /> Accept Like
+                </button>
+              </div>
+            </div>
+          </Layout.Footer>
         </Content>
       ) : (
-        <Chat />
+        <Result
+          title={`No data available for  likes`}
+          extra={
+            <Button
+              type="primary"
+              key="console"
+              size="middle"
+              onClick={() => history.replace('/shortlisted')}
+            >
+              Go To Shortlists
+            </Button>
+          }
+        />
       )}
       <BottomFooter />
     </AppLayout>
@@ -98,7 +149,8 @@ export default function CandidateLikeProfile(props: any) {
 }
 
 interface IHeaderProps {
-  profile: IShortList;
+  title: any;
+  menu: React.ReactElement;
 }
 const TopHeader = (props: IHeaderProps) => {
   return (
@@ -107,13 +159,13 @@ const TopHeader = (props: IHeaderProps) => {
         <Col span={16}>
           <Link to="/shortlisted">
             <Button type="link" className="user-name-tile">
-              <ArrowLeftOutlined /> <h3>{props.profile && props.profile.name}</h3>
+              <ArrowLeftOutlined /> <h3>{props.title && props.title}</h3>
             </Button>
           </Link>
         </Col>
         <Col className="right-menu-icon" span={8}>
-          <Dropdown overlay={filterMenu} trigger={['click']} placement="bottomRight">
-            <span onClick={e => e.preventDefault()}>
+          <Dropdown overlay={props.menu} trigger={['click']} placement="bottomRight">
+            <span onClick={(e) => e.preventDefault()}>
               <MenuIcon />{' '}
             </span>
           </Dropdown>
@@ -122,19 +174,6 @@ const TopHeader = (props: IHeaderProps) => {
     </HeaderSkelaton>
   );
 };
-
-const filterMenu = (
-  <Menu className="filter-box">
-    <Menu.Item key="0">
-      <button className="text-center" style={{ color: colors['danger-color'] }}>
-        Remove
-      </button>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <button className="text-center">Report</button>
-    </Menu.Item>
-  </Menu>
-);
 
 const UserPagination = (props: any) => {
   return (
@@ -162,11 +201,16 @@ const UserPagination = (props: any) => {
 
 const MenuIcon = (props: any) => <Icon component={MenuSvg} {...props} />;
 const MenuSvg = () => (
-  <svg width="5" height="35" viewBox="0 0 5 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M0 34.5518H5V28.7932H0V34.5518ZM0 20.155H5V14.3964H0V20.155ZM0 0V5.75864H5V0H0Z"
-      fill="black"
-    />
+  <svg
+    id="Capa_1"
+    width="25"
+    height="25"
+    viewBox="0 0 515.555 515.555"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="m303.347 18.875c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
+    <path d="m303.347 212.209c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
+    <path d="m303.347 405.541c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0" />
   </svg>
 );
 
@@ -185,3 +229,22 @@ function prevItem(i: number, len: number) {
   i = i - 1;
   return i;
 }
+
+const handleReject = async (id: number, reload: Function) => {
+  if (!id) return;
+  const url = `likes/${id}`;
+  let show = message.loading('Action Proccess ...', 0);
+  await Axios.delete(url);
+  setTimeout(show, 0);
+  reload();
+  message.success('Removed Successfully');
+};
+
+const handleAccept = async (id: number, reload: Function) => {
+  if (!id) return;
+  let show = message.loading('Action Proccess ...', 0);
+  await Axios.put(`likes/${id}`, { status: 1 });
+  setTimeout(show, 0);
+  reload();
+  message.success('Profile Accepted');
+};
