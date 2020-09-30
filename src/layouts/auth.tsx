@@ -22,7 +22,7 @@ export default function AuthLayout(props: Iprops) {
   return (
     <Layout>
       {header && <AuthHeader goBack={goBack} />}
-      <Layout.Content className="main main-container" style={style}>
+      <Layout.Content className="main" style={style}>
         {props.children}
       </Layout.Content>
     </Layout>

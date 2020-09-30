@@ -200,7 +200,7 @@ export const renderTitle = (
 export const ArrayIDS = (value: Array<any>, user: number): Array<number> => {
   const data = [] as Array<number>;
   if (user) data.push(user);
-  if (value.length) {
+  if (value?.length) {
     value?.map((i: any) => data.push(i.id));
   }
   return data;

@@ -1,11 +1,10 @@
 import React, { Dispatch, useState } from 'react';
-import { Button, Col, Layout, List, Modal, Row, Skeleton, Typography, message } from 'antd';
+import { Button, Layout, List, Modal, Typography, message } from 'antd';
 import TopHeader from '../../find/Header';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import arrayMove from 'array-move';
+//import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { Link, useHistory } from 'react-router-dom';
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { colors, FB_APP_ID } from '@constants/general';
+import Icon, { ExclamationCircleOutlined } from '@ant-design/icons';
+import { FB_APP_ID } from '@constants/general';
 import {
   FacebookMessengerShareButton,
   FacebookShareButton,
@@ -19,17 +18,20 @@ import { IAppState } from '@redux/reducers';
 import '../../media/media.scss';
 import { renderUserStatus } from '../../../screens/find/Find';
 import { IAction, SetUser } from '@redux/actions';
-import { IUser, IImage } from '../../../schemas/IUser';
+import { IUser } from '../../../schemas/IUser';
 import Axios from 'axios';
 import { convertToSlug } from '@utils/helpers';
 import AppLayout from '../../../layouts/app';
-
+import { ReactComponent as AddSvg } from '../../../assets/icons/add.svg';
+import { ReactComponent as HelpSvg } from '../../../assets/icons/help.svg';
+import { ReactComponent as SettingSvg } from '../../../assets/icons/setting.svg';
+import { ReactComponent as OutSvg } from '../../../assets/icons/logout.svg';
 const { Content } = Layout;
 
 const UserProfile = (props: any) => {
   const [webShare, setWebShare] = useState(false);
   const { user } = props;
-  const [photos, setPhotos] = useState(user?.profile?.media);
+  const photos = user?.profile?.media;
   const profile_id = user && (user.profile.id ? user.profile.id : user?.id);
 
   const url =
@@ -45,19 +47,19 @@ const UserProfile = (props: any) => {
 
   const history = useHistory();
 
-  const onSortEnd = ({ oldIndex, newIndex }: any) => {
-    setPhotos(arrayMove(photos, oldIndex, newIndex));
-    photos?.forEach((image: IImage, index: number) => {
-      image.index = index;
-    });
-    handleReOrder(photos);
-  };
+  // const onSortEnd = ({ oldIndex, newIndex }: any) => {
+  //   setPhotos(arrayMove(photos, oldIndex, newIndex));
+  //   photos?.forEach((image: IImage, index: number) => {
+  //     image.index = index;
+  //   });
+  //   handleReOrder(photos);
+  // };
 
-  const handleReOrder = async (photos: Array<IImage>) => {
-    if (!photos) return;
-    const { data } = await Axios.put(`profile/images`, { media: photos });
-    if (data.data) props.setUser(data.data);
-  };
+  // const handleReOrder = async (photos: Array<IImage>) => {
+  //   if (!photos) return;
+  //   const { data } = await Axios.put(`profile/images`, { media: photos });
+  //   if (data.data) props.setUser(data.data);
+  // };
 
   const handleLogout = async () => {
     Modal.confirm({
@@ -111,41 +113,50 @@ const UserProfile = (props: any) => {
       {user ? (
         <Content>
           {renderUserStatus(user.status, props.setUser)}
-          {profile_id ? (
-            <SortableList images={photos} onSortEnd={onSortEnd} profile_id={profile_id} />
-          ) : (
-            renderSkelton()
-          )}
-
-          <Row gutter={16} style={{ margin: '20px' }}>
-            <h3 style={{ color: colors['mutted-color'], fontSize: '0.8em' }}>Drag to Reorder</h3>
-            <Col span={24}>
-              <Typography className="image-upload-hint">
-                <Typography.Paragraph>
-                  Tap a photo to add a caption and make your profile stand out even more{' '}
-                </Typography.Paragraph>
+          <div style={{ padding: '1rem' }}>
+            <div className="user-profile-box flex-row">
+              <img src={photos[0]?.small} alt={user.name} height="80px" width="80px" />
+              <Typography>
+                <Typography.Title level={4}>{user.name}</Typography.Title>
+                <p>{user?.profile?.detail?.city}</p>
               </Typography>
-            </Col>
-            <Col span={24}>
-              <List
-                bordered
-                dataSource={listdata}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Link to={item.link}>
-                      <Button type="text" block>
-                        {item.name}
-                      </Button>
-                    </Link>
-                  </List.Item>
-                )}
-                className="profile-buttons"
-              />
-              <Button type="link" style={{ color: '#3498DB' }} onClick={handleLogout}>
-                Logout
+            </div>
+            <Link to="/user/detail">
+              <Button block type="text" className="btn-red">
+                View/ Edit Profile
               </Button>
-            </Col>
-          </Row>
+            </Link>
+          </div>
+
+          <List className="profile-buttons">
+            <List.Item>
+              <Link to="/user/detail">
+                <Button type="text" block>
+                  <Icon component={AddSvg} style={{ fontSize: '2rem' }} /> Add friends/family
+                </Button>
+              </Link>
+            </List.Item>
+            <List.Item>
+              <Link to="/account">
+                <Button type="text" block>
+                  <Icon component={SettingSvg} style={{ fontSize: '2rem' }} /> Account settings
+                </Button>
+              </Link>
+            </List.Item>
+            <List.Item>
+              <Link to="/help">
+                <Button type="text" block>
+                  <Icon component={HelpSvg} style={{ fontSize: '2rem' }} /> Help{' '}
+                </Button>
+              </Link>
+            </List.Item>
+            <List.Item>
+              <Button type="text" block onClick={handleLogout}>
+                <Icon component={OutSvg} style={{ fontSize: '2rem' }} /> Logout
+              </Button>
+            </List.Item>
+          </List>
+
           <Modal
             title="Share"
             visible={webShare}
@@ -198,84 +209,62 @@ const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
 
-const SortableList = SortableContainer((props: any) => {
-  const images = props.images;
-  const profile_id = props.profile_id;
-  const totalLeft: number = 6 - +(props.images ? props.images?.length : 0);
-  const history = useHistory();
-  return (
-    <Row gutter={16} className="mt-1" style={{ padding: '20px' }}>
-      {images?.map((value: any, index: number) => (
-        <SortableItem
-          key={value.id}
-          index={index}
-          value={value}
-          distance={2}
-          pressDelay={100}
-          profile_id={profile_id}
-          sortIndex={value.index}
-        />
-      ))}
+// const SortableList = SortableContainer((props: any) => {
+//   const images = props.images;
+//   const profile_id = props.profile_id;
+//   const totalLeft: number = 6 - +(props.images ? props.images?.length : 0);
+//   const history = useHistory();
+//   return (
+//     <Row gutter={16} className="mt-1" style={{ padding: '20px' }}>
+//       {images?.map((value: any, index: number) => (
+//         <SortableItem
+//           key={value.id}
+//           index={index}
+//           value={value}
+//           distance={2}
+//           pressDelay={100}
+//           profile_id={profile_id}
+//           sortIndex={value.index}
+//         />
+//       ))}
 
-      {totalLeft
-        ? Array(totalLeft)
-            .fill(null)
-            .map((_, index: number) => (
-              <Col span={8} className="mb-1 image" key={index}>
-                <Button
-                  type="text"
-                  block
-                  className="image-upload-box"
-                  onClick={() => history.push('/profile-image-upload', { profile_id: profile_id })}
-                >
-                  <PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} />
-                </Button>
-              </Col>
-            ))
-        : null}
-    </Row>
-  );
-});
+//       {totalLeft
+//         ? Array(totalLeft)
+//             .fill(null)
+//             .map((_, index: number) => (
+//               <Col span={8} className="mb-1 image" key={index}>
+//                 <Button
+//                   type="text"
+//                   block
+//                   className="image-upload-box"
+//                   onClick={() => history.push('/profile-image-upload', { profile_id: profile_id })}
+//                 >
+//                   <PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} />
+//                 </Button>
+//               </Col>
+//             ))
+//         : null}
+//     </Row>
+//   );
+// });
 
-const renderSkelton = () => {
-  return (
-    <Row gutter={16} className="mt-1" style={{ padding: '20px' }}>
-      {Array(6)
-        .fill(null)
-        .map((_, index: number) => (
-          <Col span={8} className="mb-1 image image-skelton" key={index}>
-            <Skeleton.Image />
-          </Col>
-        ))}
-    </Row>
-  );
-};
-
-const SortableItem = SortableElement(({ value, profile_id }: any) => {
-  const history = useHistory();
-  return (
-    profile_id && (
-      <Col span={8} className="mb-1 image">
-        <Button type="text" block style={{ padding: 0 }} className="image-upload-image-box">
-          <img
-            src={value.thumb}
-            alt={value.caption}
-            className="image-upload-image-box"
-            onClick={() =>
-              history.push('/profile-image-upload', { profile_id: profile_id, image: value })
-            }
-            loading={value.thumb}
-          />
-        </Button>
-      </Col>
-    )
-  );
-});
-
-const listdata = [
-  { name: 'Profile', link: '/user/detail' },
-  { name: 'Profile Users ', link: '/profile-users' },
-  { name: 'Preference', link: '/preference' },
-  { name: 'Account', link: '/account' },
-  { name: 'Help', link: '/help' },
-];
+// const SortableItem = SortableElement(({ value, profile_id }: any) => {
+//   const history = useHistory();
+//   return (
+//     profile_id && (
+//       <Col span={8} className="mb-1 image">
+//         <Button type="text" block style={{ padding: 0 }} className="image-upload-image-box">
+//           <img
+//             src={value.thumb}
+//             alt={value.caption}
+//             className="image-upload-image-box"
+//             onClick={() =>
+//               history.push('/profile-image-upload', { profile_id: profile_id, image: value })
+//             }
+//             loading={value.thumb}
+//           />
+//         </Button>
+//       </Col>
+//     )
+//   );
+// });

@@ -35,11 +35,12 @@ const Shortlist = (props: any) => {
 
   const members = props.user.profile.members;
   const LikesByOptions = CheckboxOptions(members, props.user);
+  //const defaultCheckedList = ArrayIDS(members, props.user.id);
 
   const [filterDRawer, setFilterDrawer] = useState(false);
   const [likedBy, setLikedBy] = useState(ArrayIDS(members, props.user.id));
 
-  const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
+  // const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
   const [likeMe, setLikeMe] = useState(true);
 
   const getShortlisted = async (params?: Object) => {
@@ -84,10 +85,17 @@ const Shortlist = (props: any) => {
     getShortlisted(params);
   };
 
-  const onCheckAllChange = (e: any) => {
-    setLikeByMe(e.target.checked);
-    setLikedBy(e.target.checked ? ArrayIDS(members, props.user.id) : ([] as Array<number>));
-  };
+  // const onCheckAllChange = (e: any) => {
+  //   console.log(likedBy);
+  //   setbtnLoading(true);
+  //   if (e.target.checked) {
+  //     setLikedBy(defaultCheckedList);
+  //   } else {
+  //     setLikedBy([]);
+  //   }
+  //   setLikeByMe(e.target.checked);
+  //   setbtnLoading(false);
+  // };
 
   const onchangeLikeMe = (e: any) => {
     setLikeMe(e.target.checked);
@@ -95,7 +103,6 @@ const Shortlist = (props: any) => {
 
   const onChangeLikeBy = (checkedValues: any) => {
     setLikedBy(checkedValues);
-    setLikeByMe(LikesByOptions.length === checkedValues.length);
   };
 
   return (
@@ -145,16 +152,17 @@ const Shortlist = (props: any) => {
         closable={true}
         visible={filterDRawer}
       >
-        <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
+        {/* <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
           Show the people I liked
-        </Checkbox>
+        </Checkbox> */}
 
-        <Checkbox.Group
-          options={LikesByOptions}
-          defaultValue={[...likedBy]}
-          onChange={onChangeLikeBy}
-          className="mx-1"
-        />
+        {LikesByOptions && (
+          <Checkbox.Group
+            options={LikesByOptions}
+            defaultValue={likedBy}
+            onChange={onChangeLikeBy}
+          />
+        )}
 
         <Checkbox checked={likeMe} onClick={onchangeLikeMe}>
           Show people who liked me
@@ -214,6 +222,7 @@ interface ICSProps {
   members?: Array<any>;
   content: any;
 }
+
 const ContactMenu = (props: ICSProps) => {
   return (
     <Drawer
@@ -255,7 +264,7 @@ export const CheckboxOptions = (value: Array<IOption>, user: IUser): Array<IOpti
   if (user) {
     data.push({ label: 'Liked by me', value: user.id });
   }
-  if (value.length) {
+  if (value?.length) {
     value?.map((i: any) =>
       data.push({ label: ` Liked by ${i.name ? i.name : i.sub_role}`, value: i.id })
     );

@@ -99,7 +99,11 @@ body {
   .nav-link.active,
   .nav-link:active,
   .nav-link:focus,
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-icon.active,
+  .nav-icon:active,
+  .nav-icon:focus,
+  .nav-icon:hover {
     background: #db4949;
     color: #fff;
   }
@@ -464,19 +468,39 @@ body {
 }
 
 .profile-buttons {
-  margin: 20px 0 !important;
+  border: none !important;
+  margin: 1rem 0 !important;
   width: 100%;
-  .ant-list-item a {
-    color: #000;
-    font-weight: 300;
-    letter-spacing: -0.333333px;
-    width: 100%;
+  .ant-list-item {
+    border: none;
+    border-top: 1px solid #cdcdcd;
+    a {
+      color: #000;
+      font-weight: 300;
+      letter-spacing: -0.333333px;
+      width: 100%;
+    }
   }
   .ant-btn-block {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
     text-align: left !important;
   }
 }
 
+.user-profile-box {
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin: 1rem 0;
+  img {
+    border-radius: 100%;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
 .image-skelton {
   .ant-skeleton-element,
   .ant-skeleton-image {
@@ -518,13 +542,13 @@ body {
 }
 
 @media (max-width: 768px) {
+  .find-actions-buttons {
+    width: 100%;
+  }
   .user-name-tile h3 {
     font-size: 18px;
   }
   .shortlist-buttons {
-    width: 100%;
-  }
-  .find-actions-buttons {
     width: 100%;
   }
 }

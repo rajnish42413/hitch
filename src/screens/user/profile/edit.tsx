@@ -16,7 +16,6 @@ import Salary from '../../../components/form/Salary';
 interface IProps {
   user: IUser;
   updateUser: any;
-  setDisable: any;
 }
 export default function EditProfile(props: IProps) {
   const [form] = Form.useForm();
@@ -43,12 +42,12 @@ export default function EditProfile(props: IProps) {
       const { data } = await Axios.post('user/profile/update', values);
       setTimeout(show, 0);
       setChanged(false);
-      props.setDisable(false);
+      // props.setDisable(false);
       message.success('Profile updated successfully');
       props.updateUser(data);
     } catch (error) {
       setTimeout(show, 0);
-      props.setDisable(false);
+      // props.setDisable(false);
       if (error.response.data.errors) {
         setChanged(false);
         const { max_education, salary_range, Workplace, height } = error.response.data.errors;
@@ -73,7 +72,7 @@ export default function EditProfile(props: IProps) {
       onFinish={onSubmit}
       onValuesChange={() => {
         setChanged(true);
-        props.setDisable(true);
+        // props.setDisable(true);
       }}
     >
       <Form.Item

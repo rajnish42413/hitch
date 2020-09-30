@@ -31,9 +31,11 @@ export default function PJCard({
 }: ISProps) {
   const { profile } = data;
   const { detail, members } = profile;
-
   const redirect = {
-    pathname: `/shortlist/user/${profile.id}`,
+    pathname:
+      data.profile_id !== profile_id
+        ? `/shortlist/user/${profile.id}`
+        : `/likes/user/${profile.id}`,
     state: { data_id: data.id },
   };
 
@@ -142,7 +144,7 @@ interface ILProps {
   profile_id: number;
 }
 const LikeandMatchAttributes = ({ data, profile_id }: ILProps) => {
-  if (data.status === 2) {
+  if (data.status === 1 && data.accepted_by) {
     return (
       <div className="likes-attribute-box">
         <Icon component={Matchvg} style={{ fontSize: '1.5rem' }} /> Its a match
