@@ -11,10 +11,10 @@ export const colors = {
 export const googleAPI = 'AIzaSyDP2-M-ZAPEpx2RLkOpdBGcwMaop8q0480';
 
 // for dev
-//export const APP_URL = 'https://dev.pakkijodi.com/api/';
+export const APP_URL = 'https://dev.pakkijodi.com/api/';
 
 //for development
-export const APP_URL = 'http://127.0.0.1:8000/api/';
+//export const APP_URL = 'http://127.0.0.1:8000/api/';
 
 export const FB_APP_ID = '576329929713047';
 
