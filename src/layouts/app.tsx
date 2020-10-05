@@ -9,7 +9,7 @@ interface Iprops {
 }
 export default function AppLayout(props: Iprops) {
   return (
-    <Layout>
+    <Layout className="pj-app-layout">
       <Layout.Content className="main main-container">{props.children}</Layout.Content>
     </Layout>
   );

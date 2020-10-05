@@ -10,17 +10,19 @@ interface Iprops {
   children: any;
   goBack?: boolean;
   header?: boolean;
+  classsName?: string;
 }
 export default function AuthLayout(props: Iprops) {
   const goBack = props.goBack || true;
   const header = props.header;
   const customStyle = {
-    backgroundColor: '#EEE0CA',
+    backgroundColor: '#eee0ca',
     padding: '0 1rem',
   };
   const style = { ...customStyle, ...props.style };
+  document.body.style.backgroundColor = '#eee0ca';
   return (
-    <Layout>
+    <Layout className="pj-auth-layout">
       {header && <AuthHeader goBack={goBack} />}
       <Layout.Content className="main" style={style}>
         {props.children}

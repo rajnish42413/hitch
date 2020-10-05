@@ -17,6 +17,7 @@ interface IProps {
 
 export default function UserProfileDetail(props: IProps) {
   const user = props.profile;
+  console.log(user);
   return user ? (
     <>
       {profileCarasole(user)}

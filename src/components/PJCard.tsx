@@ -91,13 +91,15 @@ export default function PJCard({
             />
             <div className="profile-detail-box small">
               <Row justify="space-between" className="title-row" align="middle">
-                <Col span={16}>
+                <Col span={20}>
                   <Typography>
                     <Typography.Title level={5}>{profile.name}</Typography.Title>
-                    <p>Brahmin in Delhi, India</p>
+                    <p>
+                      {profile.detail?.community} in {profile.detail?.city}, India
+                    </p>
                   </Typography>
                 </Col>
-                <Col span={8} className="text-center">
+                <Col span={4} className="text-center">
                   <Typography>
                     <Typography.Title level={4} style={{ textAlign: 'right' }}>
                       {getHeightWithLabelFromValue(profile.detail?.height)}

@@ -36,7 +36,7 @@ export default function AuthHeader(props: IProps) {
 
 export const HeaderSkelaton = (props: any) => {
   return (
-    <Layout.Header className="home-header">
+    <Layout.Header>
       <div className="main">{props.children}</div>
     </Layout.Header>
   );

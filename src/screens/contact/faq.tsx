@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Typography } from 'antd';
 import AppLayout from '../../layouts/app';
-import BottomFooter from '../find/Footer';
 import TopHeader from '../find/Header';
 
 const { Content } = Layout;
@@ -30,11 +29,11 @@ export default function FAQ() {
   ];
   return (
     <AppLayout>
-      <TopHeader backHeadertitle="Help" backHeader={true} />
+      <TopHeader backHeadertitle="Help/FAQ" backHeader={true} />
       <Content style={{ padding: '20px' }}>
         {data.map((item: any, i: number) => (
           <Typography key={i}>
-            <Typography.Title level={4}>
+            <Typography.Title level={5}>
               {i + 1 + '. '}
               {item.question}
             </Typography.Title>
@@ -44,7 +43,6 @@ export default function FAQ() {
           </Typography>
         ))}
       </Content>
-      <BottomFooter />
     </AppLayout>
   );
 }

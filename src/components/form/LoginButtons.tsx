@@ -48,7 +48,9 @@ function LoginButtons(props: any) {
   };
 
   const accountVerification = async (values: any) => {
-    if (!values.email) {
+    const { email } = values;
+
+    if (!email) {
       history.push('/phone-number', values);
       return;
     }

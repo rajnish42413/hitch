@@ -71,6 +71,19 @@
       max_age:number
   }
 
+  export interface IEducation {
+    id: number;
+    user_id: number;
+    edu_level: string;
+    edu_degree: string;
+    college_name: string;
+    start_at: string;
+    end_at: string;
+    status: number;
+    created_at: Date;
+    updated_at: Date;
+}
+
   export interface IProfile {
       id: number;
       name: string;
@@ -88,6 +101,7 @@
       members?: IMember[];
       preference?: IPreference;
       image?:IImage;
+      educations?:IEducation[]
   }
 
 

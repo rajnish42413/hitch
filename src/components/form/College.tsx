@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { AutoComplete, Form, Select, Typography } from 'antd';
 import { colleges } from '../../constants/collegesData.json';
+import { IEducation } from '../../schemas/IProfile';
 const { Option } = AutoComplete;
 
 interface IProps {
-  initialValue?: string | Number;
-  field: any;
+  initialValue?: IEducation;
+  field?: any;
 }
 
 export default function College(props: IProps) {
@@ -28,10 +29,10 @@ export default function College(props: IProps) {
       <Form.Item
         {...props.field}
         key={0}
-        name={[props.field.name, 'max_education']}
-        fieldKey={[props.field.fieldKey, 'max_education']}
+        name={props.field ? [props.field.name, 'max_education'] : 'max_education'}
+        fieldKey={props.field ? [props.field.fieldKey, 'max_education'] : 'max_education'}
         rules={[{ required: true, message: 'Please Select your highest attained!' }]}
-        initialValue={props.initialValue}
+        initialValue={props.initialValue?.edu_level}
       >
         <Select placeholder="Highest Attained">
           <Select.Option value="School">School</Select.Option>
@@ -48,10 +49,10 @@ export default function College(props: IProps) {
       <Form.Item
         {...props.field}
         key={1}
-        name={[props.field.name, 'college_name']}
-        fieldKey={[props.field.fieldKey, 'college_name']}
+        name={props.field ? [props.field.name, 'college_name'] : 'college_name'}
+        fieldKey={props.field ? [props.field.fieldKey, 'college_name'] : 'college_name'}
         rules={[{ required: true, message: 'Please input your college name!' }]}
-        initialValue={props.initialValue}
+        initialValue={props.initialValue?.college_name}
       >
         <AutoComplete placeholder="College" onSearch={handleSearch}>
           {list &&

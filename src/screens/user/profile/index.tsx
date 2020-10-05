@@ -130,7 +130,7 @@ const UserProfile = (props: any) => {
 
           <List className="profile-buttons">
             <List.Item>
-              <Link to="/user/detail">
+              <Link to="/profile-users">
                 <Button type="text" block>
                   <Icon component={AddSvg} style={{ fontSize: '2rem' }} /> Add friends/family
                 </Button>

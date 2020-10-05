@@ -35,6 +35,19 @@ interface Detail {
   workspace?: any;
 }
 
+interface IEducation {
+  id: number;
+  user_id: number;
+  edu_level: string;
+  edu_degree: string;
+  college_name: string;
+  start_at: string;
+  end_at: string;
+  status: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
 interface IProfile {
   id: number;
   name: string;
@@ -51,6 +64,7 @@ interface IProfile {
   media?: IImage[];
   image?: IImage;
   add_members_link: string;
+  educations?:IEducation[]
 }
 
 export interface IUser {

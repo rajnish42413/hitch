@@ -12,9 +12,10 @@ import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
 import { IAction, SetUser } from '@redux/actions';
 import TopHeader from '../../../screens/find/Header';
-import { IProfile } from '../../../schemas/IProfile';
+import { IProfile, IEducation } from '../../../schemas/IProfile';
 import { getHeightWithLabelFromValue } from '@utils/helpers';
 import { IUser } from '../../../schemas/IUser';
+import { useHistory } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -30,7 +31,7 @@ const UserDetail = (props: any) => {
       />
       <Content>
         {profileCarasole(user)}
-        {profileDetail(user)}
+        <ProfileDetail user={user} />
       </Content>
     </AppLayout>
   );
@@ -50,8 +51,14 @@ const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
 
-const profileDetail = (user: IUser) => {
-  if (!user) return;
+interface IPorifleDetail {
+  user: IUser;
+}
+const ProfileDetail = ({ user }: IPorifleDetail) => {
+  const history = useHistory();
+  console.log(user);
+
+  if (!user) return <></>;
   const profile = user.profile;
   return (
     <ul className="profile-detail-list">
@@ -72,31 +79,44 @@ const profileDetail = (user: IUser) => {
             </Typography>
           </Col>
           <Col span={3}>
-            <Button type="text" href="/user/create/profile-workspace">
+            <Button
+              type="text"
+              onClick={() => history.push('/user/create/profile-workspace', { edit: true })}
+            >
               Edit
             </Button>
           </Col>
         </Row>
       </li>
 
-      <li style={{ backgroundColor: '#E0E0E0' }}>
-        <Row justify="space-between" className="title-row" align="middle">
-          <Col span={5} className="text-center">
-            <SafetyOutlined style={{ fontSize: '2rem' }} />
-          </Col>
-          <Col span={16}>
-            <Typography>
-              <Typography.Title level={4}>{profile.detail?.max_education}</Typography.Title>
-              <p>{profile.detail?.college_name}</p>
-            </Typography>
-          </Col>
-          <Col span={3}>
-            <Button type="text" href="/user/create/profile-education">
-              Edit
-            </Button>
-          </Col>
-        </Row>
-      </li>
+      {profile.educations?.map((education: IEducation, i: number) => (
+        <li style={{ backgroundColor: '#E0E0E0' }} key={i}>
+          <Row justify="space-between" className="title-row" align="middle">
+            <Col span={5} className="text-center">
+              <SafetyOutlined style={{ fontSize: '2rem' }} />
+            </Col>
+            <Col span={16}>
+              <Typography>
+                <Typography.Title level={4}>{education?.edu_level}</Typography.Title>
+                <p>{education?.college_name}</p>
+              </Typography>
+            </Col>
+            <Col span={3}>
+              <Button
+                type="text"
+                onClick={() =>
+                  history.push('/user/create/profile-education', {
+                    edit: true,
+                    education: education,
+                  })
+                }
+              >
+                Edit
+              </Button>
+            </Col>
+          </Row>
+        </li>
+      ))}
 
       <li style={{ backgroundColor: '#D9D9D9' }}>
         <Row justify="space-between" className="title-row" align="middle">
@@ -109,9 +129,7 @@ const profileDetail = (user: IUser) => {
               <p>{profile.detail?.marital_status}</p>
             </Typography>
           </Col>
-          <Col span={3}>
-            <Button type="text">Edit</Button>
-          </Col>
+          <Col span={3}>{/* <Button type="text">Edit</Button> */}</Col>
         </Row>
       </li>
 
@@ -126,9 +144,7 @@ const profileDetail = (user: IUser) => {
               <p>{'Vegetarian'}</p>
             </Typography>
           </Col>
-          <Col span={3}>
-            <Button type="text">Edit</Button>
-          </Col>
+          <Col span={3}>{/* <Button type="text">Edit</Button> */}</Col>
         </Row>
       </li>
 
@@ -144,7 +160,16 @@ const profileDetail = (user: IUser) => {
             </Typography>
           </Col>
           <Col span={3}>
-            <Button type="text">Edit</Button>
+            <Button
+              type="text"
+              onClick={() =>
+                history.push('/user/introduction', {
+                  edit: true,
+                })
+              }
+            >
+              Edit
+            </Button>
           </Col>
         </Row>
       </li>

@@ -1,7 +1,7 @@
 import React, { Dispatch, useState } from 'react';
 import { Form, Button, Typography, message } from 'antd';
 import AuthLayout from '../../../layouts/auth';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import AuthFooter from '../../../layouts/auth/footer';
 import { renderTitle } from '@utils/helpers';
 import { IAppState } from '@redux/reducers';
@@ -12,13 +12,17 @@ import Workplace from '../../../components/form/Workplace';
 import Designation from '../../../components/form/Designation';
 import Salary from '../../../components/form/Salary';
 import Axios from 'axios';
+import '../../../layouts/styles/app.less';
 
 const ProfileWorkplace = (props: any) => {
   const [form] = Form.useForm();
   const history = useHistory();
-  const [step, setStep] = useState(0);
+  const { state } = useLocation();
   const [btnLoading, setBtnLoading] = useState(false);
   const user = props.user;
+  const edit = state?.edit;
+  const detail = user.profile?.detail;
+  const [step, setStep] = useState(edit ? 2 : 0);
 
   const onFinish = async (values: any) => {
     const { workplace, designation, salary_range } = values;
@@ -49,7 +53,7 @@ const ProfileWorkplace = (props: any) => {
       props.setUser(data);
       setBtnLoading(false);
       message.success('Profile updated successfully');
-      history.push('/user/create/great-job');
+      handleRedirect();
     } catch (error) {
       setTimeout(show, 0);
       if (error.response?.data?.errors) {
@@ -62,15 +66,23 @@ const ProfileWorkplace = (props: any) => {
     }
   };
 
+  const handleRedirect = () => {
+    if (edit) {
+      history.go(-1);
+      return;
+    }
+    history.push('/user/create/great-job');
+  };
+
   return (
-    <AuthLayout header={true}>
+    <AuthLayout header={true} classsName="auth-header">
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
             {renderTitle(user.sub_role, 'workplace_title', user.profile.gender, user.profile.name)}
           </Typography.Title>
         </Typography>
-        <Workplace />
+        <Workplace initialValue={detail?.workplace} />
 
         {step >= 1 && step <= 2 && (
           <>
@@ -79,7 +91,7 @@ const ProfileWorkplace = (props: any) => {
                 {renderTitle(user.sub_role, 'designation_title', user.gender, user.profile.name)}
               </Typography.Title>
             </Typography>
-            <Designation />
+            <Designation initialValue={detail?.designation} />
           </>
         )}
 
@@ -90,7 +102,7 @@ const ProfileWorkplace = (props: any) => {
                 {renderTitle(user.sub_role, 'salary_title', user.gender, user.profile.name)}{' '}
               </Typography.Title>
             </Typography>
-            <Salary />
+            <Salary initialValue={detail?.salary_range} />
           </>
         )}
 

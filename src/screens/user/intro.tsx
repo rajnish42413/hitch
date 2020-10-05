@@ -8,13 +8,15 @@ import { IAppState } from '@redux/reducers';
 import { IAction, SetTourVisibility, SetUser } from '@redux/actions';
 import { IUser } from 'src/schemas/IUser';
 import AuthFooter from '../../layouts/auth/footer';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const UserIntro = (props: any) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const [btnLoading, setBtnLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
+  const { state } = useLocation();
+  const edit = state?.edit;
   const { user } = props;
 
   const onFinish = async (values: any) => {
@@ -26,6 +28,10 @@ const UserIntro = (props: any) => {
       const { data } = await Axios.put(`/profiles/${profile_id}/introduction`, { intro: intro });
       setTimeout(show, 0);
       props.setUser(data);
+      if (edit) {
+        history.go(-1);
+        return;
+      }
       props.setTourVisibal(true);
       setBtnLoading(false);
       redirectToHome();
@@ -45,7 +51,7 @@ const UserIntro = (props: any) => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout header={edit ? true : false}>
       {user ? (
         <Form
           name="basic"
@@ -63,6 +69,7 @@ const UserIntro = (props: any) => {
           <Form.Item
             name="intro"
             rules={[{ required: true, message: 'Please input your introduction!' }]}
+            initialValue={user.profile?.detail?.intro}
           >
             <Input.TextArea rows={5} placeholder="Here goes my introduction" maxLength={255} />
           </Form.Item>
@@ -87,7 +94,7 @@ const UserIntro = (props: any) => {
 
             {!updated && (
               <Button className="btn-dark" htmlType="submit" block disabled={btnLoading}>
-                Submit
+                {edit ? 'Save' : 'Submit'}
               </Button>
             )}
           </AuthFooter>

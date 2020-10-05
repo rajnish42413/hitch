@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Card, Collapse, Layout, Modal, Typography } from 'antd';
 import AppLayout from '../../layouts/app';
-import BottomFooter from '../find/Footer';
 import { CaretRightOutlined } from '@ant-design/icons';
 import TopHeader from '../find/Header';
 
@@ -99,7 +98,6 @@ const UserAccount = (props: any) => {
           </Collapse>
         </Card>
       </Content>
-      <BottomFooter />
     </AppLayout>
   );
 };

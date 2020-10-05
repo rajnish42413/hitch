@@ -33,14 +33,14 @@ const Shortlist = (props: any) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
 
-  const members = props.user.profile.members;
+  const [members, setMembers] = useState(props.user.profile.members);
   const LikesByOptions = CheckboxOptions(members, props.user);
-  //const defaultCheckedList = ArrayIDS(members, props.user.id);
+  const defaultCheckedList = ArrayIDS(members, props.user.id);
 
   const [filterDRawer, setFilterDrawer] = useState(false);
   const [likedBy, setLikedBy] = useState(ArrayIDS(members, props.user.id));
 
-  // const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
+  const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
   const [likeMe, setLikeMe] = useState(true);
 
   const getShortlisted = async (params?: Object) => {
@@ -48,8 +48,6 @@ const Shortlist = (props: any) => {
     const { data } = await Axios.get(`shortlists`, { params: { ...params } });
     setData(data);
     setShortlistedData(data.list);
-    setLikeMe(data.likes_me);
-    setLikedBy(data.liked_by);
     setLoading(false);
   };
 
@@ -60,12 +58,10 @@ const Shortlist = (props: any) => {
     setShortlistedData(d);
   };
 
-  // const getLikes = async () => {
-  //   setLoading(true);
-  //   const { data } = await Axios.get(`likes`);
-  //   setLikesData(data);
-  //   setLoading(false);
-  // };
+  const getMembers = async () => {
+    const { data } = await Axios.get(`user/members`);
+    setMembers(data);
+  };
 
   const reload = () => {
     setDrawerOpened(false);
@@ -74,6 +70,7 @@ const Shortlist = (props: any) => {
   };
 
   useEffect(() => {
+    getMembers();
     getShortlisted();
   }, []);
 
@@ -81,21 +78,20 @@ const Shortlist = (props: any) => {
     const params = {
       liked_by: likedBy,
       likes_me: likeMe ? 1 : 0,
+      filter: true,
     };
     getShortlisted(params);
   };
 
-  // const onCheckAllChange = (e: any) => {
-  //   console.log(likedBy);
-  //   setbtnLoading(true);
-  //   if (e.target.checked) {
-  //     setLikedBy(defaultCheckedList);
-  //   } else {
-  //     setLikedBy([]);
-  //   }
-  //   setLikeByMe(e.target.checked);
-  //   setbtnLoading(false);
-  // };
+  const onCheckAllChange = (e: any) => {
+    console.log(likedBy);
+    if (e.target.checked) {
+      setLikedBy(defaultCheckedList);
+    } else {
+      setLikedBy([]);
+    }
+    setLikeByMe(e.target.checked);
+  };
 
   const onchangeLikeMe = (e: any) => {
     setLikeMe(e.target.checked);
@@ -151,16 +147,18 @@ const Shortlist = (props: any) => {
         placement="bottom"
         closable={true}
         visible={filterDRawer}
+        height="50vh"
       >
-        {/* <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
+        <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
           Show the people I liked
-        </Checkbox> */}
+        </Checkbox>
 
         {LikesByOptions && (
           <Checkbox.Group
             options={LikesByOptions}
             defaultValue={likedBy}
             onChange={onChangeLikeBy}
+            style={{ margin: '0 1rem' }}
           />
         )}
 
