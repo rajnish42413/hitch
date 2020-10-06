@@ -116,7 +116,7 @@ export default function PJCard({
             <Col span={20}>
               <Typography>
                 <Typography.Title level={4}>
-                  {detail.designation} at {detail.workplace}
+                  {detail?.designation} at {detail?.workplace}
                 </Typography.Title>
                 <p>
                   {'>'}
