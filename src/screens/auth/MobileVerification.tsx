@@ -45,6 +45,7 @@ const MobileVerification = (props: any) => {
         phone: phone,
         countryCode: countryCode,
         ref_code: params.ref ? params.ref : '',
+        test_otp:true
       });
       if (data?.user) {
         history.push('/verify-phone-number', data.user);
