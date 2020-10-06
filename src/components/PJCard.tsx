@@ -95,7 +95,7 @@ export default function PJCard({
                   <Typography>
                     <Typography.Title level={5}>{profile.name}</Typography.Title>
                     <p>
-                      {profile.detail?.community} in {profile.detail?.city}, India
+                      {profile?.detail?.community} in {profile?.detail?.city}, India
                     </p>
                   </Typography>
                 </Col>
@@ -116,11 +116,11 @@ export default function PJCard({
             <Col span={20}>
               <Typography>
                 <Typography.Title level={4}>
-                  {detail?.designation} at {detail?.workplace}
+                  {profile?.detail?.designation} at {profile?.detail?.workplace}
                 </Typography.Title>
                 <p>
                   {'>'}
-                  {detail?.salary_range} per annum
+                  {profile?.detail?.salary_range} per annum
                 </p>
               </Typography>
             </Col>
