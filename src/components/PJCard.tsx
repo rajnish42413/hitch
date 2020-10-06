@@ -30,7 +30,7 @@ export default function PJCard({
   profile_id,
 }: ISProps) {
   const { profile } = data;
-  const { detail, members } = profile;
+  const { members } = profile;
   const redirect = {
     pathname:
       data.profile_id !== profile_id
