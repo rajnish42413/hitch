@@ -20,3 +20,6 @@ export const FB_APP_ID = '576329929713047';
 
 export const GOOGLE_APP_ID =
   '854831458848-v5a47183ok2ddtcgpf2mdkbp3io087e2.apps.googleusercontent.com';
+
+export const RAZORPAY_KEY_ID = 'rzp_test_74vbGHcjiyPSZF';
+export const RAZORPAY_KEY_SECRET = '1Nl1t3O3BXmmRBTgKfzm8uyR';

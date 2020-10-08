@@ -129,7 +129,19 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
               <p>{profile.detail?.marital_status}</p>
             </Typography>
           </Col>
-          <Col span={3}>{/* <Button type="text">Edit</Button> */}</Col>
+          <Col span={3}>
+            {' '}
+            <Button
+              type="text"
+              onClick={() =>
+                history.push('/user/create/profile-maritial-status', {
+                  edit: true,
+                })
+              }
+            >
+              Edit
+            </Button>
+          </Col>
         </Row>
       </li>
 

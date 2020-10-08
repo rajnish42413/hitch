@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from 'react';
 import { Button, message, Result, Alert, Modal, Card, Layout } from 'antd';
 import AppLayout from '../../layouts/app';
-import { LeftOutlined, RightOutlined, HeartFilled } from '@ant-design/icons';
+import Icon, { LeftOutlined, RightOutlined, HeartFilled } from '@ant-design/icons';
 import { colors } from '@constants/general';
 import TopHeader from './Header';
 import UserProfileDetail from '../../components/UserProfileDetail';
@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 import { IUser } from '../../schemas/IUser';
 import { IAction, SetTourVisibility, SetUser } from '@redux/actions';
 import { IAppState } from '@redux/reducers';
+import { ReactComponent as HeartSvg } from '../../assets/icons/Heart_wh.svg';
+import { ReactComponent as JodiHeartSvg } from '../../assets/icons/Heart_Red.svg';
 
 const Home = (props: any) => {
   const [list, setlist] = useState([] as Array<IProfile>);
@@ -118,6 +120,16 @@ const Home = (props: any) => {
                       <HeartFilled /> Are you the one?
                     </button>
                   </div>
+                  <div className="actions-buttons">
+                    <button
+                      type="button"
+                      className="btn-see-jodi"
+                      onClick={() => setSuggestion(true)}
+                    >
+                      <Icon component={HeartSvg} />
+                      See Jodi
+                    </button>
+                  </div>
                 </div>
               </Layout.Footer>
 
@@ -127,26 +139,30 @@ const Home = (props: any) => {
                 onCancel={() => setSuggestion(!suggestion)}
                 centered
                 footer={null}
+                width={350}
               >
-                <Card className="suggestion-box-modal mt-2">
+                <Card className="suggestion-box-modal mt-2" bordered={false}>
                   <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
-                    <div style={{ width: '100%' }}>
-                      <img
-                        src={props?.user?.profile?.media[0]?.thumb}
-                        alt={props?.user?.name}
-                        width="100%"
-                      />
-                      <p>{props?.user?.profile?.name}</p>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <img
-                        src={list[current]?.media?.[0]?.thumb}
-                        alt={list[current]?.name}
-                        width="100%"
-                      />
-                      <p>{list[current]?.name}</p>
-                    </div>
+                    <img
+                      src={props?.user?.profile?.media[0]?.thumb}
+                      alt={props?.user?.name}
+                      width="150px"
+                      height="150px"
+                    />
+                    <img
+                      src={list[current]?.media?.[0]?.thumb}
+                      alt={list[current]?.name}
+                      width="150px"
+                      height="150px"
+                    />
                   </div>
+                  <p style={{ fontWeight: 'bold' }}>
+                    <Icon
+                      component={JodiHeartSvg}
+                      style={{ fontSize: '32px', position: 'relative', top: '10px' }}
+                    />{' '}
+                    {list[current]?.name} {'&'} {props?.user?.profile?.name}
+                  </p>
                 </Card>
               </Modal>
             </>
@@ -234,6 +250,7 @@ export const renderUserStatus = (status: number, setUser: any) => {
         message={`Your Profile is under processing !`}
         type="warning"
         closable
+        className="mt-1"
         description={
           <Button type="link" size="small" onClick={() => getUser()}>
             Refresh
@@ -256,6 +273,7 @@ export const renderUserStatus = (status: number, setUser: any) => {
         }
         type="info"
         showIcon
+        className="mt-1"
         closable
       />
     );
@@ -266,6 +284,7 @@ export const renderUserStatus = (status: number, setUser: any) => {
         message="Your Profile is under re-verification !"
         type="warning"
         closable
+        className="mt-1"
         description={
           <Button type="link" size="small" onClick={() => getUser()}>
             Refresh
@@ -281,6 +300,7 @@ export const renderUserStatus = (status: number, setUser: any) => {
         message="Your Profile rejected by system"
         type="error"
         closable
+        className="mt-1"
         description={
           <Button type="link" size="small" onClick={() => getUser()}>
             Refresh

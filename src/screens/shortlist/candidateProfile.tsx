@@ -131,8 +131,9 @@ export default function CandidateProfile(props: any) {
             <Layout.Footer className="find-actions-buttons">
               <div className="main">
                 <div className="actions-buttons">
-                  <button
+                  <Button
                     className="btn-pass"
+                    type="text"
                     onClick={() => {
                       setDrawerContent(callMenu);
                       setDrawerOpened(true);
@@ -140,17 +141,16 @@ export default function CandidateProfile(props: any) {
                     style={{ width: '50%' }}
                   >
                     <PhoneFilled color="#fff" /> Call
-                  </button>
+                  </Button>
 
-                  <Button
-                    type="text"
+                  <a
                     className="btn-accept"
                     style={{ width: '50%' }}
                     href={`https://wa.me/+91${profile.phone}?text=${encodeURI(msg)}`}
                   >
                     {' '}
                     <MessageFilled color="#fff" /> Message
-                  </Button>
+                  </a>
                 </div>
               </div>
             </Layout.Footer>

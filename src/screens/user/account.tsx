@@ -1,19 +1,76 @@
-import React from 'react';
-import { Button, Card, Collapse, Layout, Modal, Typography } from 'antd';
+import React, { useEffect } from 'react';
+import { Button, Card, Collapse, Layout, Typography } from 'antd';
 import AppLayout from '../../layouts/app';
 import { CaretRightOutlined } from '@ant-design/icons';
 import TopHeader from '../find/Header';
+import { IAppState } from '@redux/reducers';
+import { connect } from 'react-redux';
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
-const success = () => {
-  Modal.success({
-    content: 'Already Subscribe Platinum Plan !',
-  });
-};
+// const success = () => {
+//   Modal.success({
+//     content: 'Already Subscribe Platinum Plan !',
+//   });
+// };
 
 const UserAccount = (props: any) => {
+  const { user } = props;
+
+  const handlePayment = (amount: number, plan: string) => {
+    alert();
+    // var instance = new Razorpay({
+    //   key_id: 'rzp_test_74vbGHcjiyPSZF',
+    //   key_secret: '1Nl1t3O3BXmmRBTgKfzm8uyR',
+    // });
+    // instance.orders
+    //   .create({
+    //     amount: 500,
+    //     currency: 'IRN',
+    //     receipt: 'PJ00347864734',
+    //     payment_capture: 'true',
+    //     notes: '',
+    //   })
+    //   .then((response: any) => {
+    //     // handle success
+    //     console.log(response);
+    //   })
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //   });
+
+    let options = {
+      key: 'rzp_test_74vbGHcjiyPSZF',
+      key_secret: '1Nl1t3O3BXmmRBTgKfzm8uyR',
+      amount: +amount * 100, // 2000 paise = INR 20, amount in paisa
+      name: 'PAKKIJODI',
+      description: `Purchase PakkiJodi ${plan} Memebership plan`,
+      handler: function (response: any) {
+        console.log(response);
+        alert(response.razorpay_payment_id);
+      },
+      prefill: {
+        name: user.name,
+        email: user?.email,
+        contact: user.countryCode + user?.phone,
+      },
+      notes: {
+        address: 'Hello World',
+      },
+    };
+
+    let rzp = new (window as any).Razorpay(options);
+    rzp.open();
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <AppLayout>
       <TopHeader backHeadertitle="Account" backTo="/profile" backHeader={true} />
@@ -27,7 +84,7 @@ const UserAccount = (props: any) => {
           <span className="span w-100">4,850</span>
           <span className="span border-none">Unlimited Messages</span>
           <span className="span border-none">3 Users</span>
-          <Button block className="btn-gold-member" onClick={success}>
+          <Button block className="btn-gold-member" onClick={() => handlePayment(4850, 'Gold')}>
             Continue{' '}
           </Button>
           <Collapse
@@ -67,8 +124,8 @@ const UserAccount = (props: any) => {
           <span className="span w-100">5,950</span>
           <span className="span border-none">Unlimited Messages</span>
           <span className="span border-none">7 Users</span>
-          <Button block className="btn-gold-member" disabled>
-            Continue{' '}
+          <Button block className="btn-gold-member" onClick={() => handlePayment(5950, 'Platinum')}>
+            Continue
           </Button>
           <Collapse
             defaultActiveKey={[]}
@@ -101,4 +158,11 @@ const UserAccount = (props: any) => {
     </AppLayout>
   );
 };
-export default UserAccount;
+
+const mapStateToProps = ({ user }: IAppState) => {
+  return {
+    user: user.data,
+  };
+};
+
+export default connect(mapStateToProps)(UserAccount);

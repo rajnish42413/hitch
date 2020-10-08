@@ -15,7 +15,7 @@ const ProfileName = (props: any) => {
       ...state,
       full_name: values.firstName + ' ' + values.lastName,
     };
-    history.push('/user/create/profile-dob', data);
+    history.push('/user/create/profile-maritial-status', data);
   };
 
   return (

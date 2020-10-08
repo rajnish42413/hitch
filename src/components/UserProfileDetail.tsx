@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Carousel, Col, Row, Typography } from 'antd';
-import { IProfile } from '../schemas/IProfile';
+import { IEducation, IProfile } from '../schemas/IProfile';
 import { getHeightWithLabelFromValue } from '@utils/helpers';
 import {
   HeartOutlined,
@@ -50,19 +50,22 @@ const profileDetail = (user: IProfile) => {
           </Col>
         </Row>
       </li>
-      <li style={{ backgroundColor: '#E0E0E0' }}>
-        <Row justify="space-between" className="title-row" align="middle">
-          <Col span={8} className="text-center">
-            <SafetyOutlined style={{ fontSize: '2rem' }} />
-          </Col>
-          <Col span={16}>
-            <Typography>
-              <Typography.Title level={4}>{user.detail?.max_education}</Typography.Title>
-              <p>{user.detail?.college_name}</p>
-            </Typography>
-          </Col>
-        </Row>
-      </li>
+
+      {user?.educations?.map((education: IEducation, i: number) => (
+        <li style={{ backgroundColor: '#E0E0E0' }} key={i}>
+          <Row justify="space-between" className="title-row" align="middle">
+            <Col span={8} className="text-center">
+              <SafetyOutlined style={{ fontSize: '2rem' }} />
+            </Col>
+            <Col span={16}>
+              <Typography>
+                <Typography.Title level={4}>{education?.edu_level}</Typography.Title>
+                <p>{education?.college_name}</p>
+              </Typography>
+            </Col>
+          </Row>
+        </li>
+      ))}
 
       <li style={{ backgroundColor: '#D9D9D9' }}>
         <Row justify="space-between" className="title-row" align="middle">

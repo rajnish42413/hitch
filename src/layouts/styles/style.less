@@ -33,6 +33,7 @@ body {
     .actions-buttons {
       display: flex;
       flex-direction: row;
+      justify-content: center;
       padding: 0 2rem;
       width: 100%;
       button:hover {
@@ -56,12 +57,26 @@ body {
         width: 25%;
       }
       .btn-accept {
+        align-items: center;
         background-color: #e74c3c;
         border-bottom-right-radius: 25px;
         border-top-right-radius: 25px;
         color: #fff;
+        display: inline-flex;
+        justify-content: center;
         width: 75%;
       }
+    }
+    .btn-see-jodi {
+      align-items: center;
+      background-color: #0a66c2;
+      border-radius: 25px;
+      color: #fff;
+      display: inline-flex;
+      gap: 0.5rem;
+      height: 31px !important;
+      justify-content: center;
+      margin-top: 1rem;
     }
   }
 
@@ -528,7 +543,7 @@ body {
   background: #f3f3f3;
   border: none;
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 1rem !important;
   .flex-row {
     align-items: center;
     text-transform: capitalize;

@@ -8,6 +8,7 @@ interface Iprops {
   children: any;
 }
 export default function AppLayout(props: Iprops) {
+  document.body.style.backgroundColor = '#fff';
   return (
     <Layout className="pj-app-layout">
       <Layout.Content className="main main-container">{props.children}</Layout.Content>

@@ -16,6 +16,7 @@ import ProfileEducation from '../screens/user/create/ProfileEducation';
 import WellDone from '../screens/user/create/WellDone';
 import ProfileWorkplace from '../screens/user/create/ProfileWorkplace';
 import GreatJob from '../screens/user/create/GreatJob';
+import ProfileStatus from '../screens/user/create/profileStatus';
 
 const NotFoundPage = React.lazy(() => import('../screens/home/pages/notFound'));
 const UserCreatedWelcome = React.lazy(() => import('../screens/user/success'));
@@ -80,6 +81,7 @@ const Routes = (props: any) => (
         <PrivateRoute path="/user/create/profile-for" component={ProfileFor} />
         <PrivateRoute path="/user/create/profile-gender" component={ProfileGender} />
         <PrivateRoute path="/user/create/profile-name" component={ProfileName} />
+        <PrivateRoute path="/user/create/profile-maritial-status" component={ProfileStatus} />
         <PrivateRoute path="/user/create/profile-dob" component={ProfileDOB} />
         <PrivateRoute path="/user/create/profile-height" component={ProfileHeight} />
         <PrivateRoute path="/user/create/profile-location" component={ProfileCity} />
