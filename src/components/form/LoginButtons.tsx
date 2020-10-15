@@ -27,17 +27,45 @@ function LoginButtons(props: any) {
         },
         onCancel() {
           authToken.removeProfileRedirect();
-          handleLoginRedirect(login_profile);
+          getProfileStatus(login_profile?.detail);
         },
       });
     } else {
-      handleLoginRedirect(login_profile);
+      getProfileStatus(login_profile?.detail);
       return;
     }
   };
 
-  const handleLoginRedirect = (profile: any) => {
-    if (profile?.detail) {
+  const getProfileStatus = async (detail: boolean) => {
+    const { data } = await Axios.get('user/profile/status');
+    if (data) {
+      switch (data?.action) {
+        case 'add_basic_detail':
+          history.push('/user/welcome');
+          break;
+        case 'add_workplace_detail':
+          history.replace('/user/create/well-done');
+          break;
+        case 'add_educations_detail':
+          history.replace('user/create/good-going');
+          break;
+        case 'add_images':
+          history.push('/user/create/great-job');
+          break;
+        case 'add_profile_introduction':
+          history.replace('user/introduction');
+          break;
+        default:
+          history.replace('/home');
+          break;
+      }
+      return;
+    }
+    handleLoginRedirectWithoutData(detail);
+  };
+
+  const handleLoginRedirectWithoutData = (detail: boolean) => {
+    if (detail) {
       message.success('Verified and good to go!');
       history.push('/home');
       return;
