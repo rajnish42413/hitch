@@ -7,7 +7,7 @@ import Icon, {
   SafetyOutlined,
   SmileOutlined,
   StarOutlined,
-  BookOutlined
+  BookOutlined,
 } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
@@ -221,10 +221,10 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
 
       <li style={{ backgroundColor: '#E0E0E0' }}>
         <Row justify="space-between" className="title-row" align="middle">
-          <Col span={8} className="text-center">
+          <Col span={5} className="text-center">
             <BookOutlined style={{ fontSize: '2rem' }} />
           </Col>
-          <Col span={16}>
+          <Col span={19}>
             <Typography>
               <Typography.Title level={4}>Date of birth {'&'} Age </Typography.Title>
               {user?.date_of_birth &&

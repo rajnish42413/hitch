@@ -20,7 +20,7 @@ const ProfileCommunity = (props: any) => {
 
   useEffect(() => {
     if (!state) return history.go(-1);
-  }, []);
+  }, [state, history]);
 
   const onFinish = async (values: any) => {
     const data = {
