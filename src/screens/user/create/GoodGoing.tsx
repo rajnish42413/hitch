@@ -21,7 +21,7 @@ const GoodGoing = (props: any) => {
         <img src={logo} alt="welcomeImage" height="auto" />
         <Typography>
           <Title level={4}>
-            Good going {state.full_name}! <br /> Tell us about your education.
+            Good going {state?.full_name}! <br /> Tell us about your education.
             <p style={{ marginTop: '1rem' }} className="text-muted">
               Your education details can elevate you above others
             </p>

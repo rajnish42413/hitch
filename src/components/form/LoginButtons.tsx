@@ -47,13 +47,13 @@ function LoginButtons(props: any) {
           history.replace('/user/create/well-done');
           break;
         case 'add_educations_detail':
-          history.replace('user/create/good-going');
+          history.replace('/user/create/good-going');
           break;
         case 'add_images':
           history.push('/user/create/great-job');
           break;
         case 'add_profile_introduction':
-          history.replace('user/introduction');
+          history.replace('/user/introduction');
           break;
         default:
           history.replace('/home');
