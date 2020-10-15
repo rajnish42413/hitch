@@ -30,19 +30,21 @@ export default function PJCard({
   profile_id,
 }: ISProps) {
   const { profile } = data;
-  const { members } = profile;
-  const redirect = {
-    pathname:
-      data.profile_id !== profile_id
-        ? `/shortlist/user/${profile.id}`
-        : `/likes/user/${profile.id}`,
-    state: { data_id: data.id },
-  };
+  const members = profile?.members;
+  const redirect = profile
+    ? {
+        pathname:
+          data.profile_id !== profile_id
+            ? `/shortlist/user/${profile.id}`
+            : `/likes/user/${profile.id}`,
+        state: { data_id: data.id },
+      }
+    : {};
 
-  const callMenu = (
+  const callMenu = profile ? (
     <div className="filter-box" style={{ border: 'none' }}>
       {members?.length ? (
-        members.map((member: IMember) => (
+        members?.map((member: IMember) => (
           <Button
             type="text"
             className="btn-text mt-1 text-left"
@@ -53,17 +55,17 @@ export default function PJCard({
             <span>
               <PhoneOutlined />
             </span>{' '}
-            Call {profile.name}’s {member.sub_role}
+            Call {profile?.name}’s {member?.sub_role}
           </Button>
         ))
       ) : (
-        <Button type="text" className="btn-text text-left" href={`tel:${profile.phone}`} block>
+        <Button type="text" className="btn-text text-left" href={`tel:${profile?.phone}`} block>
           <span className="circle-icon">
             <PhoneOutlined />
           </span>
           {profile.sub_role !== 'self'
-            ? `Call ${profile.name + '’s ' + profile.sub_role}`
-            : `Call ${profile.name}`}
+            ? `Call ${profile?.name + '’s ' + profile?.sub_role}`
+            : `Call ${profile?.name}`}
         </Button>
       )}
       <Divider style={{ margin: '0.5em' }} />
@@ -76,9 +78,11 @@ export default function PJCard({
         <Icon component={DeleteSvg} style={{ fontSize: '42px' }} /> Delete Match
       </Button>
     </div>
+  ) : (
+    <> </>
   );
 
-  return (
+  return profile ? (
     <Col span={12} className="thumb-card-01">
       <Spin indicator={antIcon} spinning={profile ? false : true} key={data.id}>
         <Link to={redirect}>
@@ -138,6 +142,8 @@ export default function PJCard({
         </div>
       </Spin>
     </Col>
+  ) : (
+    <> </>
   );
 }
 

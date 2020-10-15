@@ -201,16 +201,19 @@ const renderDataList = (
     );
   return (
     <Row gutter={[16, 16]}>
-      {data?.map((item: IShortlist, index: number) => (
-        <PJCard
-          profile_id={profile_id}
-          data={item}
-          reload={reload}
-          setDrawerOpened={setDrawerOpened}
-          setDrawerContent={setDrawerContent}
-          key={index}
-        />
-      ))}
+      {data?.map(
+        (item: IShortlist, index: number) =>
+          item && (
+            <PJCard
+              profile_id={profile_id}
+              data={item}
+              reload={reload}
+              setDrawerOpened={setDrawerOpened}
+              setDrawerContent={setDrawerContent}
+              key={index}
+            />
+          )
+      )}
     </Row>
   );
 };

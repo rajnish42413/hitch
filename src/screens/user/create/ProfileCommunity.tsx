@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { Form, Button, Typography, message } from 'antd';
 import AuthLayout from '../../../layouts/auth';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -16,13 +16,17 @@ const ProfileCommunity = (props: any) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const history = useHistory();
   const { state } = useLocation();
-  console.log(state);
+  const { user } = props;
+
+  useEffect(() => {
+    if (!state) return history.go(-1);
+  }, []);
 
   const onFinish = async (values: any) => {
     const data = {
       ...state,
       community: values.community,
-      sub_role: state.signAs,
+      sub_role: state?.signAs,
     };
 
     handleSubmit(data);
@@ -55,7 +59,14 @@ const ProfileCommunity = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {renderTitle(state.signAs, 'community_title', state.gender, state.full_name)}
+            {state?.signAs && state?.gender
+              ? renderTitle(state?.signAs, 'community_title', state?.gender, state?.full_name)
+              : renderTitle(
+                  user?.profile?.sub_role,
+                  'community_title',
+                  user?.profile.gender,
+                  user.profile?.name
+                )}
           </Typography.Title>
         </Typography>
         <Community />

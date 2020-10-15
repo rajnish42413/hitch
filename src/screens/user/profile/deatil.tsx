@@ -7,13 +7,14 @@ import Icon, {
   SafetyOutlined,
   SmileOutlined,
   StarOutlined,
+  BookOutlined
 } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
 import { IAction, SetUser } from '@redux/actions';
 import TopHeader from '../../../screens/find/Header';
 import { IProfile, IEducation } from '../../../schemas/IProfile';
-import { convertToSlug, getHeightWithLabelFromValue } from '@utils/helpers';
+import { convertToSlug, getAge, getHeightWithLabelFromValue } from '@utils/helpers';
 import { IUser } from '../../../schemas/IUser';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as ShareSvg } from '../../../assets/icons/share.svg';
@@ -24,6 +25,7 @@ import {
   WhatsappShareButton,
 } from 'react-share';
 import { FB_APP_ID } from '@constants/general';
+import moment from 'moment';
 
 const { Content } = Layout;
 
@@ -213,6 +215,22 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
             >
               Edit
             </Button>
+          </Col>
+        </Row>
+      </li>
+
+      <li style={{ backgroundColor: '#E0E0E0' }}>
+        <Row justify="space-between" className="title-row" align="middle">
+          <Col span={8} className="text-center">
+            <BookOutlined style={{ fontSize: '2rem' }} />
+          </Col>
+          <Col span={16}>
+            <Typography>
+              <Typography.Title level={4}>Date of birth {'&'} Age </Typography.Title>
+              {user?.date_of_birth &&
+                `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '} 
+                ${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}
+            </Typography>
           </Col>
         </Row>
       </li>
