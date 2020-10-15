@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { Input } from 'antd';
+import { Form, Input } from 'antd';
 
 interface IProps {
   setCity: any;
@@ -41,46 +41,51 @@ class LocationAutoComplete extends Component<IProps, IState> {
 
   render() {
     return (
-      <PlacesAutocomplete
-        value={this.state.address}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
-        highlightFirstSuggestion={true}
+      <Form.Item
+        name="designation"
+        rules={[{ required: true, message: 'Please input your location!' }]}
       >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <Input
-              {...getInputProps({
-                placeholder: 'Search Places ...',
-                className: 'location-search-input ant-input ant-input-lg',
-              })}
-              value={this.state.address}
-            />
-            <div className="autocomplete-dropdown-container">
-              {loading && <div>Loading...</div>}
-              {suggestions.map((suggestion) => {
-                const className = suggestion.active
-                  ? 'ant-select-item ant-select-item-option active'
-                  : 'suggestion-item ant-select-item ant-select-item-option';
-                const style = suggestion.active
-                  ? { backgroundColor: '#ddd', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style,
-                    })}
-                    key={suggestion.index}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
-              })}
+        <PlacesAutocomplete
+          value={this.state.address}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+          highlightFirstSuggestion={true}
+        >
+          {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+            <div>
+              <Input
+                {...getInputProps({
+                  placeholder: 'Search Places ...',
+                  className: 'location-search-input ant-input ant-input-lg',
+                })}
+                value={this.state.address}
+              />
+              <div className="autocomplete-dropdown-container">
+                {loading && <div>Loading...</div>}
+                {suggestions.map((suggestion) => {
+                  const className = suggestion.active
+                    ? 'ant-select-item ant-select-item-option active'
+                    : 'suggestion-item ant-select-item ant-select-item-option';
+                  const style = suggestion.active
+                    ? { backgroundColor: '#ddd', cursor: 'pointer' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                  return (
+                    <div
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style,
+                      })}
+                      key={suggestion.index}
+                    >
+                      <span>{suggestion.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
+          )}
+        </PlacesAutocomplete>
+      </Form.Item>
     );
   }
 }

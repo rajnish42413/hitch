@@ -4,7 +4,7 @@ import AuthLayout from '../../../layouts/auth';
 import { useHistory } from 'react-router-dom';
 import AuthFooter from '../../../layouts/auth/footer';
 
-const logo = require('../../../assets/images/noun_education.svg');
+const logo = require('../../../assets/icons/heart-group.svg');
 
 const { Title } = Typography;
 
@@ -34,8 +34,8 @@ const GreatJob = (props: any) => {
 
   return (
     <AuthLayout header={false}>
-      <div className="mt-4">
-        <img src={logo} alt="welcomeImage" height="auto" />
+      <div>
+        <img src={logo} alt="welcomeImage" height="auto" width="50%" />
         <Typography>
           <Title level={4}>
             Wooho! Great Job!

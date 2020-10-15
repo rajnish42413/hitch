@@ -18,6 +18,7 @@ const ProfileStatus = (props: any) => {
   const { state } = useLocation();
   const user = props.user;
   const edit = state?.edit;
+  console.log(state);
 
   const onFinish = async (values: any) => {
     if (edit) {
@@ -62,8 +63,8 @@ const ProfileStatus = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {state?.sub_role && state?.gender
-              ? renderTitle(state?.sub_role, 'm_status', state?.gender, state?.name)
+            {state?.signAs && state?.gender
+              ? renderTitle(state?.signAs, 'm_status', state?.gender, state?.full_name)
               : renderTitle(user?.sub_role, 'm_status', user?.profile?.gender, user?.profile?.name)}
           </Typography.Title>
         </Typography>

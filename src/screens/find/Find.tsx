@@ -22,6 +22,8 @@ const Home = (props: any) => {
   const [current, setCurrent] = useState(0);
   const [suggestion, setSuggestion] = useState(false);
   const isFirstTime = props?.tourVisibal;
+  const [tooltip, setTooltip] = useState(isFirstTime ? 'profile-detail' : '');
+
   const fetchProfiles = async () => {
     setloading(true);
     const { data } = await Axios.get(`profiles`);
@@ -82,14 +84,35 @@ const Home = (props: any) => {
     }
   };
 
+  const nextTooltip = (current: string) => {
+    switch (current) {
+      case 'prefrence':
+        setTooltip('shortlist');
+        break;
+      case 'shortlist':
+        props.setTourVisibal(false);
+        setTooltip('');
+        break;
+      case 'profile-detail':
+        setTooltip('shortlist');
+        break;
+      case 'profile-name':
+        setTooltip('prefrence');
+        break;
+      default:
+        setTooltip('profile-name');
+        break;
+    }
+  };
+
   return (
     <AppLayout>
-      <TopHeader />
+      <TopHeader tooltipVisibal={tooltip} nextTooltip={nextTooltip} />
       {loading ? (
         <Loader />
       ) : (
         <>
-          {props.user && renderUserStatus(props.user.status, props.setUser)}
+          {props.user?.profile && renderUserStatus(props.user.profile.status, props.setUser)}
           {list[current] ? (
             <>
               <UserPagination
@@ -118,16 +141,6 @@ const Home = (props: any) => {
                     >
                       {' '}
                       <HeartFilled /> Are you the one?
-                    </button>
-                  </div>
-                  <div className="actions-buttons">
-                    <button
-                      type="button"
-                      className="btn-see-jodi"
-                      onClick={() => setSuggestion(true)}
-                    >
-                      <Icon component={HeartSvg} />
-                      See Jodi
                     </button>
                   </div>
                 </div>
@@ -209,7 +222,10 @@ const UserPagination = (props: any) => {
         data-tut="second-step"
       />
       <div className="suggestion-box" onClick={props.suggestion}>
-        <h3>See Your PakkiJodi!</h3>
+        <h3>
+          <Icon component={HeartSvg} style={{ fontSize: '25px' }} />
+          See Your PakkiJodi!
+        </h3>
       </div>
 
       <Button
@@ -239,6 +255,7 @@ function prevItem(i: number, len: number) {
 }
 
 export const renderUserStatus = (status: number, setUser: any) => {
+  console.log(status);
   const getUser = async () => {
     const { data } = await Axios.get('user');
     setUser(data);
@@ -265,7 +282,7 @@ export const renderUserStatus = (status: number, setUser: any) => {
   if (status === 3) {
     return (
       <Alert
-        message="Profile Detail not completed , Your Profile is not completed yet.You can update profile form profile setting tab"
+        message="Profile Detail not completed , Your Profile is not completed yet.You can update profile from profile setting tab"
         description={
           <Button type="link" size="small" onClick={() => getUser()}>
             Refresh

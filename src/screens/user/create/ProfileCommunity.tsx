@@ -25,9 +25,7 @@ const ProfileCommunity = (props: any) => {
       sub_role: state.signAs,
     };
 
-    console.log(data);
     handleSubmit(data);
-    history.push('/user/create/good-going', data);
   };
 
   const handleSubmit = async (values: any) => {

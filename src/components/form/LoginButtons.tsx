@@ -37,7 +37,7 @@ function LoginButtons(props: any) {
   };
 
   const handleLoginRedirect = (profile: any) => {
-    if (profile?.detail?.name && profile?.detail?.gender) {
+    if (profile?.detail) {
       message.success('Verified and good to go!');
       history.push('/home');
       return;

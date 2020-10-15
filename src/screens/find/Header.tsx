@@ -1,15 +1,18 @@
 import React from 'react';
-import Icon, { UserOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import Icon, { UserOutlined } from '@ant-design/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import Button from 'antd/lib/button';
 import Layout from 'antd/lib/layout';
-import { Row, Col } from 'antd';
+import { Row, Col, Popover } from 'antd';
+import { ReactComponent as BackSvg } from '../../assets/icons/back.svg';
 
 interface IProps {
   backHeadertitle?: string;
   backHeader?: boolean;
   backTo?: string;
   rightMenu?: any;
+  nextTooltip?: any;
+  tooltipVisibal?: string;
 }
 const TopHeader = (props: IProps) => {
   const { pathname } = useLocation();
@@ -23,13 +26,31 @@ const TopHeader = (props: IProps) => {
     }
   };
 
+  const content = (title: string, current: string, okText?: string) => {
+    return (
+      <div>
+        <p>{title}</p>
+        <br />
+        <Button
+          size="small"
+          type="text"
+          onClick={() => props.nextTooltip(current)}
+          className="btn-red"
+        >
+          {okText ? okText : 'OK'}
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <HeaderSkelaton>
       {props.backHeader ? (
         <Row>
           <Col span={16}>
             <Button type="link" className="user-name-tile" onClick={goBack}>
-              <ArrowLeftOutlined /> <h3>{props.backHeadertitle || 'Go Back'}</h3>
+              <Icon component={BackSvg} style={{ fontSize: '1.2rem' }} />{' '}
+              <h3>{props.backHeadertitle || 'Go Back'}</h3>
             </Button>
           </Col>
           <Col span={8} className="right-menu-icon">
@@ -39,16 +60,24 @@ const TopHeader = (props: IProps) => {
       ) : (
         <ul className="flex-row flex-justify-start app-navbar">
           <li>
-            <Link to="/profile">
-              <Button
-                className={`nav-icon ${pathname === '/profile' && 'active'}`}
-                type="text"
-                shape="circle"
-                size="small"
-              >
-                <UserOutlined />
-              </Button>
-            </Link>
+            <Popover
+              content={() =>
+                content('You can see profile detail from this tab', 'profile-detail', 'Done')
+              }
+              visible={props.tooltipVisibal === 'profile-detail' ? true : false}
+              placement="bottomLeft"
+            >
+              <Link to="/profile">
+                <Button
+                  className={`nav-icon ${pathname === '/profile' && 'active'}`}
+                  type="text"
+                  shape="circle"
+                  size="small"
+                >
+                  <UserOutlined />
+                </Button>
+              </Link>
+            </Popover>
           </li>
           <li>
             <Link to="/home" className={`nav-link ${pathname === '/home' && 'active'}`}>
@@ -56,12 +85,18 @@ const TopHeader = (props: IProps) => {
             </Link>
           </li>
           <li>
-            <Link
-              to="/shortlisted"
-              className={`nav-link ${pathname === '/shortlisted' && 'active'}`}
+            <Popover
+              content={() => content('You can see shortlisted profiles from this tab', 'shortlist')}
+              visible={props.tooltipVisibal === 'shortlist' ? true : false}
+              placement="bottomLeft"
             >
-              Shortlists
-            </Link>
+              <Link
+                to="/shortlisted"
+                className={`nav-link ${pathname === '/shortlisted' && 'active'}`}
+              >
+                Shortlists
+              </Link>
+            </Popover>
           </li>
         </ul>
       )}

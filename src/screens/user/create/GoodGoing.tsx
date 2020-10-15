@@ -4,7 +4,7 @@ import AuthLayout from '../../../layouts/auth';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import AuthFooter from '../../../layouts/auth/footer';
 
-const logo = require('../../../assets/images/noun_education.svg');
+const logo = require('../../../assets/icons/education.svg');
 
 const { Title } = Typography;
 

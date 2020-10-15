@@ -197,11 +197,10 @@ export const renderTitle = (
   if (returnType === 'salary_title') return salary_title;
 };
 
-export const ArrayIDS = (value: Array<any>, user: number): Array<number> => {
-  const data = [] as Array<number>;
-  if (user) data.push(user);
+export const ArrayIDS = (value: Array<any>): Array<string> => {
+  const data = [] as Array<string>;
   if (value?.length) {
-    value?.map((i: any) => data.push(i.id));
+    value?.map((i: any) => data.push(i.value));
   }
   return data;
 };

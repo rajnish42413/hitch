@@ -2,6 +2,7 @@
   "name": "PakkiJodi",
   "version": "0.1.0",
   "private": true,
+  "main":"src/index.js",
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "npm-run-all -p prettier-watch stylelint-watch start-js",
@@ -15,7 +16,9 @@
     "build": "react-app-rewired build",
     "start-build": "http-server ./build",
     "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
+    "eject": "react-app-rewired eject" ,
+    "prebuild": "npm run generate-build-meta",
+    "generate-build-meta": "./node_modules/react-clear-cache/bin/cli.js"
   },
   "dependencies": {
     "@types/history": "^4.7.7",
@@ -49,6 +52,7 @@
     "nprogress": "^0.2.0",
     "pusher-js": "^7.0.0",
     "react": "^16.13.1",
+    "react-clear-cache": "^1.3.2",
     "react-copy-to-clipboard": "^5.0.2",
     "react-document-meta": "^3.0.0-beta.2",
     "react-dom": "^16.13.1",

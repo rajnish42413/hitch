@@ -67,17 +67,6 @@ body {
         width: 75%;
       }
     }
-    .btn-see-jodi {
-      align-items: center;
-      background-color: #0a66c2;
-      border-radius: 25px;
-      color: #fff;
-      display: inline-flex;
-      gap: 0.5rem;
-      height: 31px !important;
-      justify-content: center;
-      margin-top: 1rem;
-    }
   }
 
   .ant-drawer-body {
@@ -131,8 +120,9 @@ body {
 
 .main-container {
   margin-bottom: 3.5rem;
-  margin-top: 3.5rem;
+  margin-top: 70px;
 }
+
 .mt-2 {
   margin-top: 2rem;
 }
@@ -176,7 +166,7 @@ body {
 }
 
 .profile-detail-box {
-  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0) 74.24%);
+  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0) 100%);
   border-radius: 6px 6px 0 0;
   bottom: 0;
   left: 0;
@@ -206,6 +196,18 @@ body {
     font-size: 11px;
     gap: 0.5em;
     margin: 0.5rem;
+  }
+  .btn-white-round {
+    background-color: #fff;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: bold;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 0.7rem;
   }
 }
 
@@ -402,14 +404,18 @@ body {
   .suggestion-box {
     background-color: #3495fa;
     border-radius: 6px;
+    cursor: pointer;
     height: 45px;
     width: 65%;
     h3 {
+      align-items: center;
       color: #fff;
+      display: flex;
       font-weight: 500;
+      gap: 0.5em;
+      justify-content: center;
       letter-spacing: -0.333333px;
       line-height: 45px;
-      text-align: center;
     }
   }
 }

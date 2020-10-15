@@ -76,7 +76,7 @@ const VerifyPhone = (props: any) => {
   };
 
   const handleLoginRedirect = (profile: any) => {
-    if (profile?.detail?.city && profile?.detail?.college_name) {
+    if (profile?.detail) {
       message.success('Verified and good to go!');
       history.push('/home');
       return;

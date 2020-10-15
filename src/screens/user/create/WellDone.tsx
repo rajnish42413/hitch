@@ -3,7 +3,7 @@ import { Button, Typography } from 'antd';
 import AuthLayout from '../../../layouts/auth';
 import { Link, useHistory } from 'react-router-dom';
 import AuthFooter from '../../../layouts/auth/footer';
-const logo = require('../../../assets/images/well.svg');
+const logo = require('../../../assets/icons/work.svg');
 const WellDone = (props: any) => {
   const history = useHistory();
   const onFinish = () => {

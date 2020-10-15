@@ -14,7 +14,6 @@ const ProfileCity = (props: any) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const { state } = useLocation();
-  console.log(state);
 
   const onFinish = async (values: any) => {
     const data = {
@@ -31,7 +30,7 @@ const ProfileCity = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {renderTitle(state.signAs, 'city_title', state.gender, state.full_name)}
+            {renderTitle(state?.signAs, 'city_title', state?.gender, state?.full_name)}
           </Typography.Title>
         </Typography>
         <LocationAutoComplete

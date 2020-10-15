@@ -7,6 +7,7 @@ import { queryfie } from '@utils/helpers';
 import { SmileOutlined } from '@ant-design/icons';
 import { colors } from '@constants/general';
 import AuthFooter from '../../layouts/auth/footer';
+import { countryCodes } from '../../constants/countryCodes.json';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -17,21 +18,20 @@ const layout = {
 
 const MobileVerification = (props: any) => {
   const [form] = Form.useForm();
-  const [countryCode, setCountryCode] = useState('+91');
   const [btnLoading, setBtnLoading] = useState(false);
   const history = useHistory();
   const { search, state } = useLocation();
   const params = queryfie(search);
   const social_data = state;
 
-  const handleSelectCountry = (value: string) => {
-    setCountryCode(value);
-  };
-
   const prefixSelector = (
-    <Form.Item name="prefix" noStyle initialValue={countryCode}>
-      <Select onChange={handleSelectCountry}>
-        <Option value="+91">+91</Option>
+    <Form.Item name="countryCode" noStyle initialValue="+91">
+      <Select>
+        {countryCodes?.map((country: any, i: number) => (
+          <Option value={country.dial_code} key={i}>
+            {country.dial_code}
+          </Option>
+        ))}
       </Select>
     </Form.Item>
   );
@@ -39,7 +39,7 @@ const MobileVerification = (props: any) => {
   const onFinish = async (values: any) => {
     setBtnLoading(true);
     let show = message.loading('Verifying Phone Number ...', 0);
-    const { phone } = values;
+    const { phone, countryCode } = values;
     try {
       const { data } = await Axios.post(`request-otp`, {
         phone: phone,

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col, Button, Layout } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { ReactComponent as BackSvg } from '../../assets/icons/back.svg';
 
 interface IProps {
   title?: string;
@@ -23,7 +24,7 @@ export default function AuthHeader(props: IProps) {
           {goBack && (
             <Button
               shape="circle"
-              icon={<ArrowLeftOutlined />}
+              icon={<Icon component={BackSvg} style={{ fontSize: '1.2rem' }} />}
               size="middle"
               onClick={handleBackBtn}
             />

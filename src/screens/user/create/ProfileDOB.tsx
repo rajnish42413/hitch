@@ -35,9 +35,9 @@ const ProfileDOB = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {' '}
-            {renderTitle(props.signAs, 'gender_title', props.gender)}{' '}
+            {renderTitle(state?.signAs, 'dob_title', state?.gender)}
           </Typography.Title>
+          <p className="hints">Tip: This can’t be changed later</p>
         </Typography>
         <Form.Item
           name="dob"

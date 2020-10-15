@@ -5,7 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { colors } from '../../constants/general';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
@@ -20,6 +20,8 @@ const UserImage = (props: any) => {
   const history = useHistory();
   const [user, setUser] = useState({} as IUser);
   const [photos, setPhotos] = useState(user?.profile?.media);
+  const { state } = useLocation();
+  const hideBottomButton = state?.hideBottomButton || false;
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
     setPhotos(arrayMove(photos ? photos : [], oldIndex, newIndex));
@@ -34,36 +36,40 @@ const UserImage = (props: any) => {
   }, []);
 
   return (
-    <AuthLayout>
+    <AuthLayout header={true}>
       {user ? (
         <>
-          <div className="mt-1">
-            <Typography>
-              <Title level={3}>Pair your photos with captions </Title>
-              <Paragraph>Drag to reorder </Paragraph>
-            </Typography>
-          </div>
+          <Typography>
+            <Title level={4}>Pair your photos with captions </Title>
+            <Paragraph>Drag to reorder </Paragraph>
+          </Typography>
           <SortableList images={user?.profile?.media} onSortEnd={onSortEnd} user={user} />
-          <Row gutter={16} className="mt-1">
+          <Row gutter={16}>
             <Col span={24}>
               <Typography className="image-upload-hint">
                 <Paragraph>
                   Tap a photo to add a caption and make your profile stand out even more{' '}
                 </Paragraph>
               </Typography>
-              <p className="text-danger">Add photos to activate profile </p>
+              <p className="text-danger" style={{ marginBottom: '4rem' }}>
+                Add photos to activate profile{' '}
+              </p>
             </Col>
           </Row>
 
-          <AuthFooter>
-            <Button
-              block
-              onClick={() => history.push('/user/introduction', { profile_id: user?.profile?.id })}
-              className="btn-dark"
-            >
-              Good to go!
-            </Button>
-          </AuthFooter>
+          {!hideBottomButton && (
+            <AuthFooter>
+              <Button
+                block
+                onClick={() =>
+                  history.push('/user/introduction', { profile_id: user?.profile?.id })
+                }
+                className="btn-dark"
+              >
+                Good to go!
+              </Button>
+            </AuthFooter>
+          )}
         </>
       ) : (
         <Loader />

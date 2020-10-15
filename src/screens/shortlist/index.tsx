@@ -35,10 +35,10 @@ const Shortlist = (props: any) => {
 
   const [members, setMembers] = useState(props.user.profile.members);
   const LikesByOptions = CheckboxOptions(members, props.user);
-  const defaultCheckedList = ArrayIDS(members, props.user.id);
+  const defaultCheckedList = LikesByOptions ? ArrayIDS(LikesByOptions) : [];
 
   const [filterDRawer, setFilterDrawer] = useState(false);
-  const [likedBy, setLikedBy] = useState(ArrayIDS(members, props.user.id));
+  const [likedBy, setLikedBy] = useState(defaultCheckedList);
 
   const [likeByMe, setLikeByMe] = useState(LikesByOptions.length === likedBy.length);
   const [likeMe, setLikeMe] = useState(true);
@@ -72,6 +72,7 @@ const Shortlist = (props: any) => {
   useEffect(() => {
     getMembers();
     getShortlisted();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onFinish = () => {
@@ -84,7 +85,6 @@ const Shortlist = (props: any) => {
   };
 
   const onCheckAllChange = (e: any) => {
-    console.log(likedBy);
     if (e.target.checked) {
       setLikedBy(defaultCheckedList);
     } else {
@@ -99,6 +99,7 @@ const Shortlist = (props: any) => {
 
   const onChangeLikeBy = (checkedValues: any) => {
     setLikedBy(checkedValues);
+    setLikeByMe(defaultCheckedList.length === checkedValues.length);
   };
 
   return (
@@ -147,7 +148,7 @@ const Shortlist = (props: any) => {
         placement="bottom"
         closable={true}
         visible={filterDRawer}
-        height="50vh"
+        height="40vh"
       >
         <Checkbox value="1" checked={likeByMe} onChange={onCheckAllChange}>
           Show the people I liked
@@ -158,7 +159,7 @@ const Shortlist = (props: any) => {
             options={LikesByOptions}
             defaultValue={likedBy}
             onChange={onChangeLikeBy}
-            style={{ margin: '0 1rem' }}
+            style={{ margin: '0 1rem', display: 'flex', flexDirection: 'column' }}
           />
         )}
 
@@ -253,18 +254,18 @@ const ContactMenu = (props: ICSProps) => {
 // };
 
 interface IOption {
-  value: number;
+  value: string;
   label: string;
 }
 
 export const CheckboxOptions = (value: Array<IOption>, user: IUser): Array<IOption> => {
   const data = [] as Array<IOption>;
   if (user) {
-    data.push({ label: 'Liked by me', value: user.id });
+    data.push({ label: 'Liked by me', value: user.id?.toString() });
   }
   if (value?.length) {
     value?.map((i: any) =>
-      data.push({ label: ` Liked by ${i.name ? i.name : i.sub_role}`, value: i.id })
+      data.push({ label: ` Liked by ${i.name ? i.name : i.sub_role}`, value: i.id?.toString() })
     );
   }
   return data;

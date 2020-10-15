@@ -18,12 +18,7 @@ function UserImageManage(props: any) {
       <TopHeader backTo="/profile" backHeader={true} />
       <Layout.Content style={{ margin: '20px' }}>
         {profile_id && (
-          <ImageUploader
-            profile_id={profile_id}
-            image={image}
-            setUser={props.setUser}
-            onBack="/profile"
-          />
+          <ImageUploader profile_id={profile_id} image={image} setUser={props.setUser} />
         )}
       </Layout.Content>
     </AppLayout>

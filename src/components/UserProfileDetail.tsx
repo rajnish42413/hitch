@@ -1,15 +1,17 @@
 import React from 'react';
 import { Button, Carousel, Col, Row, Typography } from 'antd';
 import { IEducation, IProfile } from '../schemas/IProfile';
-import { getHeightWithLabelFromValue } from '@utils/helpers';
+import { getAge, getHeightWithLabelFromValue } from '@utils/helpers';
 import {
   HeartOutlined,
   IdcardOutlined,
   SafetyOutlined,
   SmileOutlined,
   StarOutlined,
+  BookOutlined,
 } from '@ant-design/icons';
 import Loader from './loader/Loader';
+import moment from 'moment';
 
 interface IProps {
   profile: IProfile;
@@ -84,6 +86,36 @@ const profileDetail = (user: IProfile) => {
       <li style={{ backgroundColor: '#E0E0E0' }}>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
+            <BookOutlined style={{ fontSize: '2rem' }} />
+          </Col>
+          <Col span={16}>
+            <Typography>
+              <Typography.Title level={4}>Date of birth {'&'} Age </Typography.Title>
+              {user?.date_of_birth &&
+                `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '} 
+                ${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}
+            </Typography>
+          </Col>
+        </Row>
+      </li>
+
+      {/* <li style={{ backgroundColor: '#D9D9D9' }}>
+        <Row justify="space-between" className="title-row" align="middle">
+          <Col span={8} className="text-center">
+            <HeartOutlined style={{ fontSize: '2rem' }} />
+          </Col>
+          <Col span={16}>
+            <Typography>
+              <Typography.Title level={4}>Age</Typography.Title>
+              <p>{user.detail?.marital_status}</p>
+            </Typography>
+          </Col>
+        </Row>
+      </li> */}
+
+      <li style={{ backgroundColor: '#E0E0E0' }}>
+        <Row justify="space-between" className="title-row" align="middle">
+          <Col span={8} className="text-center">
             <SmileOutlined style={{ fontSize: '2rem' }} />
           </Col>
           <Col span={16}>
@@ -135,6 +167,7 @@ const profileDetail = (user: IProfile) => {
 
 const profileCarasole = (profile: IProfile | undefined) => {
   if (!profile) return;
+  console.log(profile);
   return (
     <div
       style={{

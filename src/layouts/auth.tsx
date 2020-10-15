@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthHeader from './auth/header';
 import { Layout } from 'antd';
-
+import CacheClear from '../components/cacheClear';
 import './styles/app.less';
 import './styles/auth.less';
 
@@ -25,6 +25,8 @@ export default function AuthLayout(props: Iprops) {
     <Layout className="pj-auth-layout">
       {header && <AuthHeader goBack={goBack} />}
       <Layout.Content className="main" style={style}>
+        <CacheClear />
+
         {props.children}
       </Layout.Content>
     </Layout>

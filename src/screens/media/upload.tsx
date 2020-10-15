@@ -1,5 +1,4 @@
 import React, { Dispatch } from 'react';
-import { PageHeader } from 'antd';
 import AuthLayout from '../../layouts/auth';
 import { useHistory, useLocation } from 'react-router-dom';
 import ImageUploader from '../../components/Uploader';
@@ -9,6 +8,7 @@ import { IUser } from '../../schemas/IUser';
 import { IAction, SetUser } from '@redux/actions';
 import { connect } from 'react-redux';
 import './media.scss';
+import { PageHeader } from 'antd';
 
 const MediaUpload = (props: any) => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const MediaUpload = (props: any) => {
   return (
     <AuthLayout>
       <PageHeader
-        onBack={() => history.replace('/user/images')}
+        onBack={() => history.go(-1)}
         title="Add Photo"
         style={{ padding: 0, margin: '1rem 0' }}
       />
@@ -27,8 +27,7 @@ const MediaUpload = (props: any) => {
           profile_id={profile_id}
           image={image}
           setUser={props.setUser}
-          onBack="/user/images"
-          bottomButtomRedirect="/user/images"
+          bottomButtomRedirect=""
         />
       ) : (
         <Loader />

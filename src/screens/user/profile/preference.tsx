@@ -10,7 +10,6 @@ import EducationLevel from '../../../components/form/EducationLevel';
 import { getHeightFromValue } from '../../../utils/helpers';
 import Loader from '../../../components/loader/Loader';
 import NavigationPrompt from 'react-router-navigation-prompt';
-import { useLocation } from 'react-router-dom';
 import { IAction, SetTourVisibility } from '@redux/actions';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
@@ -28,9 +27,7 @@ function Preference(props: any) {
   const [preference, setPreference] = useState({} as IPreference);
   const [loading, setLoading] = useState(false);
   const [changed, setChanged] = useState(false);
-  const location = useLocation();
   const tourVisibal = props.tourVisibal;
-  const goback = location?.state?.goback;
   const [age, setAge] = useState([18, 60]);
 
   const handleAgeChange = (value: any) => {
@@ -92,11 +89,7 @@ function Preference(props: any) {
 
   return (
     <AppLayout>
-      <TopHeader
-        backHeadertitle="Preference"
-        backTo={goback ? goback : '/profile'}
-        backHeader={true}
-      />
+      <TopHeader backHeadertitle="Preference" backHeader={true} />
       <Content>
         {!loading ? (
           <Form

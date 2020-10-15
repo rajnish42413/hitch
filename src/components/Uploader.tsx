@@ -17,7 +17,6 @@ interface IProps {
   profile_id: number;
   image?: IImage;
   setUser: any;
-  onBack: string;
 }
 
 const ImageUploader = (props: IProps) => {
@@ -41,9 +40,7 @@ const ImageUploader = (props: IProps) => {
     setChanged(false);
     props.setUser(data);
     message.success('Caption Updated');
-    console.log(props.onBack);
-    if (props.onBack) history.push(props.onBack);
-    else redirectTo();
+    history.go(-1);
     return;
   };
 
@@ -52,6 +49,7 @@ const ImageUploader = (props: IProps) => {
       history.push(props.bottomButtomRedirect);
       return;
     }
+    history.go(-1);
   };
 
   const renderImage = (image?: IImage) => {
@@ -82,8 +80,8 @@ const ImageUploader = (props: IProps) => {
   const handleUpload = (response: any) => {
     setLoading(true);
     const { image, data } = response;
-    setImage(image);
-    props.setUser(data);
+    if (image?.small) setImage(image);
+    if (data) props.setUser(data);
     setUploadOption(false);
     setLoading(false);
   };
@@ -220,9 +218,8 @@ const UploadButton = (IUploadProps: IUploadButton) => {
         message.success(`${info.file.name} file uploaded successfully`);
         IUploadProps.updateUser(fileInfo.response);
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-        if (fileInfo.response?.status === 'fail') {
-          message.error(`${fileInfo.response.message}`);
+        if (fileInfo.response?.message) {
+          message.error(`${fileInfo.response?.message}`);
         }
         if (fileInfo.response?.errors) {
           const { caption, image } = fileInfo.response?.errors;
@@ -241,14 +238,14 @@ const UploadButton = (IUploadProps: IUploadButton) => {
     },
   };
   return (
-    <ImgCrop grid>
-      <Upload accept=".jpg, .jpeg, .png" {...props}>
-        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <Button type="primary" block size="large" style={{ width: '50%' }}>
+    <div style={{ marginTop: '1.5rem' }}>
+      <ImgCrop grid>
+        <Upload accept=".jpg, .jpeg, .png" {...props}>
+          <Button type="text" block className="btn-dark">
             From Media
           </Button>
-        </div>
-      </Upload>
-    </ImgCrop>
+        </Upload>
+      </ImgCrop>
+    </div>
   );
 };

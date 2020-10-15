@@ -1,26 +1,18 @@
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch } from 'react';
 import { Button, Layout, List, Modal, Typography, message } from 'antd';
 import TopHeader from '../../find/Header';
 //import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { Link, useHistory } from 'react-router-dom';
-import Icon, { ExclamationCircleOutlined } from '@ant-design/icons';
-import { FB_APP_ID } from '@constants/general';
-import {
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  WhatsappShareButton,
-} from 'react-share';
+import Icon, { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
+
 import Loader from '../../../components/loader/Loader';
 import * as authToken from '@utils/userAuth';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
-import '../../media/media.scss';
 import { renderUserStatus } from '../../../screens/find/Find';
 import { IAction, SetUser } from '@redux/actions';
 import { IUser } from '../../../schemas/IUser';
 import Axios from 'axios';
-import { convertToSlug } from '@utils/helpers';
 import AppLayout from '../../../layouts/app';
 import { ReactComponent as AddSvg } from '../../../assets/icons/add.svg';
 import { ReactComponent as HelpSvg } from '../../../assets/icons/help.svg';
@@ -29,21 +21,8 @@ import { ReactComponent as OutSvg } from '../../../assets/icons/logout.svg';
 const { Content } = Layout;
 
 const UserProfile = (props: any) => {
-  const [webShare, setWebShare] = useState(false);
   const { user } = props;
   const photos = user?.profile?.media;
-  const profile_id = user && (user.profile.id ? user.profile.id : user?.id);
-
-  const url =
-    profile_id && user.profile
-      ? `https://www.pakkijodi.com/profiles/${profile_id}?name=${convertToSlug(
-          user?.profile?.name
-        )}`
-      : '';
-
-  const share_text = user.profile ? `Want to know about ${user?.profile?.name} on PAKKIJODI.` : '';
-
-  // const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
@@ -84,38 +63,19 @@ const UserProfile = (props: any) => {
     }
   };
 
-  // const handleShare = async () => {
-  //   setLoading(true);
-  //   if (navigator.share) {
-  //     navigator
-  //       .share({
-  //         title: share_text,
-  //         text: share_text,
-  //         url: url,
-  //       })
-  //       .then(() => {
-  //         setLoading(false);
-  //         console.log('Thanks for sharing!');
-  //       })
-  //       .catch((err) => {
-  //         setLoading(false);
-  //         console.log(`Couldn't share because of`, err.message);
-  //       });
-  //   } else {
-  //     setWebShare(true);
-  //     setLoading(false);
-  //   }
-  // };
-
   return (
     <AppLayout>
       <TopHeader />
       {user ? (
         <Content>
-          {renderUserStatus(user.status, props.setUser)}
+          {user.profile && renderUserStatus(user.profile?.status, props.setUser)}
           <div style={{ padding: '1rem' }}>
             <div className="user-profile-box flex-row">
-              <img src={photos[0]?.small} alt={user.name} height="80px" width="80px" />
+              {photos[0]?.small ? (
+                <img src={photos[0]?.small} alt={user.name} height="80px" width="80px" />
+              ) : (
+                <UserOutlined style={{ fontSize: '5em' }} />
+              )}
               <Typography>
                 <Typography.Title level={4}>{user.name}</Typography.Title>
                 <p>{user?.profile?.detail?.city}</p>
@@ -151,43 +111,19 @@ const UserProfile = (props: any) => {
               </Link>
             </List.Item>
             <List.Item>
+              <Link to="/preference">
+                <Button type="text" block>
+                  <Icon component={SettingSvg} style={{ fontSize: '2rem' }} />
+                  Profile Preference
+                </Button>
+              </Link>
+            </List.Item>
+            <List.Item>
               <Button type="text" block onClick={handleLogout}>
                 <Icon component={OutSvg} style={{ fontSize: '2rem' }} /> Logout
               </Button>
             </List.Item>
           </List>
-
-          <Modal
-            title="Share"
-            visible={webShare}
-            onCancel={() => setWebShare(false)}
-            okButtonProps={{ disabled: true }}
-            cancelButtonProps={{ disabled: true }}
-            footer={null}
-          >
-            <CopyToClipboard text={url} onCopy={() => message.success('copied')}>
-              <Button block type="dashed" className="mb-1">
-                Copy Link
-              </Button>
-            </CopyToClipboard>
-
-            <WhatsappShareButton
-              url={url}
-              title={share_text}
-              separator=":: "
-              className="mb-1 btn-block"
-            >
-              Share on Whatsapp
-            </WhatsappShareButton>
-
-            <FacebookMessengerShareButton url={url} appId={FB_APP_ID} className="mb-1 btn-block">
-              {' '}
-              Share on FacebookMessenger
-            </FacebookMessengerShareButton>
-            <FacebookShareButton quote={`${share_text}`} className="mb-1 btn-block" url={url}>
-              Share on Facebook
-            </FacebookShareButton>
-          </Modal>
         </Content>
       ) : (
         <Loader />
