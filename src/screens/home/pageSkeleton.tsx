@@ -107,7 +107,7 @@ const Header = ({ triggerLoginMoal, triggerSideBar }: any) => {
         </div>
         <div>
           <Button type="link" onClick={() => triggerSideBar()} style={{ padding: 0 }}>
-            <MenuOutlined style={{ color: '#60bd9b', fontSize: '2rem' }} />
+            <MenuOutlined style={{ color: '#000', fontSize: '2rem' }} />
           </Button>
         </div>
       </div>

@@ -16,11 +16,9 @@ export default function AuthLayout(props: Iprops) {
   const goBack = props.goBack || true;
   const header = props.header;
   const customStyle = {
-    backgroundColor: '#eee0ca',
     padding: '0 1rem',
   };
   const style = { ...customStyle, ...props.style };
-  document.body.style.backgroundColor = '#eee0ca';
   return (
     <Layout className="pj-auth-layout">
       {header && <AuthHeader goBack={goBack} />}

@@ -8,7 +8,7 @@ const AuthLayout = React.lazy(() => import('../../layouts/auth'));
 const PopMenu = React.lazy(() => import('../home/popMenu'));
 const LoginButtons = React.lazy(() => import('../../components/form/LoginButtons'));
 const backgroundImage = require('../../assets/images/background-min.jpg');
-const logo = require('../../assets/images/pakkijodi-logo.svg');
+const logo = require('../../assets/images/logo.svg');
 
 const Login = (props: any) => {
   const [visible, setVisible] = useState(false);
@@ -31,9 +31,8 @@ const Login = (props: any) => {
           <MenuOutlined style={{ fontSize: '30px', color: '#fff', alignSelf: 'right' }} />
         </Button>
 
-        <div style={{ position: 'relative', top: '7rem' }}>
+        <div style={{ position: 'relative', top: '7rem', textAlign: 'center' }}>
           <img src={logo} alt="pakki jodi logo" />
-          <h4 style={{ fontWeight: 'bold', fontSize: '24px', color: '#fff' }}>Shadi Made Easy</h4>
         </div>
 
         <LoginButtons />
