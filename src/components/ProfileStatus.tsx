@@ -33,9 +33,18 @@ export default function ProfileVerificationStatus({
         closable
         className="mt-1"
         description={
-          <Button type="link" size="small" onClick={() => getUser()} loading={btnLoading}>
-            Refresh
-          </Button>
+          <div className="flex-row">
+            <Button type="link" size="small" onClick={() => getUser()} loading={btnLoading}>
+              Refresh
+            </Button>
+            {goToProfile && (
+              <Link to="/profile">
+                <Button type="link" size="small">
+                  Go to Profile
+                </Button>
+              </Link>
+            )}
+          </div>
         }
       />
     );

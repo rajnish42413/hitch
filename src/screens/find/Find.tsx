@@ -107,7 +107,12 @@ const Home = (props: any) => {
     }
   };
 
-  const status = props.user?.profile?.status || 0;
+  const disableActionButton = (): boolean => {
+    const { profile } = props?.user;
+    if (btnLoading) return true;
+    if (profile?.status === 1 || profile?.status === 2 || profile?.status === 4) return false;
+    return true;
+  };
 
   return (
     <AppLayout>
@@ -140,26 +145,14 @@ const Home = (props: any) => {
                     <Button
                       className="btn-pass"
                       onClick={() => handleRemoveProfile(list[current]?.id)}
-                      disabled={
-                        btnLoading
-                          ? true
-                          : status !== 1 || status !== 2 || status !== 4
-                          ? true
-                          : false
-                      }
+                      disabled={disableActionButton()}
                     >
                       Pass
                     </Button>
                     <Button
                       className="btn-accept"
                       onClick={() => handleAddShortlist(list[current]?.id)}
-                      disabled={
-                        btnLoading
-                          ? true
-                          : status !== 1 || status !== 2 || status !== 4
-                          ? true
-                          : false
-                      }
+                      disabled={disableActionButton()}
                     >
                       <HeartFilled /> Are you the one?
                     </Button>

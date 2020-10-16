@@ -92,7 +92,7 @@ const profileDetail = (user: IProfile) => {
           <Col span={16}>
             <Typography>
               <Typography.Title level={4}>Date of birth </Typography.Title>
-              {user?.date_of_birth && `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '}`}
+              {user?.date_of_birth && `${moment(user.date_of_birth).format('DD-MMM-YYYY')}`}
             </Typography>
           </Col>
         </Row>

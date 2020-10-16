@@ -9,13 +9,11 @@ import Height from '../../../components/form/Height';
 import EducationLevel from '../../../components/form/EducationLevel';
 import { getHeightFromValue } from '../../../utils/helpers';
 import Loader from '../../../components/loader/Loader';
-import NavigationPrompt from 'react-router-navigation-prompt';
 import { IAction, SetTourVisibility } from '@redux/actions';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
 import TopHeader from '../../../screens/find/Header';
-
-const { Content } = Layout;
+import PromptModal from '../../../components/PromptModal';
 
 interface IAge {
   min: number;
@@ -90,7 +88,7 @@ function Preference(props: any) {
   return (
     <AppLayout>
       <TopHeader backHeadertitle="Preference" backHeader={true} />
-      <Content>
+      <Layout.Content>
         {!loading ? (
           <Form
             name="basic"
@@ -201,32 +199,8 @@ function Preference(props: any) {
           <Loader />
         )}
 
-        <NavigationPrompt when={changed}>
-          {({ isActive, onCancel, onConfirm }) => {
-            if (isActive) {
-              return (
-                <Modal
-                  visible={changed}
-                  title="Close without saving"
-                  cancelText="Save"
-                  okButtonProps={{ type: 'default' }}
-                  cancelButtonProps={{ type: 'primary' }}
-                  okText="Go"
-                  onCancel={onValuesChange}
-                  onOk={onConfirm}
-                  centered
-                  closable={false}
-                >
-                  <p>
-                    You have unsaved changes. Are you sure you want to leave this page without
-                    saving?
-                  </p>
-                </Modal>
-              );
-            }
-          }}
-        </NavigationPrompt>
-      </Content>
+        <PromptModal changed={changed} onOk={onValuesChange} />
+      </Layout.Content>
     </AppLayout>
   );
 }

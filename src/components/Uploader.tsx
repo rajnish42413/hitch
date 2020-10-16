@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Typography, Button, Card, Input, Modal, message, Upload, Drawer, Spin } from 'antd';
+import { Typography, Button, Card, Input, message, Upload, Drawer, Spin } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { APP_URL, colors } from '@constants/general';
 import ImgCrop from 'antd-img-crop';
 import * as authToken from '@utils/userAuth';
 import { IImage } from '../schemas/IProfile';
-import NavigationPrompt from 'react-router-navigation-prompt';
 import Axios from 'axios';
 import AuthFooter from '../layouts/auth/footer';
-
-const { Paragraph } = Typography;
+import PromptModal from './PromptModal';
 
 interface IProps {
   bottomButtomRedirect?: string;
@@ -101,9 +99,9 @@ const ImageUploader = (props: IProps) => {
       </Card>
 
       <Typography className="image-upload-hint">
-        <Paragraph>
+        <Typography.Paragraph>
           Tap a photo to add a caption and make your profile stand out even more{' '}
-        </Paragraph>
+        </Typography.Paragraph>
       </Typography>
       <br />
       {props.bottomButtomRedirect && (
@@ -127,30 +125,7 @@ const ImageUploader = (props: IProps) => {
           disableModal={() => setUploadOption(false)}
         />
       }
-      <NavigationPrompt when={changed}>
-        {({ isActive, onCancel, onConfirm }) => {
-          if (isActive) {
-            return (
-              <Modal
-                visible={changed}
-                title="Close without saving"
-                cancelText="Save"
-                okButtonProps={{ type: 'default' }}
-                cancelButtonProps={{ type: 'primary' }}
-                okText="Go"
-                onCancel={handleUpdateCaption}
-                onOk={onConfirm}
-                centered
-                closable={false}
-              >
-                <p>
-                  You have unsaved changes. Are you sure you want to leave this page without saving?
-                </p>
-              </Modal>
-            );
-          }
-        }}
-      </NavigationPrompt>
+      <PromptModal changed={changed} onOk={handleUpdateCaption} />
     </>
   );
 };
