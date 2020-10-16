@@ -9,7 +9,6 @@ import Loader from '../../../components/loader/Loader';
 import * as authToken from '@utils/userAuth';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
-import { renderUserStatus } from '../../../screens/find/Find';
 import { IAction, SetUser } from '@redux/actions';
 import { IUser } from '../../../schemas/IUser';
 import Axios from 'axios';
@@ -18,6 +17,8 @@ import { ReactComponent as AddSvg } from '../../../assets/icons/add.svg';
 import { ReactComponent as HelpSvg } from '../../../assets/icons/help.svg';
 import { ReactComponent as SettingSvg } from '../../../assets/icons/setting.svg';
 import { ReactComponent as OutSvg } from '../../../assets/icons/logout.svg';
+import ProfileVerificationStatus from '../../../components/ProfileStatus';
+
 const { Content } = Layout;
 
 const UserProfile = (props: any) => {
@@ -68,7 +69,13 @@ const UserProfile = (props: any) => {
       <TopHeader />
       {user ? (
         <Content>
-          {user.profile && renderUserStatus(user.profile?.status, props.setUser)}
+          {user.profile && (
+            <ProfileVerificationStatus
+              status={user?.profile?.status}
+              setUser={props.setUser}
+              goToProfile={false}
+            />
+          )}
           <div style={{ padding: '1rem' }}>
             <div className="user-profile-box flex-row">
               {photos[0]?.small ? (

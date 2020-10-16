@@ -1,7 +1,7 @@
-import React, { Dispatch, useState } from 'react';
-import { Button, Carousel, Col, Layout, message, Modal, Row, Typography } from 'antd';
+import React, { Dispatch } from 'react';
+import { Button, Carousel, Col, Layout, Row, Typography } from 'antd';
 import AppLayout from '../../../layouts/app';
-import Icon, {
+import {
   HeartOutlined,
   IdcardOutlined,
   SafetyOutlined,
@@ -14,57 +14,20 @@ import { IAppState } from '@redux/reducers';
 import { IAction, SetUser } from '@redux/actions';
 import TopHeader from '../../../screens/find/Header';
 import { IProfile, IEducation } from '../../../schemas/IProfile';
-import { convertToSlug, getAge, getHeightWithLabelFromValue } from '@utils/helpers';
+import { getAge, getHeightWithLabelFromValue } from '@utils/helpers';
 import { IUser } from '../../../schemas/IUser';
 import { useHistory } from 'react-router-dom';
-import { ReactComponent as ShareSvg } from '../../../assets/icons/share.svg';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import {
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  WhatsappShareButton,
-} from 'react-share';
-import { FB_APP_ID } from '@constants/general';
 import moment from 'moment';
+import ShareProfile from '../../../components/ShareProfile';
 
 const { Content } = Layout;
 
 const UserDetail = (props: any) => {
-  const [webShare, setWebShare] = useState(false);
   const { user } = props;
   const history = useHistory();
-  const profile_id = user && (user.profile.id ? user.profile.id : user?.id);
-  const url =
-    profile_id && user.profile
-      ? `https://www.pakkijodi.com/profiles/${profile_id}?name=${convertToSlug(
-          user?.profile?.name
-        )}`
-      : '';
-
-  const share_text = user.profile ? `Want to know about ${user?.profile?.name} on PAKKIJODI.` : '';
-
   const handleEditPhotos = () => {
     history.push('/user/images', { backTo: '/profile', hideBottomButton: true });
     return;
-  };
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: share_text,
-          text: share_text,
-          url: url,
-        })
-        .then(() => {
-          console.log('Thanks for sharing!');
-        })
-        .catch((err) => {
-          console.log(`Couldn't share because of`, err.message);
-        });
-    } else {
-      setWebShare(true);
-    }
   };
 
   return (
@@ -75,40 +38,9 @@ const UserDetail = (props: any) => {
         backTo="/profile"
       />
       <Content>
-        {profileCarasole(user.profile, handleEditPhotos, handleShare)}
+        {profileCarasole(user.profile, handleEditPhotos)}
         <ProfileDetail user={user} />
       </Content>
-      <Modal
-        title="Share"
-        visible={webShare}
-        onCancel={() => setWebShare(false)}
-        okButtonProps={{ disabled: true }}
-        cancelButtonProps={{ disabled: true }}
-        footer={null}
-      >
-        <CopyToClipboard text={url} onCopy={() => message.success('copied')}>
-          <Button block type="dashed" className="mb-1">
-            Copy Link
-          </Button>
-        </CopyToClipboard>
-
-        <WhatsappShareButton
-          url={url}
-          title={share_text}
-          separator=":: "
-          className="mb-1 btn-block"
-        >
-          Share on Whatsapp
-        </WhatsappShareButton>
-
-        <FacebookMessengerShareButton url={url} appId={FB_APP_ID} className="mb-1 btn-block">
-          {' '}
-          Share on FacebookMessenger
-        </FacebookMessengerShareButton>
-        <FacebookShareButton quote={`${share_text}`} className="mb-1 btn-block" url={url}>
-          Share on Facebook
-        </FacebookShareButton>
-      </Modal>
     </AppLayout>
   );
 };
@@ -226,10 +158,22 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
           </Col>
           <Col span={19}>
             <Typography>
-              <Typography.Title level={4}>Date of birth {'&'} Age </Typography.Title>
-              {user?.date_of_birth &&
-                `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '} 
-                ${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}
+              <Typography.Title level={4}>Date of birth </Typography.Title>
+              {user?.date_of_birth && `${moment(user.date_of_birth).format('DD-MMM-YYYY')}`}
+            </Typography>
+          </Col>
+        </Row>
+      </li>
+
+      <li style={{ backgroundColor: '#D9D9D9' }}>
+        <Row justify="space-between" className="title-row" align="middle">
+          <Col span={5} className="text-center">
+            <HeartOutlined style={{ fontSize: '2rem' }} />
+          </Col>
+          <Col span={19}>
+            <Typography>
+              <Typography.Title level={4}>Age</Typography.Title>
+              <p>{`${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}</p>
             </Typography>
           </Col>
         </Row>
@@ -300,11 +244,7 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
   );
 };
 
-const profileCarasole = (
-  profile: IProfile | undefined,
-  handleEditPhotos: any,
-  handleShare: any
-) => {
+const profileCarasole = (profile: IProfile | undefined, handleEditPhotos: any) => {
   if (!profile) return;
 
   return (
@@ -326,18 +266,14 @@ const profileCarasole = (
           <button className="ant-btn btn-white-round" onClick={handleEditPhotos}>
             Edit Photos
           </button>
-          <Icon
-            component={ShareSvg}
-            style={{ fontSize: '1rem', color: '#fff' }}
-            onClick={handleShare}
-          />
+          <ShareProfile name={profile.name} profile_id={profile.id} />
         </div>
 
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={16}>
             <Typography>
               <Typography.Title level={4}>{profile.name}</Typography.Title>
-              <p>Brahmin in Delhi, India</p>
+              <p>{`${profile?.detail?.community} in ${profile?.detail?.city}`}</p>
             </Typography>
           </Col>
           <Col span={8} className="text-center">

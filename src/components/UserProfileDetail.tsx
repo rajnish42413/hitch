@@ -12,17 +12,18 @@ import {
 } from '@ant-design/icons';
 import Loader from './loader/Loader';
 import moment from 'moment';
+import ShareProfile from './ShareProfile';
 
 interface IProps {
   profile: IProfile;
+  shareButton?: boolean;
 }
 
-export default function UserProfileDetail(props: IProps) {
-  const user = props.profile;
-  console.log(user);
+export default function UserProfileDetail({ profile, shareButton = false }: IProps) {
+  const user = profile;
   return user ? (
     <>
-      {profileCarasole(user)}
+      {profileCarasole(user, shareButton)}
       {profileDetail(user)}
     </>
   ) : (
@@ -90,16 +91,14 @@ const profileDetail = (user: IProfile) => {
           </Col>
           <Col span={16}>
             <Typography>
-              <Typography.Title level={4}>Date of birth {'&'} Age </Typography.Title>
-              {user?.date_of_birth &&
-                `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '} 
-                ${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}
+              <Typography.Title level={4}>Date of birth </Typography.Title>
+              {user?.date_of_birth && `${moment(user.date_of_birth).format('DD-MMM-YYYY') + ' , '}`}
             </Typography>
           </Col>
         </Row>
       </li>
 
-      {/* <li style={{ backgroundColor: '#D9D9D9' }}>
+      <li style={{ backgroundColor: '#D9D9D9' }}>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
             <HeartOutlined style={{ fontSize: '2rem' }} />
@@ -107,11 +106,11 @@ const profileDetail = (user: IProfile) => {
           <Col span={16}>
             <Typography>
               <Typography.Title level={4}>Age</Typography.Title>
-              <p>{user.detail?.marital_status}</p>
+              <p>{`${getAge(moment(user.date_of_birth).format('DD-MM-YYYY'))} yrs`}</p>
             </Typography>
           </Col>
         </Row>
-      </li> */}
+      </li>
 
       <li style={{ backgroundColor: '#E0E0E0' }}>
         <Row justify="space-between" className="title-row" align="middle">
@@ -165,9 +164,8 @@ const profileDetail = (user: IProfile) => {
   );
 };
 
-const profileCarasole = (profile: IProfile | undefined) => {
+const profileCarasole = (profile: IProfile | undefined, shareButton: boolean) => {
   if (!profile) return;
-  console.log(profile);
   return (
     <div
       style={{
@@ -183,11 +181,16 @@ const profileCarasole = (profile: IProfile | undefined) => {
         ))}
       </Carousel>
       <div className="profile-detail-box">
+        {shareButton && (
+          <div className="mt-1 flex-row mx-1" style={{ flexDirection: 'row-reverse' }}>
+            <ShareProfile name={profile.name} profile_id={profile.id} />
+          </div>
+        )}
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={16}>
             <Typography>
               <Typography.Title level={4}>{profile.name}</Typography.Title>
-              <p>Brahmin in Delhi, India</p>
+              <p>{`${profile?.detail?.community} in ${profile?.detail?.city}`}</p>
             </Typography>
           </Col>
           <Col span={8} className="text-center">

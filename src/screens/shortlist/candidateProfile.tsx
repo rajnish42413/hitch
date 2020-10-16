@@ -3,29 +3,26 @@ import { Dropdown, Layout, Menu, Button, message, Drawer, Divider } from 'antd';
 import AppLayout from '../../layouts/app';
 import UserProfileDetail from '../../components/UserProfileDetail';
 import TopHeader, { MenuIcon } from '../find/Header';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { colors } from '@constants/general';
 import Axios from 'axios';
 import Icon, { PhoneFilled, MessageFilled, PhoneOutlined } from '@ant-design/icons';
 import Loader from '../../components/loader/Loader';
 import { IMember, IProfile } from '../../schemas/IProfile';
 import { ReactComponent as DeleteSvg } from '../../assets/icons/delete.svg';
+import { connect } from 'react-redux';
+import { IAppState } from '@redux/reducers';
 
-const { Content } = Layout;
-// enum PType {
-//   'profile',
-//   'chat',
-// }
-
-export default function CandidateProfile(props: any) {
+function CandidateProfile(props: any) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({} as IProfile);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null as any);
-  const location = useLocation();
   const history = useHistory();
-  const { data_id } = location.state;
+
   const { members } = profile;
+  const user = props.user;
+  const userProfile = user?.profile;
 
   const {
     match: { params },
@@ -42,6 +39,9 @@ export default function CandidateProfile(props: any) {
   };
 
   useEffect(() => {
+    if (!userProfile) {
+      return history.go(-1);
+    }
     getData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -51,7 +51,7 @@ export default function CandidateProfile(props: any) {
         <button
           className="text-center"
           style={{ color: colors['danger-color'] }}
-          onClick={() => handleReject(data_id, reload)}
+          onClick={() => handleReject(user?.id, reload)}
         >
           Remove
         </button>
@@ -62,46 +62,52 @@ export default function CandidateProfile(props: any) {
     </Menu>
   );
 
-  const callMenu = (
-    <div className="filter-box" style={{ border: 'none' }}>
-      {members?.length ? (
-        members.map((member: IMember) => (
-          <Button
-            type="text"
-            className="btn-text mt-1 text-left"
-            href={`tel:${member.phone}`}
-            key={member.id}
-            block
-          >
-            <span>
-              <PhoneOutlined />
-            </span>{' '}
-            Call {profile.name}’s {member.sub_role}
-          </Button>
-        ))
-      ) : (
-        <Button type="text" className="btn-text text-left" href={`tel:${profile.phone}`} block>
-          <span className="circle-icon">
-            <PhoneOutlined />
-          </span>
-          {profile.sub_role !== 'self'
-            ? `Call ${profile.name + '’s ' + profile.sub_role}`
-            : `Call ${profile.name}`}
-        </Button>
-      )}
-      <Divider style={{ margin: '0.5em' }} />
-      <Button
-        type="text"
-        className="btn-text text-left"
-        block
-        onClick={() => handleReject(data_id, reload)}
-      >
-        <Icon component={DeleteSvg} style={{ fontSize: '42px' }} /> Delete Match
-      </Button>
-    </div>
-  );
+  const callMenu =
+    profile && userProfile ? (
+      <div className="filter-box" style={{ border: 'none' }}>
+        {userProfile.status === 1 ? (
+          <>
+            {members?.map((member: IMember) => (
+              <Button
+                type="text"
+                className="btn-text mt-1 text-left"
+                href={`tel:${member.phone}`}
+                key={member.id}
+                block
+              >
+                <span>
+                  <PhoneOutlined />
+                </span>{' '}
+                Call {profile?.name}’s {member?.sub_role}
+              </Button>
+            ))}
 
-  const msg = `Hello ${profile.name} , we got match on PakkiJodi.com`;
+            <Button type="text" className="btn-text text-left" href={`tel:${profile?.phone}`} block>
+              <span className="circle-icon">
+                <PhoneOutlined />
+              </span>
+              {profile.sub_role !== 'self'
+                ? `Call ${profile?.name + '’s ' + profile?.sub_role}`
+                : `Call ${profile?.name}`}
+            </Button>
+            <Divider style={{ margin: '0.5em' }} />
+          </>
+        ) : null}
+
+        <Button
+          type="text"
+          className="btn-text text-left"
+          block
+          onClick={() => handleReject(user.id, reload)}
+        >
+          <Icon component={DeleteSvg} style={{ fontSize: '42px' }} /> Delete Match
+        </Button>
+      </div>
+    ) : (
+      <> </>
+    );
+
+  const msg = `Hello ${profile.name}, we have a match on PakkiJodi.com`;
 
   return (
     <AppLayout>
@@ -117,17 +123,9 @@ export default function CandidateProfile(props: any) {
       {loading ? (
         <Loader />
       ) : (
-        <Content>
-          {/* <Switch
-            checkedChildren="PROFILE"
-            unCheckedChildren="CHAT"
-            defaultChecked
-            onChange={() => setPType(pType === PType.profile ? PType.chat : PType.chat)}
-            style={{ display: 'block', margin: '1rem' }}
-          /> */}
-
-          <UserProfileDetail profile={profile} />
-          {data_id && (
+        <Layout.Content>
+          {profile && <UserProfileDetail profile={profile} shareButton={true} />}
+          {userProfile && profile && (
             <Layout.Footer className="find-actions-buttons">
               <div className="main">
                 <div className="actions-buttons">
@@ -139,55 +137,44 @@ export default function CandidateProfile(props: any) {
                       setDrawerOpened(true);
                     }}
                     style={{ width: '50%' }}
+                    disabled={userProfile.status !== 1}
                   >
                     <PhoneFilled color="#fff" /> Call
                   </Button>
 
-                  <a
-                    className="btn-accept"
-                    style={{ width: '50%' }}
-                    href={`https://wa.me/+91${profile.phone}?text=${encodeURI(msg)}`}
-                  >
-                    {' '}
-                    <MessageFilled color="#fff" /> Message
-                  </a>
+                  {userProfile.status === 1 ? (
+                    <a
+                      className="btn-accept"
+                      style={{ width: '50%' }}
+                      href={`https://wa.me/+91${profile.phone}?text=${encodeURI(msg)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {' '}
+                      <MessageFilled color="#fff" /> Message
+                    </a>
+                  ) : (
+                    <Button className="btn-accept" style={{ width: '50%' }} disabled={true}>
+                      <MessageFilled color="#fff" /> Message
+                    </Button>
+                  )}
                 </div>
               </div>
             </Layout.Footer>
           )}
-        </Content>
+        </Layout.Content>
       )}
       <ContactMenu visible={drawerOpened} setVisibal={setDrawerOpened} content={drawerContent} />
     </AppLayout>
   );
 }
 
-interface IHeaderProps {
-  profile: IProfile;
-  menu: React.ReactElement;
-}
-// const TopHeader = (props: IHeaderProps) => {
-//   return (
-//     <HeaderSkelaton>
-//       <Row>
-//         <Col span={16}>
-//           <Link to="/shortlisted">
-//             <Button type="link" className="user-name-tile">
-//               <ArrowLeftOutlined /> <h3>{props.profile?.name}</h3>
-//             </Button>
-//           </Link>
-//         </Col>
-//         <Col className="right-menu-icon" span={8}>
-//           <Dropdown overlay={props.menu} trigger={['click']} placement="bottomRight">
-//             <span onClick={(e) => e.preventDefault()}>
-//               <MenuIcon />{' '}
-//             </span>
-//           </Dropdown>
-//         </Col>
-//       </Row>
-//     </HeaderSkelaton>
-//   );
-// };
+const mapStateToProps = ({ user }: IAppState) => {
+  return {
+    user: user.data,
+  };
+};
+export default connect(mapStateToProps)(CandidateProfile);
 
 const handleReject = async (id: number, reload: Function) => {
   let show = message.loading('Action Proccess ...', 0);

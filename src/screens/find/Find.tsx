@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react';
-import { Button, message, Result, Alert, Modal, Card, Layout } from 'antd';
+import { Button, message, Result, Modal, Card, Layout } from 'antd';
 import AppLayout from '../../layouts/app';
 import Icon, { LeftOutlined, RightOutlined, HeartFilled } from '@ant-design/icons';
 import { colors } from '@constants/general';
@@ -14,6 +14,8 @@ import { IAction, SetTourVisibility, SetUser } from '@redux/actions';
 import { IAppState } from '@redux/reducers';
 import { ReactComponent as HeartSvg } from '../../assets/icons/Heart_wh.svg';
 import { ReactComponent as JodiHeartSvg } from '../../assets/icons/Heart_Red.svg';
+import { Link } from 'react-router-dom';
+import ProfileVerificationStatus from '../../components/ProfileStatus';
 
 const Home = (props: any) => {
   const [list, setlist] = useState([] as Array<IProfile>);
@@ -105,6 +107,8 @@ const Home = (props: any) => {
     }
   };
 
+  const status = props.user?.profile?.status || 0;
+
   return (
     <AppLayout>
       <TopHeader tooltipVisibal={tooltip} nextTooltip={nextTooltip} />
@@ -112,7 +116,13 @@ const Home = (props: any) => {
         <Loader />
       ) : (
         <>
-          {props.user?.profile && renderUserStatus(props.user.profile.status, props.setUser)}
+          {props.user?.profile && (
+            <ProfileVerificationStatus
+              status={props.user?.profile?.status}
+              setUser={props.setUser}
+              goToProfile={true}
+            />
+          )}
           {list[current] ? (
             <>
               <UserPagination
@@ -127,21 +137,32 @@ const Home = (props: any) => {
               <Layout.Footer className="find-actions-buttons">
                 <div className="main">
                   <div className="actions-buttons">
-                    <button
+                    <Button
                       className="btn-pass"
                       onClick={() => handleRemoveProfile(list[current]?.id)}
-                      disabled={props.user.status === 1 ? (btnLoading ? true : false) : true}
+                      disabled={
+                        btnLoading
+                          ? true
+                          : status !== 1 || status !== 2 || status !== 4
+                          ? true
+                          : false
+                      }
                     >
                       Pass
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       className="btn-accept"
                       onClick={() => handleAddShortlist(list[current]?.id)}
-                      disabled={props.user.status === 1 ? (btnLoading ? true : false) : true}
+                      disabled={
+                        btnLoading
+                          ? true
+                          : status !== 1 || status !== 2 || status !== 4
+                          ? true
+                          : false
+                      }
                     >
-                      {' '}
                       <HeartFilled /> Are you the one?
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </Layout.Footer>
@@ -183,9 +204,11 @@ const Home = (props: any) => {
             <Result
               title={`Currently,No matching profiles available.`}
               extra={
-                <Button type="primary" key="console" size="middle" href="/profile">
-                  Go To Profile
-                </Button>
+                <Link to="/profile">
+                  <Button type="primary" key="console" size="middle">
+                    Go To Profile
+                  </Button>
+                </Link>
               }
             />
           )}
@@ -221,12 +244,10 @@ const UserPagination = (props: any) => {
         onClick={props.onPrevous}
         data-tut="second-step"
       />
-      <div className="suggestion-box" onClick={props.suggestion}>
-        <h3>
-          <Icon component={HeartSvg} style={{ fontSize: '25px' }} />
-          See Your PakkiJodi!
-        </h3>
-      </div>
+      <Button type="text" className="suggestion-box" onClick={props.suggestion}>
+        <Icon component={HeartSvg} style={{ fontSize: '25px' }} />
+        See Your PakkiJodi!
+      </Button>
 
       <Button
         shape="circle"
@@ -253,78 +274,3 @@ function prevItem(i: number, len: number) {
   i = i - 1;
   return i;
 }
-
-export const renderUserStatus = (status: number, setUser: any) => {
-  console.log(status);
-  const getUser = async () => {
-    const { data } = await Axios.get('user');
-    setUser(data);
-  };
-
-  if (status === 0) {
-    return (
-      <Alert
-        message={`Your Profile is under processing !`}
-        type="warning"
-        closable
-        className="mt-1"
-        description={
-          <Button type="link" size="small" onClick={() => getUser()}>
-            Refresh
-          </Button>
-        }
-      />
-    );
-  }
-  if (status === 2) {
-    return <Alert message="Your Profile is under verification !" type="warning" closable />;
-  }
-  if (status === 3) {
-    return (
-      <Alert
-        message="Profile Detail not completed , Your Profile is not completed yet.You can update profile from profile setting tab"
-        description={
-          <Button type="link" size="small" onClick={() => getUser()}>
-            Refresh
-          </Button>
-        }
-        type="info"
-        showIcon
-        className="mt-1"
-        closable
-      />
-    );
-  }
-  if (status === 4) {
-    return (
-      <Alert
-        message="Your Profile is under re-verification !"
-        type="warning"
-        closable
-        className="mt-1"
-        description={
-          <Button type="link" size="small" onClick={() => getUser()}>
-            Refresh
-          </Button>
-        }
-      />
-    );
-  }
-
-  if (status === 5) {
-    return (
-      <Alert
-        message="Your Profile rejected by system"
-        type="error"
-        closable
-        className="mt-1"
-        description={
-          <Button type="link" size="small" onClick={() => getUser()}>
-            Refresh
-          </Button>
-        }
-      />
-    );
-  }
-  return null;
-};

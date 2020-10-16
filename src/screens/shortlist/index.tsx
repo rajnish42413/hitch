@@ -11,6 +11,7 @@ import PJCard from '../../components/PJCard';
 import TopHeader from '../find/Header';
 import { ArrayIDS } from '@utils/helpers';
 import { IUser } from 'src/schemas/IUser';
+import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -26,6 +27,8 @@ interface IData {
 
 const Shortlist = (props: any) => {
   const [data, setData] = useState({} as IData);
+  const user = props.user;
+  const userProfile = user?.profile;
 
   // for tem data
   const [shortlistedData, setShortlistedData] = useState([] as Array<IShortlist>);
@@ -110,7 +113,7 @@ const Shortlist = (props: any) => {
       ) : (
         <Content style={{ padding: '0 1rem', margin: '2rem 0' }}>
           <Input
-            placeholder="Search for name, education etc."
+            placeholder="Search for name."
             prefix={<SearchOutlined />}
             onChange={onSearch}
             allowClear
@@ -128,13 +131,15 @@ const Shortlist = (props: any) => {
               Filter
             </button>
           </div>
-          {renderDataList(
-            props.user?.profile ? props.user?.profile.id : props.user.id,
-            shortlistedData,
-            reload,
-            setDrawerOpened,
-            setDrawerContent
-          )}
+          {userProfile &&
+            renderDataList(
+              userProfile?.id,
+              shortlistedData,
+              reload,
+              setDrawerOpened,
+              setDrawerContent,
+              userProfile?.status
+            )}
           <ContactMenu
             visible={drawerOpened}
             setVisibal={setDrawerOpened}
@@ -186,16 +191,19 @@ const renderDataList = (
   data: Array<IShortlist>,
   reload: Function,
   setDrawerOpened: Function,
-  setDrawerContent: any
+  setDrawerContent: any,
+  profile_status: number
 ) => {
   if (!data.length)
     return (
       <Result
         title={`No data available for shortlists or likes`}
         extra={
-          <Button type="primary" key="console" size="middle">
-            Go To Find
-          </Button>
+          <Link to="/home">
+            <Button type="primary" key="console" size="middle">
+              Go To Find
+            </Button>
+          </Link>
         }
       />
     );
@@ -211,6 +219,7 @@ const renderDataList = (
               setDrawerOpened={setDrawerOpened}
               setDrawerContent={setDrawerContent}
               key={index}
+              profile_status={profile_status}
             />
           )
       )}

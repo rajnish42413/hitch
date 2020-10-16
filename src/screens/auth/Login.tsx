@@ -7,7 +7,7 @@ const Button = React.lazy(() => import('antd/lib/button'));
 const AuthLayout = React.lazy(() => import('../../layouts/auth'));
 const PopMenu = React.lazy(() => import('../home/popMenu'));
 const LoginButtons = React.lazy(() => import('../../components/form/LoginButtons'));
-const backgroundImage = require('../../assets/images/backgroound-pj-2.png');
+const backgroundImage = require('../../assets/images/background-min.jpg');
 const logo = require('../../assets/images/pakkijodi-logo.svg');
 
 const Login = (props: any) => {

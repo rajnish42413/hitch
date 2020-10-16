@@ -19,6 +19,8 @@ interface ISProps {
   setDrawerOpened: Function;
   setDrawerContent: Function;
   profile_id: number;
+  profile_status: number;
+  share_button?: boolean;
 }
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -28,6 +30,8 @@ export default function PJCard({
   setDrawerOpened,
   setDrawerContent,
   profile_id,
+  profile_status,
+  share_button = false,
 }: ISProps) {
   const { profile } = data;
   const members = profile?.members;
@@ -41,46 +45,50 @@ export default function PJCard({
       }
     : {};
 
-  const callMenu = profile ? (
-    <div className="filter-box" style={{ border: 'none' }}>
-      {members?.length ? (
-        members?.map((member: IMember) => (
-          <Button
-            type="text"
-            className="btn-text mt-1 text-left"
-            href={`tel:${member.phone}`}
-            key={member.id}
-            block
-          >
-            <span>
-              <PhoneOutlined />
-            </span>{' '}
-            Call {profile?.name}’s {member?.sub_role}
-          </Button>
-        ))
-      ) : (
-        <Button type="text" className="btn-text text-left" href={`tel:${profile?.phone}`} block>
-          <span className="circle-icon">
-            <PhoneOutlined />
-          </span>
-          {profile.sub_role !== 'self'
-            ? `Call ${profile?.name + '’s ' + profile?.sub_role}`
-            : `Call ${profile?.name}`}
+  const callMenu =
+    profile && profile_status ? (
+      <div className="filter-box" style={{ border: 'none' }}>
+        {profile_status === 1 ? (
+          <>
+            {members?.map((member: IMember) => (
+              <Button
+                type="text"
+                className="btn-text mt-1 text-left"
+                href={`tel:${member.phone}`}
+                key={member.id}
+                block
+              >
+                <span>
+                  <PhoneOutlined />
+                </span>{' '}
+                Call {profile?.name}’s {member?.sub_role}
+              </Button>
+            ))}
+
+            <Button type="text" className="btn-text text-left" href={`tel:${profile?.phone}`} block>
+              <span className="circle-icon">
+                <PhoneOutlined />
+              </span>
+              {profile.sub_role !== 'self'
+                ? `Call ${profile?.name + '’s ' + profile?.sub_role}`
+                : `Call ${profile?.name}`}
+            </Button>
+            <Divider style={{ margin: '0.5em' }} />
+          </>
+        ) : null}
+
+        <Button
+          type="text"
+          className="btn-text text-left"
+          block
+          onClick={() => handleReject(data.id, reload)}
+        >
+          <Icon component={DeleteSvg} style={{ fontSize: '42px' }} /> Delete Match
         </Button>
-      )}
-      <Divider style={{ margin: '0.5em' }} />
-      <Button
-        type="text"
-        className="btn-text text-left"
-        block
-        onClick={() => handleReject(data.id, reload)}
-      >
-        <Icon component={DeleteSvg} style={{ fontSize: '42px' }} /> Delete Match
-      </Button>
-    </div>
-  ) : (
-    <> </>
-  );
+      </div>
+    ) : (
+      <> </>
+    );
 
   return profile ? (
     <Col span={12} className="thumb-card-01">

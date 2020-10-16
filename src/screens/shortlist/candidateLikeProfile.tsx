@@ -3,25 +3,28 @@ import { Dropdown, Layout, Menu, Button, message, Result } from 'antd';
 import AppLayout from '../../layouts/app';
 import UserProfileDetail from '../../components/UserProfileDetail';
 import TopHeader, { MenuIcon } from '../find/Header';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { colors } from '@constants/general';
 import Axios from 'axios';
 import { CloseOutlined, HeartFilled } from '@ant-design/icons';
 import Loader from '../../components/loader/Loader';
 import { IProfile } from '../../schemas/IProfile';
+import { connect } from 'react-redux';
+import { IAppState } from '@redux/reducers';
 
 const { Content } = Layout;
 
-export default function CandidateLikeProfile(props: any) {
+function CandidateLikeProfile(props: any) {
   const [profile, setProfile] = useState({} as IProfile);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
   const history = useHistory();
+
+  const user = props.user;
+  const userProfile = user?.profile;
 
   const {
     match: { params },
   } = props;
-  const { data_id } = location.state;
 
   const getData = async () => {
     const { data } = await Axios.get<IProfile>(`profiles/${params?.id}`);
@@ -30,6 +33,9 @@ export default function CandidateLikeProfile(props: any) {
   };
 
   useEffect(() => {
+    if (!userProfile) {
+      return history.go(-1);
+    }
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -70,47 +76,27 @@ export default function CandidateLikeProfile(props: any) {
         <Loader />
       ) : profile ? (
         <Content>
-          {/* <UserPagination onNext={onNext} onPrevous={onPrev} /> */}
-          <UserProfileDetail profile={profile} />
-          {/* <div className="detail-likes-button-group">
-            <Button
-              shape="circle"
-              size="large"
-              danger
-              className="button-shortlist-and-likes"
-              onClick={() => handleReject(list[current]?.id, reload)}
-            >
-              <CloseOutlined />
-            </Button>
-
-            <Button
-              shape="circle"
-              size="large"
-              type="link"
-              className="button-shortlist-and-likes"
-              onClick={() => handleAccept(list[current]?.id, getData)}
-            >
-              <HeartFilled />
-            </Button>
-          </div> */}
+          {profile && <UserProfileDetail profile={profile} />}
           <Layout.Footer className="find-actions-buttons">
             <div className="main">
               <div className="actions-buttons">
-                <button
+                <Button
                   className="btn-pass"
-                  onClick={() => handleReject(data_id, reload)}
+                  onClick={() => handleReject(user.id, reload)}
                   style={{ width: '50%' }}
+                  disabled={userProfile.status !== 1}
                 >
                   <CloseOutlined /> Reject
-                </button>
-                <button
+                </Button>
+                <Button
                   className="btn-accept"
-                  onClick={() => handleAccept(data_id, getData)}
+                  onClick={() => handleAccept(user.id, getData)}
                   style={{ width: '50%' }}
+                  disabled={userProfile.status !== 1}
                 >
                   {' '}
                   <HeartFilled /> Like back
-                </button>
+                </Button>
               </div>
             </div>
           </Layout.Footer>
@@ -133,6 +119,13 @@ export default function CandidateLikeProfile(props: any) {
     </AppLayout>
   );
 }
+
+const mapStateToProps = ({ user }: IAppState) => {
+  return {
+    user: user.data,
+  };
+};
+export default connect(mapStateToProps)(CandidateLikeProfile);
 
 const handleReject = async (id: number, reload: Function) => {
   if (!id) return;

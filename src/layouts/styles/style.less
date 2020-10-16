@@ -36,9 +36,7 @@ body {
       justify-content: center;
       padding: 0 2rem;
       width: 100%;
-      button:hover {
-        cursor: pointer;
-      }
+
       button {
         border: none;
         box-shadow: none;
@@ -63,6 +61,7 @@ body {
         border-top-right-radius: 25px;
         color: #fff;
         display: inline-flex;
+        gap: 1em;
         justify-content: center;
         width: 75%;
       }
@@ -402,20 +401,19 @@ body {
   justify-content: space-between;
   margin: 1rem 0;
   .suggestion-box {
+    align-items: center;
     background-color: #3495fa;
     border-radius: 6px;
+    color: #fff;
     cursor: pointer;
-    height: 45px;
+    display: flex;
+    font-size: 1.2em;
+    font-weight: 500;
+    gap: 1em;
+    justify-content: center;
     width: 65%;
-    h3 {
-      align-items: center;
-      color: #fff;
-      display: flex;
-      font-weight: 500;
-      gap: 0.5em;
-      justify-content: center;
-      letter-spacing: -0.333333px;
-      line-height: 45px;
+    .anticon {
+      line-height: 0;
     }
   }
 }

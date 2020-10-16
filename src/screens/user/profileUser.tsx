@@ -3,7 +3,6 @@ import { Layout, Form, Select, Typography, Button, List, Tag, Input, message, Dr
 import AppLayout from '../../layouts/app';
 import { IMember } from '../../schemas/IProfile';
 import Axios from 'axios';
-import { lowerStrings } from '@utils/helpers';
 import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
 import TopHeader from '../find/Header';
@@ -53,7 +52,6 @@ const ProfileUsers = (props: any) => {
   };
 
   const onFinish = async (values: any) => {
-    values = lowerStrings(values);
     setBtnLoading(true);
     let show = message.loading('Sending Invitation ...', 0);
     try {
@@ -73,7 +71,7 @@ const ProfileUsers = (props: any) => {
   };
 
   const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
+    <Form.Item name="countryCode" noStyle>
       <Select onChange={handleSelectCountry} defaultValue={countryCode}>
         <Select.Option value="+91">+91</Select.Option>
       </Select>
