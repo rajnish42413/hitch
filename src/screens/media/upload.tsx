@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import AuthLayout from '../../layouts/auth';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ImageUploader from '../../components/Uploader';
 import Loader from '../../components/loader/Loader';
 import { IAppState } from '@redux/reducers';

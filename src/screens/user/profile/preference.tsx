@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react';
-import { Card, Col, Form, Input, Row, Typography, Layout, message, Modal, Slider } from 'antd';
+import { Card, Col, Form, Input, Row, Typography, Layout, message, Slider } from 'antd';
 import AppLayout from '../../../layouts/app';
 import { IPreference } from '../../../schemas/IProfile';
 import Axios from 'axios';
