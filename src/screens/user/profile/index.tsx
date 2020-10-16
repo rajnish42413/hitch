@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { Button, Layout, List, Modal, Typography, message } from 'antd';
+import { Button, Layout, List, Modal, Typography, message, Tag } from 'antd';
 import TopHeader from '../../find/Header';
 //import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { Link, useHistory } from 'react-router-dom';
@@ -86,10 +86,15 @@ const UserProfile = (props: any) => {
               <Typography>
                 <Typography.Title level={4}>{user.name}</Typography.Title>
                 <p>{user?.profile?.detail?.city}</p>
+                <p>
+                  <Tag color={'green'} style={{ textTransform: 'capitalize' }}>
+                    {user.sub_role}
+                  </Tag>
+                </p>
               </Typography>
             </div>
             <Link to="/user/detail">
-              <Button block type="text" className="btn-red">
+              <Button block className="btn-red">
                 View/ Edit Profile
               </Button>
             </Link>

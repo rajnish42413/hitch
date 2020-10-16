@@ -28,8 +28,8 @@ module.exports = override(
     paths: ['./src/styles', './node_modules'],
     javascriptEnabled: true,
     modifyVars: {
-      '@primary-color': '#60BD9B',
-      '@link-color': '#60BD9B',
+      '@primary-color': '#000000',
+      '@link-color': '#000000',
       '@success-color': '#52c41a',
       '@warning-color': '#faad14',
       '@error-color': '#f5222d',

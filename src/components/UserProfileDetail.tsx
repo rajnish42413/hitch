@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Carousel, Col, Row, Typography } from 'antd';
+import { Carousel, Col, Row, Typography } from 'antd';
 import { IEducation, IProfile } from '../schemas/IProfile';
 import { getAge, getHeightWithLabelFromValue } from '@utils/helpers';
 import {
@@ -139,7 +139,7 @@ const profileDetail = (user: IProfile) => {
           </Col>
         </Row>
       </li>
-      <li style={{ backgroundColor: '#E0E0E0' }}>
+      {/* <li style={{ backgroundColor: '#E0E0E0' }}>
         <Typography className="text-center my-2">
           <Typography.Title>Social profiles</Typography.Title>
         </Typography>
@@ -159,7 +159,7 @@ const profileDetail = (user: IProfile) => {
         >
           {user.name}’s Instagram
         </Button>
-      </li>
+      </li> */}
     </ul>
   );
 };

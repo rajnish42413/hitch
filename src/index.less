@@ -6,9 +6,18 @@
 body {
   .btn-dark {
     background-color: #000;
+    border-color: #000;
     color: #fff;
     font-size: 18px;
     font-weight: bold;
+  }
+
+  .btn-dark:hover,
+  .btn-dark:focus,
+  .btn-dark:active {
+    background-color: #db4949;
+    border-color: #db4949;
+    color: #fff;
   }
 
   .btn-red {
@@ -21,6 +30,15 @@ body {
     font-weight: bold;
     gap: 1em;
     justify-content: center;
+  }
+
+  .btn-red:hover,
+  .btn-red:focus,
+  .btn-red:active {
+    background-color: #db4949;
+    border-color: #db4949;
+    color: #fff;
+    opacity: 0.8;
   }
 
   .btn-text {
@@ -153,7 +171,7 @@ body {
       width: 30px;
     }
     li.active {
-      background: #1abc9c;
+      background: #000;
     }
   }
 }
@@ -169,7 +187,7 @@ body {
 
 // routes progress bar styles
 
-@progress-color: #1abc9c;
+@progress-color: #000000;
 
 #nprogress .bar {
   background: @progress-color;

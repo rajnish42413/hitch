@@ -219,7 +219,7 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
           </Col>
         </Row>
       </li>
-      <li style={{ backgroundColor: '#E0E0E0' }}>
+      {/* <li style={{ backgroundColor: '#E0E0E0' }}>
         <Typography className="text-center my-2">
           <Typography.Title>Social profiles</Typography.Title>
         </Typography>
@@ -239,7 +239,7 @@ const ProfileDetail = ({ user }: IPorifleDetail) => {
         >
           {user.name}’s Instagram
         </Button>
-      </li>
+      </li> */}
     </ul>
   );
 };

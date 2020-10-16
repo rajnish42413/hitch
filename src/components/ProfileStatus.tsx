@@ -76,6 +76,7 @@ export default function ProfileVerificationStatus({
     return (
       <Alert
         message="Profile not completed. Please complete to activate all services"
+        type="warning"
         description={
           <div className="flex-row">
             <Button type="link" size="small" onClick={() => getUser()} loading={btnLoading}>
@@ -90,7 +91,6 @@ export default function ProfileVerificationStatus({
             )}
           </div>
         }
-        type="info"
         showIcon
         className="mt-1"
         closable
