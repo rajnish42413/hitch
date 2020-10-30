@@ -3,8 +3,7 @@ import { Dropdown, Layout, Menu, Button, message, Drawer, Divider } from 'antd';
 import AppLayout from '../../layouts/app';
 import UserProfileDetail from '../../components/UserProfileDetail';
 import TopHeader, { MenuIcon } from '../find/Header';
-import { useHistory } from 'react-router-dom';
-import { colors } from '@constants/general';
+import { Link, useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import Icon, { PhoneFilled, MessageFilled, PhoneOutlined } from '@ant-design/icons';
 import Loader from '../../components/loader/Loader';
@@ -45,20 +44,20 @@ function CandidateProfile(props: any) {
     getData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const redirectReport = {
+    pathname: '/user/report-profile',
+    state: { profile_id: userProfile.id },
+  };
   const filterMenu = (
     <Menu className="filter-box">
-      <Menu.Item key="0">
-        <button
-          className="text-center"
-          style={{ color: colors['danger-color'] }}
-          onClick={() => handleReject(user?.id, reload)}
-        >
-          Remove
-        </button>
+      <Menu.Item key="0" onClick={() => handleReject(user?.id, reload)}>
+        Remove
       </Menu.Item>
-      <Menu.Item key="1">
-        <button className="text-center">Report</button>
-      </Menu.Item>
+      {userProfile && (
+        <Menu.Item key="1">
+          <Link to={redirectReport}>Report</Link>
+        </Menu.Item>
+      )}
     </Menu>
   );
 

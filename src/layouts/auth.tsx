@@ -2,6 +2,7 @@ import React from 'react';
 import AuthHeader from './auth/header';
 import { Layout } from 'antd';
 import CacheClear from '../components/cacheClear';
+import HelmetConfig from '../components/HelmetConfig';
 import './styles/app.less';
 import './styles/auth.less';
 
@@ -11,21 +12,27 @@ interface Iprops {
   goBack?: boolean;
   header?: boolean;
   classsName?: string;
+  helmet?: boolean;
 }
-export default function AuthLayout(props: Iprops) {
-  const goBack = props.goBack || true;
-  const header = props.header;
+export default function AuthLayout({
+  style,
+  children,
+  goBack = true,
+  header,
+  classsName,
+  helmet = true,
+}: Iprops) {
   const customStyle = {
     padding: '0 1rem',
   };
-  const style = { ...customStyle, ...props.style };
+  const dom_style = { ...customStyle, ...style };
   return (
     <Layout className="pj-auth-layout">
+      {helmet && <HelmetConfig />}
       {header && <AuthHeader goBack={goBack} />}
-      <Layout.Content className="main" style={style}>
+      <Layout.Content className="main" style={dom_style}>
         <CacheClear />
-
-        {props.children}
+        {children}
       </Layout.Content>
     </Layout>
   );

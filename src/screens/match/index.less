@@ -1,0 +1,53 @@
+.matched-flex-box {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  .profile-img {
+    background: #ebedf2;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 150px;
+    width: 150px;
+  }
+}
+.statics-card {
+  display: flex;
+  width: 100%;
+  .ant-radio-button-wrapper {
+    height: auto;
+    line-height: normal;
+    padding: 1rem;
+    text-align: center;
+    width: 33.3%;
+  }
+}
+.percent-box {
+  background-color: #000;
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+  height: 80px;
+  justify-content: center;
+  line-height: 80px;
+  width: 100%;
+}
+
+.answer-box {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  margin-bottom: 1.3rem;
+  padding: 0 15px;
+  img {
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .statics-card {
+    h3 {
+      font-size: 14px;
+    }
+  }
+}

@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useClearCache } from 'react-clear-cache';
 import { Alert, Button } from 'antd';
 
 export default function CacheClear() {
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  
-  // useEffect(() => {
-  //   if(!isLatestVersion){
-  //     emptyCacheStorage();
-  //   }
-  // }, [emptyCacheStorage, isLatestVersion])
+
+  useEffect(() => {
+    if (!isLatestVersion) {
+      emptyCacheStorage();
+    }
+    return () => {
+      if (!isLatestVersion) {
+        emptyCacheStorage();
+      }
+    };
+  }, [emptyCacheStorage, isLatestVersion]);
 
   return !isLatestVersion ? (
     <Alert
       message="Update Version"
-      type="info"
+      type="warning"
       showIcon
       description={
         <Button

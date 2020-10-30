@@ -20,8 +20,8 @@ const ProfileFor = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Title level={4}>
-            Welcome to made in heaven. <br />
-            Signing up as ...?
+            Welcome to made in heaven.
+            <br /> Whose profile are you making?
           </Title>
         </Typography>
 
@@ -41,7 +41,7 @@ const ProfileFor = (props: any) => {
 
         <AuthFooter>
           <Button htmlType="submit" block className="btn-dark">
-            Create a new profile
+            Continue
           </Button>
 
           {/* <button type="button" className="btn-dark-text">

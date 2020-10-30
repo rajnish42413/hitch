@@ -62,7 +62,7 @@ const UserIntro = (props: any) => {
           className="mt-1"
         >
           <Typography style={{ textAlign: 'center' }}>
-            <Typography.Title level={3}>Write your introduction </Typography.Title>
+            <Typography.Title level={4}>Write your introduction </Typography.Title>
             <Typography.Paragraph>Good first impressions are nice to have </Typography.Paragraph>
           </Typography>
 
@@ -78,9 +78,16 @@ const UserIntro = (props: any) => {
           <AuthFooter>
             {updated && (
               <>
-                <Button className="btn-dark" htmlType="button" block href={`/profiles/${user.id}`}>
-                  Profile Preview
-                </Button>
+                {user.profile && (
+                  <Button
+                    className="btn-dark"
+                    htmlType="button"
+                    block
+                    href={`/profiles/${user.profile?.id}`}
+                  >
+                    Profile Preview
+                  </Button>
+                )}
 
                 <button
                   className="btn-dark-text"

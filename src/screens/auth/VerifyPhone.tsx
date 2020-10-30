@@ -8,10 +8,11 @@ import * as authToken from '@utils/userAuth';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { IUser } from '../../schemas/IUser';
-import { IAction, SetUser } from '@redux/actions';
+import { IAction, SetUser, SetUserQuestionAnswer } from '@redux/actions';
 import { IAppState } from '@redux/reducers';
 import firebase from '../../firebase/config';
 import AuthFooter from '../../layouts/auth/footer';
+import { IQuestion } from '../../schemas/IQuestion.d';
 
 const { Title } = Typography;
 const { Countdown } = Statistic;
@@ -26,7 +27,7 @@ const VerifyPhone = (props: any) => {
   const history = useHistory();
   const [counter, setCounter] = useState(true);
   const location = useLocation();
-  const { phone } = location.state;
+  const { phone, countryCode } = location.state;
   const [btnLoading, setBtnLoading] = useState(false);
   const [deviceToken, setDeviceToken] = useState('');
 
@@ -76,7 +77,12 @@ const VerifyPhone = (props: any) => {
   };
 
   const getProfileStatus = async (detail: boolean) => {
-    const { data } = await Axios.get('user/profile/status');
+    const [firstResponse, secondResponse] = await Promise.all([
+      Axios.get(`user/profile/status`),
+      Axios.get(`questions`),
+    ]);
+    props.setUserQuestionAnswer(secondResponse.data);
+    const data = firstResponse.data;
     if (data) {
       switch (data?.action) {
         case 'add_basic_detail':
@@ -191,15 +197,15 @@ const VerifyPhone = (props: any) => {
         <Typography>
           <Title level={4}>
             Enter OTP sent to you on <br />
-            +91-{phone}
+            {countryCode || '+91'}-{phone}
           </Title>
         </Typography>
 
         <Form.Item
           name="otp"
           rules={[
-            { required: true, message: 'Enter 6 digit OTP' },
-            { max: 6, min: 6, message: 'Please enter valid phone number!' },
+            { required: true, message: 'Please enter valid OTP!' },
+            { max: 6, min: 6, message: 'Enter 6 digit OTP!' },
           ]}
         >
           <Input style={{ width: '100%' }} placeholder="6 digit OTP" type="number" />
@@ -254,6 +260,7 @@ const mapStateToProps = ({ user }: IAppState) => {
 const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
   return {
     setUser: (data: IUser) => dipatch(SetUser(data)),
+    setUserQuestionAnswer: (data: Array<IQuestion>) => dipatch(SetUserQuestionAnswer(data)),
   };
 };
 

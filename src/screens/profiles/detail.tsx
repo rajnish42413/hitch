@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Layout, Row, Button, message } from 'antd';
+import { Col, Layout, Row, Button, Alert, Result } from 'antd';
 import AppLayout from '../../layouts/app';
 import UserProfileDetail from '../../components/UserProfileDetail';
 import { HeaderSkelaton } from '../find/Header';
@@ -17,22 +17,21 @@ const { Content } = Layout;
 export default function PorfileDetail(props: any) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({} as IProfile);
+  const [image, setImage] = useState('');
+  const token = authToken.get();
   const { id }: any = useParams();
   const history = useHistory();
   const profile_id = id;
 
   const getData = async () => {
-    const token = authToken.get();
-    if (token) {
+    try {
       const { data } = await Axios.get<IProfile>(`profiles/${profile_id}`);
+      setImage(data?.media?.[0].thumb);
       setProfile(data);
       setLoading(false);
-    } else {
-      if (profile_id) authToken.setProfileRedirect(profile_id);
-      message.warning('Login to visit profile');
+    } catch (error) {
       setProfile({} as IProfile);
       setLoading(false);
-      history.push('/');
     }
   };
 
@@ -40,34 +39,61 @@ export default function PorfileDetail(props: any) {
     getData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return profile ? (
+  const alt = profile ? `${profile.name} on PakkiJodi` : '';
+
+  return !loading ? (
     <AppLayout>
       <Helmet>
-        {profile.name && <title>{profile.name} | PakkiJodi</title>}
-        <meta
-          property="og:url"
-          content={`https://www.pakkijodi.com/profiles/${profile.id}?name=${convertToSlug(
-            profile.name
-          )}`}
-        />
+        {profile.name && <title> {profile.name} | PakkiJodi</title>}
 
-        {profile?.media?.[0].thumb ? (
-          <meta property="og:image" content={profile?.media?.[0].thumb} />
-        ) : (
+        {profile.id && (
           <meta
-            property="og:image"
-            content="https://www.pakkijodi.com/static/media/pakkijodi-logoH-white.c42b1e31.png"
+            property="og:url"
+            content={`https://www.pakkijodi.com/profiles/${profile.id}?name=${convertToSlug(
+              profile.name
+            )}`}
           />
         )}
+
+        {image && <meta property="og:image" content={image} />}
+        {image && <meta property="og:image:secure_url" content={image} />}
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:type" content="image/jpg" />
+        <meta property="og:image:width" content="300" />
+        <meta property="og:image:height" content="300" />
+        {alt && <meta property="og:image:alt" content={alt} />}
       </Helmet>
-      <TopHeader profile={profile} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <Content>
-          <UserProfileDetail profile={profile} />
-        </Content>
+      <TopHeader profile={profile.name ? profile.name : 'Profile Detail'} />
+
+      {!token && (
+        <Alert
+          message="Please Login ! , to perform more action on this profile"
+          type="warning"
+          closable
+          style={{ marginBottom: '1em' }}
+          description={
+            <Button type="link" size="small" onClick={() => history.push('/')}>
+              Login
+            </Button>
+          }
+        />
       )}
+      <Content>
+        {profile?.id ? (
+          <UserProfileDetail profile={profile} />
+        ) : (
+          <Result
+            title="Profile not found"
+            subTitle="Sorry, something went wrong."
+            extra={
+              <Button type="primary" href="/">
+                Back Home
+              </Button>
+            }
+          />
+        )}
+      </Content>
     </AppLayout>
   ) : (
     <Loader />
@@ -75,7 +101,7 @@ export default function PorfileDetail(props: any) {
 }
 
 interface IHeaderProps {
-  profile: IProfile;
+  profile: string;
 }
 const TopHeader = (props: IHeaderProps) => {
   return (
@@ -84,7 +110,7 @@ const TopHeader = (props: IHeaderProps) => {
         <Col span={24}>
           <Link to="/home">
             <Button type="link" className="user-name-tile">
-              <ArrowLeftOutlined /> <h3>{props.profile?.name}</h3>
+              <ArrowLeftOutlined /> <h3>{props.profile}</h3>
             </Button>
           </Link>
         </Col>

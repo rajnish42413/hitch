@@ -17,7 +17,7 @@ export default function ContactDetail() {
           <Title level={4}>HELP / SUPPORT</Title>
           <Paragraph>
             <p>For all things technical and app-related.</p>
-            <p>ontact Us or reach us by facsimile at xxxx xxx xxx </p>
+            <p>Contact Us or reach us by facsimile at xxxx xxx xxx </p>
           </Paragraph>
           <Divider />
 

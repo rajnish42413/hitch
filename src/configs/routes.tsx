@@ -17,6 +17,11 @@ import WellDone from '../screens/user/create/WellDone';
 import ProfileWorkplace from '../screens/user/create/ProfileWorkplace';
 import GreatJob from '../screens/user/create/GreatJob';
 import ProfileStatus from '../screens/user/create/profileStatus';
+import ProfileSocialHandle from '../screens/user/create/profileSocialHandle';
+import EditProfile from '../screens/user/profile/edit';
+import UserQuestions from '../screens/questions/index';
+import ProfileMatch from '../screens/match/index';
+import CommingSoon from '../screens/home/pages/comming';
 
 const NotFoundPage = React.lazy(() => import('../screens/home/pages/notFound'));
 const UserCreatedWelcome = React.lazy(() => import('../screens/user/success'));
@@ -40,7 +45,6 @@ const SafetyTips = React.lazy(() => import('../screens/home/pages/safetyTips'));
 const CommunityGuidelines = React.lazy(() => import('../screens/home/pages/commynity'));
 const ReportProfile = React.lazy(() => import('../screens/report'));
 const PorfileDetail = React.lazy(() => import('../screens/profiles/detail'));
-const Login = React.lazy(() => import('../screens/auth/Login'));
 const Home = React.lazy(() => import('../screens/find/Find'));
 const MobileVerification = React.lazy(() => import('../screens/auth/MobileVerification'));
 const VerifyPhone = React.lazy(() => import('../screens/auth/VerifyPhone'));
@@ -54,25 +58,32 @@ const Support = React.lazy(() => import('../screens/home/pages/support'));
 const Jobs = React.lazy(() => import('../screens/home/pages/jobs'));
 const ProfileFor = React.lazy(() => import('../screens/user/create/profileFor'));
 
+/* --------Static SEO Pages --- */
+const seoPages = React.lazy(() => import('../screens/home/pages/staticPages'));
+
 const Routes = (props: any) => (
   <BrowserRouter>
     <React.Suspense fallback={<Ploader />}>
       <Switch>
+        {/* SEO Pages routes */}
+        <Route exact path="/matrimonials" component={seoPages} />
+        <Route exact path="/matrimonials/:pageUrl" component={seoPages} />
+
         {/* public routes */}
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/privacy" component={Privacy} />
-        <Route exact path="/terms" component={Terms} />
+        <Route exact path="/privacy-policy" component={Privacy} />
+        <Route exact path="/terms-and-conditions" component={Terms} />
 
         <Route exact path="/safety-tips" component={SafetyTips} />
         <Route exact path="/community-guidelines" component={CommunityGuidelines} />
         <Route exact path="/faq" component={FaqHome} />
-        <Route exact path="/contact" component={ContactDetail} />
+        <Route exact path="/contact-us" component={ContactDetail} />
         <Route exact path="/support" component={Support} />
         <Route exact path="/jobs" component={Jobs} />
 
         {/* /open pages */}
         <Route path="/profiles/:id" component={PorfileDetail} />
-        <PublicRoute path="/login" component={Login} />
+        <PublicRoute path="/login" component={LandingPage} />
         <PublicRoute path="/phone-number" component={MobileVerification} />
         <PublicRoute path="/verify-phone-number" component={VerifyPhone} />
         <PublicRoute path="/profile-for" component={ProfileFor} />
@@ -91,6 +102,7 @@ const Routes = (props: any) => (
         <PrivateRoute path="/user/create/well-done" component={WellDone} />
         <PrivateRoute path="/user/create/profile-workspace" component={ProfileWorkplace} />
         <PrivateRoute path="/user/create/great-job" component={GreatJob} />
+        <PrivateRoute path="/user/create/social-handles" component={ProfileSocialHandle} />
 
         <PrivateRoute path="/user/create/step-1" component={CreateUserStepOne} />
         <PrivateRoute path="/user/create/step-2" component={CreateUserStepTwo} />
@@ -102,10 +114,14 @@ const Routes = (props: any) => (
         <PrivateRoute path="/user/introduction" component={UserIntro} />
         <PrivateRoute path="/user/report-profile" component={ReportProfile} />
 
+        <PrivateRoute path="/profile/questions" component={UserQuestions} />
+        <PrivateRoute path="/profile/:id/match-statics" component={ProfileMatch} />
+
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/profile-image-upload" component={UserImageManage} />
         <PrivateRoute path="/profile" component={UserProfile} />
         <PrivateRoute path="/user/detail" component={UserDetail} />
+        <PrivateRoute path="/user/edit" component={EditProfile} />
         <PrivateRoute path="/profile-users" component={ProfileUsers} />
 
         <PrivateRoute path="/shortlisted" component={Shortlist} />
@@ -120,6 +136,7 @@ const Routes = (props: any) => (
         <PrivateRoute path="/help" component={FAQ} />
 
         {/* //404 */}
+        <Route path="/comming-soon" component={CommingSoon} />
         <Route path="/404" component={NotFoundPage} />
         <Redirect to="/404" />
       </Switch>

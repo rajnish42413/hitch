@@ -3,7 +3,7 @@ import { Button, Col, Modal, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { MenuOutlined, HeartFilled } from '@ant-design/icons';
 import './landing.less';
-
+import HelmetConfig from '../../components/HelmetConfig';
 const PopMenu = React.lazy(() => import('./popMenu'));
 const LoginButtons = React.lazy(() => import('../../components/form/LoginButtons'));
 const logo = require('../../assets/images/pakkijodi-logoH-white.png');
@@ -23,6 +23,7 @@ const PageSkeleton = React.forwardRef((props: IProps, ref: any) => {
 
   return (
     <main className={props.className}>
+      <HelmetConfig />
       <Header
         triggerLoginMoal={() => setLoginModal(!loginModal)}
         triggerSideBar={() => setVisible(!visible)}

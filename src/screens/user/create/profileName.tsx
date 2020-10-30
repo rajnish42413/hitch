@@ -10,6 +10,8 @@ const ProfileName = (props: any) => {
   const history = useHistory();
   const { state } = useLocation();
 
+  console.log(state);
+
   const onFinish = async (values: any) => {
     const data = {
       ...state,
@@ -23,8 +25,7 @@ const ProfileName = (props: any) => {
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {' '}
-            {renderTitle(props.signAs, 'gender_title', props.gender)}{' '}
+            {renderTitle(state.signAs, 'gender_title', state.gender)}{' '}
           </Typography.Title>
         </Typography>
         <Form.Item

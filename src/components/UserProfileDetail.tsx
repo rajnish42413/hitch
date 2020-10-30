@@ -1,18 +1,21 @@
-import React from 'react';
-import { Carousel, Col, Row, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Carousel, Col, Row, Spin, Typography } from 'antd';
 import { IEducation, IProfile } from '../schemas/IProfile';
-import { getAge, getHeightWithLabelFromValue } from '@utils/helpers';
-import {
-  HeartOutlined,
-  IdcardOutlined,
-  SafetyOutlined,
-  SmileOutlined,
-  StarOutlined,
-  BookOutlined,
-} from '@ant-design/icons';
+import { getAge, getHeightWithLabelFromValue, getZodiac } from '@utils/helpers';
+import Icon, { ShareAltOutlined } from '@ant-design/icons';
 import Loader from './loader/Loader';
 import moment from 'moment';
 import ShareProfile from './ShareProfile';
+
+import { ReactComponent as WorkSvg } from '../assets/icons/work-icon.svg';
+import { ReactComponent as EduSvg } from '../assets/icons/college.svg';
+import { ReactComponent as HeartSvg } from '../assets/icons/heart.svg';
+import { ReactComponent as DOBSvg } from '../assets/icons/DOB.svg';
+import { ReactComponent as AboutSvg } from '../assets/icons/created_by.svg';
+import { ReactComponent as AgeSvg } from '../assets/icons/age.svg';
+import { ReactComponent as ZodicAvg } from '../assets/icons/zodiacsign.svg';
+import { IHandle } from '../schemas/IProfileHandles';
+import Axios from 'axios';
 
 interface IProps {
   profile: IProfile;
@@ -21,24 +24,43 @@ interface IProps {
 
 export default function UserProfileDetail({ profile, shareButton = false }: IProps) {
   const user = profile;
+  const [profileSocial, setProfileSocial] = useState({} as IHandle);
+  const [socialLoading, setSocialLoading] = useState(true);
+
+  const getData = async () => {
+    const { data } = await Axios.get(`profiles/${profile.id}/socials`);
+    setProfileSocial(data);
+    setSocialLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return user ? (
     <>
       {profileCarasole(user, shareButton)}
-      {profileDetail(user)}
+      <ProfileDetail user={user} socialLoading={socialLoading} profileSocial={profileSocial} />
     </>
   ) : (
     <Loader />
   );
 }
 
-const profileDetail = (user: IProfile) => {
-  if (!user) return;
+interface IPorifleDetail {
+  user: IProfile;
+  socialLoading: boolean;
+  profileSocial: IHandle;
+}
+const ProfileDetail = ({ user, socialLoading, profileSocial }: IPorifleDetail) => {
+  if (!user) return <> </>;
   return (
     <ul className="profile-detail-list">
-      <li style={{ backgroundColor: '#E8E8E8' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <IdcardOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={WorkSvg} style={{ fontSize: '2rem', color: 'transparent' }} />
           </Col>
           <Col span={16}>
             <Typography>
@@ -55,10 +77,10 @@ const profileDetail = (user: IProfile) => {
       </li>
 
       {user?.educations?.map((education: IEducation, i: number) => (
-        <li style={{ backgroundColor: '#E0E0E0' }} key={i}>
+        <li key={i}>
           <Row justify="space-between" className="title-row" align="middle">
             <Col span={8} className="text-center">
-              <SafetyOutlined style={{ fontSize: '2rem' }} />
+              <Icon component={EduSvg} style={{ fontSize: '2rem', color: 'transparent' }} />
             </Col>
             <Col span={16}>
               <Typography>
@@ -70,10 +92,10 @@ const profileDetail = (user: IProfile) => {
         </li>
       ))}
 
-      <li style={{ backgroundColor: '#D9D9D9' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <HeartOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={HeartSvg} style={{ fontSize: '2rem', color: 'transparent' }} />
           </Col>
           <Col span={16}>
             <Typography>
@@ -84,10 +106,10 @@ const profileDetail = (user: IProfile) => {
         </Row>
       </li>
 
-      <li style={{ backgroundColor: '#E0E0E0' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <BookOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={DOBSvg} style={{ fontSize: '2rem', color: 'transparent' }} />
           </Col>
           <Col span={16}>
             <Typography>
@@ -98,10 +120,10 @@ const profileDetail = (user: IProfile) => {
         </Row>
       </li>
 
-      <li style={{ backgroundColor: '#D9D9D9' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <HeartOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={AgeSvg} style={{ fontSize: '2rem', color: 'transparent' }} />
           </Col>
           <Col span={16}>
             <Typography>
@@ -112,24 +134,24 @@ const profileDetail = (user: IProfile) => {
         </Row>
       </li>
 
-      <li style={{ backgroundColor: '#E0E0E0' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <SmileOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={ZodicAvg} style={{ fontSize: '2rem', color: 'transparent' }} />
           </Col>
           <Col span={16}>
             <Typography>
-              <Typography.Title level={4}>Food choices</Typography.Title>
-              <p>{'Vegetarian'}</p>
+              <Typography.Title level={4}>Zodiac Sign</Typography.Title>
+              <p>{getZodiac(user.date_of_birth)}</p>
             </Typography>
           </Col>
         </Row>
       </li>
 
-      <li style={{ backgroundColor: '#D9D9D9' }}>
+      <li>
         <Row justify="space-between" className="title-row" align="middle">
           <Col span={8} className="text-center">
-            <StarOutlined style={{ fontSize: '2rem' }} />
+            <Icon component={AboutSvg} style={{ fontSize: '2rem' }} />
           </Col>
           <Col span={16}>
             <Typography>
@@ -139,27 +161,63 @@ const profileDetail = (user: IProfile) => {
           </Col>
         </Row>
       </li>
-      {/* <li style={{ backgroundColor: '#E0E0E0' }}>
-        <Typography className="text-center my-2">
-          <Typography.Title>Social profiles</Typography.Title>
-        </Typography>
-        <Button
-          block
-          className="mt-2"
-          type="text"
-          style={{ textTransform: 'capitalize', backgroundColor: '#185EB1' }}
-        >
-          {user.name}’s Facebook
-        </Button>
-        <Button
-          block
-          className="mt-1"
-          style={{ textTransform: 'capitalize', color: '#000' }}
-          type="primary"
-        >
-          {user.name}’s Instagram
-        </Button>
-      </li> */}
+      <li style={{ paddingBottom: '2rem' }}>
+        <Spin spinning={socialLoading}>
+          {profileSocial && (
+            <Row justify="space-between" className="title-row" align="middle">
+              <Col span={8} className="text-center">
+                {' '}
+                <ShareAltOutlined style={{ fontSize: '2rem' }} />{' '}
+              </Col>
+              <Col span={16}>
+                <Typography>
+                  <Typography.Title level={4}>Social profiles</Typography.Title>
+                </Typography>
+              </Col>
+
+              <Col span={24}>
+                <Button
+                  block
+                  className="mt-2"
+                  type="text"
+                  style={{ textTransform: 'capitalize', backgroundColor: '#185EB1' }}
+                  href={profileSocial?.facebook}
+                  target="_blank"
+                  disabled={!profileSocial?.facebook}
+                >
+                  {user.name}’s Facebook
+                </Button>
+
+                <Button
+                  block
+                  className="mt-1 instagram"
+                  style={{ textTransform: 'capitalize' }}
+                  href={profileSocial.instagram}
+                  target="_blank"
+                  disabled={!profileSocial?.instagram}
+                >
+                  {user.name}’s Instagram
+                </Button>
+
+                <Button
+                  block
+                  className="mt-1"
+                  href={profileSocial.linkedin}
+                  target="_blank"
+                  disabled={!profileSocial?.linkedin}
+                  style={{
+                    textTransform: 'capitalize',
+                    color: '#000',
+                    backgroundColor: '#0077B5',
+                  }}
+                >
+                  {user.name}’s Linkedin
+                </Button>
+              </Col>
+            </Row>
+          )}
+        </Spin>
+      </li>
     </ul>
   );
 };
@@ -167,17 +225,10 @@ const profileDetail = (user: IProfile) => {
 const profileCarasole = (profile: IProfile | undefined, shareButton: boolean) => {
   if (!profile) return;
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '385px',
-        position: 'relative',
-        borderRadius: '11px 11px 0 0',
-      }}
-    >
+    <div className="profile-carousel">
       <Carousel style={{ zIndex: 0 }} autoplay dots={false}>
         {profile?.media?.map((image: any, index: number) => (
-          <img width="100%" height={385} src={image?.small} key={index} alt={profile.name} />
+          <img className="carousel-img" src={image?.medium} key={index} alt={profile.name} />
         ))}
       </Carousel>
       <div className="profile-detail-box">

@@ -7,9 +7,10 @@ import * as authToken from '@utils/userAuth';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Axios from 'axios';
 import { message, Modal, Button } from 'antd';
-import { IAction, SetUser } from '@redux/actions';
+import { IAction, SetUser, SetUserQuestionAnswer } from '@redux/actions';
 import { connect } from 'react-redux';
 import { IUser } from '../../schemas/IUser';
+import { IQuestion } from '../../schemas/IQuestion';
 
 function LoginButtons(props: any) {
   const history = useHistory();
@@ -37,7 +38,12 @@ function LoginButtons(props: any) {
   };
 
   const getProfileStatus = async (detail: boolean) => {
-    const { data } = await Axios.get('user/profile/status');
+    const [firstResponse, secondResponse] = await Promise.all([
+      Axios.get(`user/profile/status`),
+      Axios.get(`questions`),
+    ]);
+    props.setUserQuestionAnswer(secondResponse.data);
+    const data = firstResponse.data;
     if (data) {
       switch (data?.action) {
         case 'add_basic_detail':
@@ -77,12 +83,10 @@ function LoginButtons(props: any) {
 
   const accountVerification = async (values: any) => {
     const { email } = values;
-
     if (!email) {
       history.push('/phone-number', values);
       return;
     }
-
     setLoading(false);
     let show = message.loading('Verifying account ...', 0);
     try {
@@ -101,23 +105,23 @@ function LoginButtons(props: any) {
         history.push('/phone-number', values);
       }
 
-      if (data && data.action === 'fail_account_not_found') {
+      if (data && data.action === 'signup') {
         history.push('/phone-number', values);
       }
     }
   };
 
   const responseGoogle = (response: any) => {
-    setLoading(true);
     const { profileObj, accessToken } = response;
     if (accessToken && profileObj) {
+      setLoading(true);
       const data = {
         provider_id: accessToken,
         name: profileObj.name,
         email: profileObj.email,
         provider_name: 'google',
       };
-      if (data.email) accountVerification(data);
+      accountVerification(data);
     }
   };
 
@@ -125,13 +129,14 @@ function LoginButtons(props: any) {
     response: ReactFacebookLoginInfo | ReactFacebookLoginInfo
   ) => {
     if (response.accessToken) {
+      setLoading(true);
       const data = {
         provider_id: response.accessToken,
         name: response.name,
         email: response.email,
         provider_name: 'facebook',
       };
-      if (data.email) accountVerification(data);
+      accountVerification(data);
     }
   };
 
@@ -184,6 +189,7 @@ function LoginButtons(props: any) {
 const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
   return {
     setUser: (data: IUser) => dipatch(SetUser(data)),
+    setUserQuestionAnswer: (data: Array<IQuestion>) => dipatch(SetUserQuestionAnswer(data)),
   };
 };
 

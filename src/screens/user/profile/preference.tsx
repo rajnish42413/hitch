@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { IAppState } from '@redux/reducers';
 import TopHeader from '../../../screens/find/Header';
 import PromptModal from '../../../components/PromptModal';
+import { useHistory } from 'react-router-dom';
 
 interface IAge {
   min: number;
@@ -27,6 +28,8 @@ function Preference(props: any) {
   const [changed, setChanged] = useState(false);
   const tourVisibal = props.tourVisibal;
   const [age, setAge] = useState([18, 60]);
+
+  const history = useHistory();
 
   const handleAgeChange = (value: any) => {
     setChanged(true);
@@ -47,17 +50,19 @@ function Preference(props: any) {
     allValues.min_age = age[0];
     allValues.max_age = age[1];
     allValues.height = getHeightFromValue(allValues.c_height);
-    setChanged(false);
     handleSubmit(allValues);
   };
 
   const handleSubmit = async (values: any) => {
-    setChanged(false);
     let show = message.loading('Action Proccess ...', 0);
     try {
       await Axios.post('user/preference', values);
       setTimeout(show, 0);
       message.success('Preference updated successfully');
+      if (changed) {
+        setChanged(false);
+        return history.go(-1);
+      }
     } catch (error) {
       setChanged(false);
       setTimeout(show, 0);

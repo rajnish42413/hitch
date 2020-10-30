@@ -18,7 +18,7 @@ const GoodGoing = (props: any) => {
   return (
     <AuthLayout header={false}>
       <div className="mt-4">
-        <img src={logo} alt="welcomeImage" height="auto" />
+        <img src={logo} alt="welcomeImage" height="auto" width="150px" />
         <Typography>
           <Title level={4}>
             Good going {state?.full_name}! <br /> Tell us about your education.

@@ -31,11 +31,11 @@ export default function Workplace(props: IProps) {
     <Form.Item
       name="workplace"
       rules={[{ required: true, message: 'Please input your workplace!' }]}
-      initialValue={props?.initialValue}
+      initialValue={props?.initialValue ? props.initialValue : ''}
     >
       <AutoComplete placeholder="Workplace" onChange={(value: string) => organizationList(value)}>
         {organization.map((data: any, i: number) => (
-          <AutoComplete.Option key={i} value={`${data?.properties?.name}`} >
+          <AutoComplete.Option key={i} value={`${data?.properties?.name}`}>
             {`${data?.properties?.name} (${data?.properties?.homepage_url})`}
           </AutoComplete.Option>
         ))}

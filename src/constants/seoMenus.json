@@ -1,0 +1,789 @@
+{
+    "byCast": {
+        "matrimony": [{
+                "title": "Agarwal",
+                "link": "/matrimonials/agarwal-matrimony/",
+                "metaKeywords": "agarwal brides,agarwal groom,agarwal marriage,agarwal matchmaking,agarwal matrimonial,agarwal wedding"
+            },
+            {
+                "title": "Gupta",
+                "link": "/matrimonials/gupta-matrimony/",
+                "metaKeywords": "gupta brides,gupta groom,gupta marriage,gupta matchmaking,gupta matrimonial,gupta wedding"
+            },
+            {
+                "title": "Arora",
+                "link": "/matrimonials/arora-matrimony/",
+                "metaKeywords": "arora brides,arora groom,arora marriage,arora matchmaking,arora matrimonial,arora wedding"
+            },
+            {
+                "title": "Brahmin",
+                "link": "/matrimonials/brahmin-matrimony/",
+                "metaKeywords": "brahmin brides,brahmin groom,brahmin marriage,brahmin matchmaking,brahmin matrimonial,brahmin wedding"
+            },
+            {
+                "title": "Jat",
+                "link": "/matrimonials/jat-matrimony/",
+                "metaKeywords": "jat groom,jat marriage,jat matchmaking,jat matrimonial,jat wedding"
+            },
+            {
+                "title": "Kayastha",
+                "link": "/matrimonials/kayastha-matrimony/",
+                "metaKeywords": "kayastha brides,kayastha groom,kayastha marriage,kayastha matchmaking,kayastha matrimonial,kayastha wedding"
+            },
+            {
+                "title": "Khatri",
+                "link": "/matrimonials/khatri-matrimony/",
+                "metaKeywords": "khatri groom,khatri marriage,khatri matchmaking,khatri matrimonial,khatri matrimony,khatri wedding"
+            },
+            {
+                "title": "Purvanchal",
+                "link": "/matrimonials/purvanchal-matrimony/",
+                "metaKeywords": "purvanchal groom,purvanchal marriage,purvanchal matchmaking,purvanchal matrimonial,purvanchal matrimony,purvanchal wedding"
+            },
+            {
+                "title": "Vaish",
+                "link": "/matrimonials/vaish-matrimony/",
+                "metaKeywords": "vaish groom,vaish marriage,vaish matchmaking,vaish matrimonial,vaish matrimony,vaish wedding"
+            }
+        ],
+        "groom": [{
+                "title": "Agarwal",
+                "link": "/matrimonials/agarwal-groom-boys/",
+                "metaKeywords": "agarwal brides,agarwal groom,agarwal marriage,agarwal matchmaking,agarwal matrimonial,agarwal wedding"
+            },
+            {
+                "title": "Gupta",
+                "link": "/matrimonials/gupta-groom-boys/",
+                "metaKeywords": "gupta brides,gupta groom,gupta marriage,gupta matchmaking,gupta matrimonial,gupta wedding"
+            },
+            {
+                "title": "Arora",
+                "link": "/matrimonials/arora-groom-boys/",
+                "metaKeywords": "arora brides,arora groom,arora marriage,arora matchmaking,arora matrimonial,arora wedding"
+            },
+            {
+                "title": "Brahmin",
+                "link": "/matrimonials/brahmin-groom-boys/",
+                "metaKeywords": "brahmin brides,brahmin groom,brahmin marriage,brahmin matchmaking,brahmin matrimonial,brahmin wedding"
+            },
+            {
+                "title": "Jat",
+                "link": "/matrimonials/jat-groom-boys/",
+                "metaKeywords": "jat groom,jat marriage,jat matchmaking,jat matrimonial,jat wedding"
+            },
+            {
+                "title": "Kayastha",
+                "link": "/matrimonials/kayastha-groom-boys/",
+                "metaKeywords": "kayastha brides,kayastha groom,kayastha marriage,kayastha matchmaking,kayastha matrimonial,kayastha wedding"
+            },
+            {
+                "title": "Khatri",
+                "link": "/matrimonials/khatri-groom-boys/",
+                "metaKeywords": "khatri groom,khatri marriage,khatri matchmaking,khatri matrimonial,khatri matrimony,khatri wedding"
+            },
+            {
+                "title": "Purvanchal",
+                "link": "/matrimonials/purvanchal-groom-boys/",
+                "metaKeywords": "purvanchal groom,purvanchal marriage,purvanchal matchmaking,purvanchal matrimonial,purvanchal matrimony,purvanchal wedding"
+            },
+            {
+                "title": "Vaish",
+                "link": "/matrimonials/vaish-groom-boys/",
+                "metaKeywords": "vaish groom,vaish marriage,vaish matchmaking,vaish matrimonial,vaish matrimony,vaish wedding"
+            }
+        ],
+        "bride": [{
+                "title": "Agarwal",
+                "link": "/matrimonials/agarwal-bride-girls/",
+                "metaKeywords": "agarwal brides,agarwal groom,agarwal marriage,agarwal matchmaking,agarwal matrimonial,agarwal wedding"
+            },
+            {
+                "title": "Gupta",
+                "link": "/matrimonials/gupta-bride-girls/",
+                "metaKeywords": "gupta brides,gupta groom,gupta marriage,gupta matchmaking,gupta matrimonial,gupta wedding"
+            },
+            {
+                "title": "Arora",
+                "link": "/matrimonials/arora-bride-girls/",
+                "metaKeywords": "arora brides,arora groom,arora marriage,arora matchmaking,arora matrimonial,arora wedding"
+            },
+            {
+                "title": "Brahmin",
+                "link": "/matrimonials/brahmin-bride-girls/",
+                "metaKeywords": "brahmin brides,brahmin groom,brahmin marriage,brahmin matchmaking,brahmin matrimonial,brahmin wedding"
+            },
+            {
+                "title": "Jat",
+                "link": "/matrimonials/jat-bride-girls/",
+                "metaKeywords": "jat groom,jat marriage,jat matchmaking,jat matrimonial,jat wedding"
+            },
+            {
+                "title": "Kayastha",
+                "link": "/matrimonials/kayastha-bride-girls/",
+                "metaKeywords": "kayastha brides,kayastha groom,kayastha marriage,kayastha matchmaking,kayastha matrimonial,kayastha wedding"
+            },
+            {
+                "title": "Khatri",
+                "link": "/matrimonials/khatri-bride-girls/",
+                "metaKeywords": "khatri groom,khatri marriage,khatri matchmaking,khatri matrimonial,khatri matrimony,khatri wedding"
+            },
+            {
+                "title": "Purvanchal",
+                "link": "/matrimonials/purvanchal-bride-girls/",
+                "metaKeywords": "purvanchal groom,purvanchal marriage,purvanchal matchmaking,purvanchal matrimonial,purvanchal matrimony,purvanchal wedding"
+            },
+            {
+                "title": "Vaish",
+                "link": "/matrimonials/vaish-bride-girls/",
+                "metaKeywords": "vaish groom,vaish marriage,vaish matchmaking,vaish matrimonial,vaish matrimony,vaish wedding"
+            }
+        ]
+    },
+    "byCity": {
+        "matrimony": [{
+                "title": "Delhi",
+                "link": "/matrimonials/delhi-matrimony/",
+                "metaKeywords": "delhi boys, delhi brides,delhi girls,delhi groom,delhi matrimonial,marriage beuro in delhi,marriage bureau in delhi,marriage services in delhi,matchmaking services,matrimonial agency in delhi,matrimonial bureau in delhi,matrimonial services in delhi,marriage counsellor in delhi,matrimonial sites in delhi,best matrimonial site in delhi"
+            },
+            {
+                "title": "Faridabad",
+                "link": "/matrimonials/faridabad-matrimony/",
+                "metaKeywords": "faridabad boys, faridabad brides,faridabad girls,faridabad groom,faridabad matrimonial,marriage beuro in faridabad,marriage bureau in faridabad,marriage services in faridabad,matchmaking services,matrimonial agency in faridabad,matrimonial bureau in faridabad,matrimonial services in faridabad,marriage counsellor in faridabad,matrimonial sites in faridabad,best matrimonial site in faridabad"
+            },
+            {
+                "title": "Ghaziabad",
+                "link": "/matrimonials/ghaziabad-matrimony/",
+                "metaKeywords": "ghaziabad boys,ghaziabad girls,marriage beuro in ghaziabad,marriage bureau in ghaziabad,ghaziabad matrimony"
+            },
+            {
+                "title": "Gurgaon",
+                "link": "/matrimonials/gurgaon-matrimony/",
+                "metaKeywords": "gurgaon boys,gurgaon brides,gurgaon groom,gurgaon matrimonial,gurugram girls,marriage beuro in gurgaon,marriage bureau in gurgaon,matrimonial bureau in gurgaon,matrimonial services in gurgaon"
+            },
+            {
+                "title": "Noida",
+                "link": "/matrimonials/noida-matrimony/",
+                "metaKeywords": "marriage beuro in noida,marriage bureau in noida,matrimonial services in noida,noida boys,noida brides,noida girls,noida groom,noida matrimonial"
+            },
+            {
+                "title": "Agra",
+                "link": "/matrimonials/agra-matrimony/",
+                "metaKeywords": "agra brides,agra girls,agra marriage profiles,agra matrimonial"
+            },
+            {
+                "title": "Aligarh",
+                "link": "/matrimonials/aligarh-matrimony/",
+                "metaKeywords": "aligarh brides,aligarh girls,aligarh marriage profiles,aligarh matrimonial"
+            },
+            {
+                "title": "Alwar",
+                "link": "/matrimonials/alwar-matrimony/",
+                "metaKeywords": "alwar brides,alwar girls,alwar marriage profiles,alwar matrimonial"
+            },
+            {
+                "title": "Bareilly",
+                "link": "/matrimonials/bareilly-matrimony/",
+                "metaKeywords": "bareilly brides,bareilly marriage profiles,bareilly matrimonial"
+            },
+            {
+                "title": "Bhiwani",
+                "link": "/matrimonials/bhiwani-matrimony/",
+                "metaKeywords": "bhiwani brides,bhiwani girls,bhiwani marriage profiles,bhiwani matrimonial"
+            },
+            {
+                "title": "Bijnor",
+                "link": "/matrimonials/bijnor-matrimony/",
+                "metaKeywords": "bijnor brides,bijnor girls,bijnor marriage profiles,bijnor matrimonial"
+            },
+            {
+                "title": "Bulandshahr",
+                "link": "/matrimonials/bulandshahr-matrimony/",
+                "metaKeywords": "bulandshahr brides,bulandshahr girls,bulandshahr marriage profiles,bulandshahr matrimonial,bulandshahr matrimony"
+            },
+            {
+                "title": "Chandigarh",
+                "link": "/matrimonials/chandigarh-matrimony/",
+                "metaKeywords": "chandigarh brides,chandigarh girls,chandigarh marriage profiles,chandigarh matrimonial,chandigarh matrimony"
+            },
+            {
+                "title": "Dehradun",
+                "link": "/matrimonials/dehradun-matrimony/",
+                "metaKeywords": "dehradun brides,dehradun girls,dehradun marriage profiles,dehradun matrimonial,dehradun matrimony"
+            },
+            {
+                "title": "Haridwar",
+                "link": "/matrimonials/haridwar-matrimony/",
+                "metaKeywords": "haridwar brides,haridwar girls,haridwar marriage profiles,haridwar matrimonial,haridwar matrimony"
+            },
+            {
+                "title": "Hisar",
+                "link": "/matrimonials/hisar-matrimony/",
+                "metaKeywords": "hisar brides,hisar girls,hisar marriage profiles,hisar matrimonial,hisar matrimony"
+            },
+            {
+                "title": "Jaipur",
+                "link": "/matrimonials/jaipur-matrimony/",
+                "metaKeywords": "jaipur brides,jaipur girls,jaipur marriage profiles,jaipur matrimonial,jaipur matrimony"
+            },
+            {
+                "title": "Karnal",
+                "link": "/matrimonials/karnal-matrimony/",
+                "metaKeywords": "karnal brides,karnal girls,karnal marriage profiles,karnal matrimonial,karnal matrimony"
+            },
+            {
+                "title": "Kurukshetra",
+                "link": "/matrimonials/kurukshetra-matrimony/",
+                "metaKeywords": "kurukshetra brides,kurukshetra girls,kurukshetra marriage profiles,kurukshetra matrimonial,kurukshetra matrimony"
+            },
+            {
+                "title": "Sonipat",
+                "link": "/matrimonials/sonipat-matrimony/",
+                "metaKeywords": "sonipat brides,sonipat girls,sonipat marriage profiles,sonipat matrimonial,sonipat matrimony"
+            },
+            {
+                "title": "Mathura",
+                "link": "/matrimonials/mathura-matrimony/",
+                "metaKeywords": "mathura brides,mathura girls,mathura marriage profiles,mathura matrimonial,mathura matrimony"
+            },
+            {
+                "title": "Meerut",
+                "link": "/matrimonials/meerut-matrimony/",
+                "metaKeywords": "meerut brides,meerut girls,meerut marriage profiles,meerut matrimonial,meerut matrimony"
+            },
+            {
+                "title": "Moradabad",
+                "link": "/matrimonials/moradabad-matrimony/",
+                "metaKeywords": "moradabad brides,moradabad girls,moradabad marriage profiles,moradabad matrimonial,moradabad matrimony"
+            },
+            {
+                "title": "Muzaffarnagar",
+                "link": "/matrimonials/muzaffarnagar-matrimony/",
+                "metaKeywords": "muzaffarnagar brides,muzaffarnagar girls,muzaffarnagar marriage profiles,muzaffarnagar matrimonial,muzaffarnagar matrimony"
+            },
+            {
+                "title": "Panipat",
+                "link": "/matrimonials/panipat-matrimony/",
+                "metaKeywords": "panipat brides,panipat girls,panipat marriage profiles,panipat matrimonial,panipat matrimony"
+            },
+            {
+                "title": "Patiala",
+                "link": "/matrimonials/patiala-matrimony/",
+                "metaKeywords": "patiala brides,patiala girls,patiala marriage profiles,patiala matrimonial,patiala matrimony"
+            },
+            {
+                "title": "Rewari",
+                "link": "/matrimonials/rewari-matrimony/",
+                "metaKeywords": "rewari brides,rewari girls,rewari marriage profiles,rewari matrimonial,rewari matrimony"
+            },
+            {
+                "title": "Rohtak",
+                "link": "/matrimonials/rohtak-matrimony/",
+                "metaKeywords": "rohtak brides,rohtak girls,rohtak marriage profiles,rohtak matrimonial,rohtak matrimony"
+            },
+            {
+                "title": "Roorkee",
+                "link": "/matrimonials/roorkee-matrimony/",
+                "metaKeywords": "roorkee brides,roorkee girls,roorkee marriage profiles,roorkee matrimonial,roorkee matrimony"
+            }
+
+        ],
+        "groom": [{
+                "title": "Delhi",
+                "link": "/matrimonials/delhi-groom-boys/",
+                "metaKeywords": "delhi boys, delhi brides,delhi girls,delhi groom,delhi matrimonial,marriage beuro in delhi,marriage bureau in delhi,marriage services in delhi,matchmaking services,matrimonial agency in delhi,matrimonial bureau in delhi,matrimonial services in delhi,marriage counsellor in delhi,matrimonial sites in delhi,best matrimonial site in delhi"
+            },
+            {
+                "title": "Faridabad",
+                "link": "/matrimonials/faridabad-groom-boys/",
+                "metaKeywords": "faridabad boys, faridabad brides,faridabad girls,faridabad groom,faridabad matrimonial,marriage beuro in faridabad,marriage bureau in faridabad,marriage services in faridabad,matchmaking services,matrimonial agency in faridabad,matrimonial bureau in faridabad,matrimonial services in faridabad,marriage counsellor in faridabad,matrimonial sites in faridabad,best matrimonial site in faridabad"
+            },
+            {
+                "title": "Ghaziabad",
+                "link": "/matrimonials/ghaziabad-groom-boys/",
+                "metaKeywords": "ghaziabad boys,ghaziabad girls,marriage beuro in ghaziabad,marriage bureau in ghaziabad,ghaziabad matrimony"
+            },
+            {
+                "title": "Gurgaon",
+                "link": "/matrimonials/gurgaon-groom-boys/",
+                "metaKeywords": "gurgaon boys,gurgaon brides,gurgaon groom,gurgaon matrimonial,gurugram girls,marriage beuro in gurgaon,marriage bureau in gurgaon,matrimonial bureau in gurgaon,matrimonial services in gurgaon"
+            },
+            {
+                "title": "Noida",
+                "link": "/matrimonials/noida-groom-boys/",
+                "metaKeywords": "marriage beuro in noida,marriage bureau in noida,matrimonial services in noida,noida boys,noida brides,noida girls,noida groom,noida matrimonial"
+            },
+            {
+                "title": "Agra",
+                "link": "/matrimonials/agra-groom-boys/",
+                "metaKeywords": "agra brides,agra girls,agra marriage profiles,agra matrimonial"
+            },
+            {
+                "title": "Aligarh",
+                "link": "/matrimonials/aligarh-groom-boys/",
+                "metaKeywords": "aligarh brides,aligarh girls,aligarh marriage profiles,aligarh matrimonial"
+            },
+            {
+                "title": "Alwar",
+                "link": "/matrimonials/alwar-groom-boys/",
+                "metaKeywords": "alwar brides,alwar girls,alwar marriage profiles,alwar matrimonial"
+            },
+            {
+                "title": "Bareilly",
+                "link": "/matrimonials/bareilly-groom-boys/",
+                "metaKeywords": "bareilly brides,bareilly marriage profiles,bareilly matrimonial"
+            },
+            {
+                "title": "Bhiwani",
+                "link": "/matrimonials/bhiwani-groom-boys/",
+                "metaKeywords": "bhiwani brides,bhiwani girls,bhiwani marriage profiles,bhiwani matrimonial"
+            },
+            {
+                "title": "Bijnor",
+                "link": "/matrimonials/bijnor-groom-boys/",
+                "metaKeywords": "bijnor brides,bijnor girls,bijnor marriage profiles,bijnor matrimonial"
+            },
+            {
+                "title": "Bulandshahr",
+                "link": "/matrimonials/bulandshahr-groom-boys/",
+                "metaKeywords": "bulandshahr brides,bulandshahr girls,bulandshahr marriage profiles,bulandshahr matrimonial,bulandshahr matrimony"
+            },
+            {
+                "title": "Chandigarh",
+                "link": "/matrimonials/chandigarh-groom-boys/",
+                "metaKeywords": "chandigarh brides,chandigarh girls,chandigarh marriage profiles,chandigarh matrimonial,chandigarh matrimony"
+            },
+            {
+                "title": "Dehradun",
+                "link": "/matrimonials/dehradun-groom-boys/",
+                "metaKeywords": "dehradun brides,dehradun girls,dehradun marriage profiles,dehradun matrimonial,dehradun matrimony"
+            },
+            {
+                "title": "Haridwar",
+                "link": "/matrimonials/haridwar-groom-boys/",
+                "metaKeywords": "haridwar brides,haridwar girls,haridwar marriage profiles,haridwar matrimonial,haridwar matrimony"
+            },
+            {
+                "title": "Hisar",
+                "link": "/matrimonials/hisar-groom-boys/",
+                "metaKeywords": "hisar brides,hisar girls,hisar marriage profiles,hisar matrimonial,hisar matrimony"
+            },
+            {
+                "title": "Jaipur",
+                "link": "/matrimonials/jaipur-groom-boys/",
+                "metaKeywords": "jaipur brides,jaipur girls,jaipur marriage profiles,jaipur matrimonial,jaipur matrimony"
+            },
+            {
+                "title": "Karnal",
+                "link": "/matrimonials/karnal-groom-boys/",
+                "metaKeywords": "karnal brides,karnal girls,karnal marriage profiles,karnal matrimonial,karnal matrimony"
+            },
+            {
+                "title": "Kurukshetra",
+                "link": "/matrimonials/kurukshetra-groom-boys/",
+                "metaKeywords": "kurukshetra brides,kurukshetra girls,kurukshetra marriage profiles,kurukshetra matrimonial,kurukshetra matrimony"
+            },
+            {
+                "title": "Sonipat",
+                "link": "/matrimonials/sonipat-groom-boys/",
+                "metaKeywords": "sonipat brides,sonipat girls,sonipat marriage profiles,sonipat matrimonial,sonipat matrimony"
+            },
+            {
+                "title": "Mathura",
+                "link": "/matrimonials/mathura-groom-boys/",
+                "metaKeywords": "mathura brides,mathura girls,mathura marriage profiles,mathura matrimonial,mathura matrimony"
+            },
+            {
+                "title": "Meerut",
+                "link": "/matrimonials/meerut-groom-boys/",
+                "metaKeywords": "meerut brides,meerut girls,meerut marriage profiles,meerut matrimonial,meerut matrimony"
+            },
+            {
+                "title": "Moradabad",
+                "link": "/matrimonials/moradabad-groom-boys/",
+                "metaKeywords": "moradabad brides,moradabad girls,moradabad marriage profiles,moradabad matrimonial,moradabad matrimony"
+            },
+            {
+                "title": "Muzaffarnagar",
+                "link": "/matrimonials/muzaffarnagar-groom-boys/",
+                "metaKeywords": "muzaffarnagar brides,muzaffarnagar girls,muzaffarnagar marriage profiles,muzaffarnagar matrimonial,muzaffarnagar matrimony"
+            },
+            {
+                "title": "Panipat",
+                "link": "/matrimonials/panipat-groom-boys/",
+                "metaKeywords": "panipat brides,panipat girls,panipat marriage profiles,panipat matrimonial,panipat matrimony"
+            },
+            {
+                "title": "Patiala",
+                "link": "/matrimonials/patiala-groom-boys/",
+                "metaKeywords": "patiala brides,patiala girls,patiala marriage profiles,patiala matrimonial,patiala matrimony"
+            },
+            {
+                "title": "Rewari",
+                "link": "/matrimonials/rewari-groom-boys/",
+                "metaKeywords": "rewari brides,rewari girls,rewari marriage profiles,rewari matrimonial,rewari matrimony"
+            },
+            {
+                "title": "Rohtak",
+                "link": "/matrimonials/rohtak-groom-boys/",
+                "metaKeywords": "rohtak brides,rohtak girls,rohtak marriage profiles,rohtak matrimonial,rohtak matrimony"
+            },
+            {
+                "title": "Roorkee",
+                "link": "/matrimonials/roorkee-groom-boys/",
+                "metaKeywords": "roorkee brides,roorkee girls,roorkee marriage profiles,roorkee matrimonial,roorkee matrimony"
+            }
+        ],
+        "bride": [{
+                "title": "Delhi",
+                "link": "/matrimonials/delhi-bride-girls/",
+                "metaKeywords": "delhi boys, delhi brides,delhi girls,delhi groom,delhi matrimonial,marriage beuro in delhi,marriage bureau in delhi,marriage services in delhi,matchmaking services,matrimonial agency in delhi,matrimonial bureau in delhi,matrimonial services in delhi,marriage counsellor in delhi,matrimonial sites in delhi,best matrimonial site in delhi"
+            },
+            {
+                "title": "Faridabad",
+                "link": "/matrimonials/faridabad-bride-girls/",
+                "metaKeywords": "faridabad boys, faridabad brides,faridabad girls,faridabad groom,faridabad matrimonial,marriage beuro in faridabad,marriage bureau in faridabad,marriage services in faridabad,matchmaking services,matrimonial agency in faridabad,matrimonial bureau in faridabad,matrimonial services in faridabad,marriage counsellor in faridabad,matrimonial sites in faridabad,best matrimonial site in faridabad"
+            },
+            {
+                "title": "Ghaziabad",
+                "link": "/matrimonials/ghaziabad-bride-girls/",
+                "metaKeywords": "ghaziabad boys,ghaziabad girls,marriage beuro in ghaziabad,marriage bureau in ghaziabad,ghaziabad matrimony"
+            },
+            {
+                "title": "Gurgaon",
+                "link": "/matrimonials/gurgaon-bride-girls/",
+                "metaKeywords": "gurgaon boys,gurgaon brides,gurgaon groom,gurgaon matrimonial,gurugram girls,marriage beuro in gurgaon,marriage bureau in gurgaon,matrimonial bureau in gurgaon,matrimonial services in gurgaon"
+            },
+            {
+                "title": "Noida",
+                "link": "/matrimonials/noida-bride-girls/",
+                "metaKeywords": "marriage beuro in noida,marriage bureau in noida,matrimonial services in noida,noida boys,noida brides,noida girls,noida groom,noida matrimonial"
+            },
+            {
+                "title": "Agra",
+                "link": "/matrimonials/agra-bride-girls/",
+                "metaKeywords": "agra brides,agra girls,agra marriage profiles,agra matrimonial"
+            },
+            {
+                "title": "Aligarh",
+                "link": "/matrimonials/aligarh-bride-girls/",
+                "metaKeywords": "aligarh brides,aligarh girls,aligarh marriage profiles,aligarh matrimonial"
+            },
+            {
+                "title": "Alwar",
+                "link": "/matrimonials/alwar-bride-girls/",
+                "metaKeywords": "alwar brides,alwar girls,alwar marriage profiles,alwar matrimonial"
+            },
+            {
+                "title": "Bareilly",
+                "link": "/matrimonials/bareilly-bride-girls/",
+                "metaKeywords": "bareilly brides,bareilly marriage profiles,bareilly matrimonial"
+            },
+            {
+                "title": "Bhiwani",
+                "link": "/matrimonials/bhiwani-bride-girls/",
+                "metaKeywords": "bhiwani brides,bhiwani girls,bhiwani marriage profiles,bhiwani matrimonial"
+            },
+            {
+                "title": "Bijnor",
+                "link": "/matrimonials/bijnor-bride-girls/",
+                "metaKeywords": "bijnor brides,bijnor girls,bijnor marriage profiles,bijnor matrimonial"
+            },
+            {
+                "title": "Bulandshahr",
+                "link": "/matrimonials/bijnor-bride-girls/",
+                "metaKeywords": "bulandshahr brides,bulandshahr girls,bulandshahr marriage profiles,bulandshahr matrimonial,bulandshahr matrimony"
+            },
+            {
+                "title": "Chandigarh",
+                "link": "/matrimonials/chandigarh-bride-girls/",
+                "metaKeywords": "chandigarh brides,chandigarh girls,chandigarh marriage profiles,chandigarh matrimonial,chandigarh matrimony"
+            },
+            {
+                "title": "Dehradun",
+                "link": "/matrimonials/dehradun-bride-girls/",
+                "metaKeywords": "dehradun brides,dehradun girls,dehradun marriage profiles,dehradun matrimonial,dehradun matrimony"
+            },
+            {
+                "title": "Haridwar",
+                "link": "/matrimonials/haridwar-bride-girls/",
+                "metaKeywords": "haridwar brides,haridwar girls,haridwar marriage profiles,haridwar matrimonial,haridwar matrimony"
+            },
+            {
+                "title": "Hisar",
+                "link": "/matrimonials/hisar-bride-girls/",
+                "metaKeywords": "hisar brides,hisar girls,hisar marriage profiles,hisar matrimonial,hisar matrimony"
+            },
+            {
+                "title": "Jaipur",
+                "link": "/matrimonials/jaipur-bride-girls/",
+                "metaKeywords": "jaipur brides,jaipur girls,jaipur marriage profiles,jaipur matrimonial,jaipur matrimony"
+            },
+            {
+                "title": "Karnal",
+                "link": "/matrimonials/karnal-bride-girls/",
+                "metaKeywords": "karnal brides,karnal girls,karnal marriage profiles,karnal matrimonial,karnal matrimony"
+            },
+            {
+                "title": "Kurukshetra",
+                "link": "/matrimonials/kurukshetra-bride-girls/",
+                "metaKeywords": "kurukshetra brides,kurukshetra girls,kurukshetra marriage profiles,kurukshetra matrimonial,kurukshetra matrimony"
+            },
+            {
+                "title": "Sonipat",
+                "link": "/matrimonials/sonipat-bride-girls/",
+                "metaKeywords": "sonipat brides,sonipat girls,sonipat marriage profiles,sonipat matrimonial,sonipat matrimony"
+            },
+            {
+                "title": "Mathura",
+                "link": "/matrimonials/mathura-bride-girls/",
+                "metaKeywords": "mathura brides,mathura girls,mathura marriage profiles,mathura matrimonial,mathura matrimony"
+            },
+            {
+                "title": "Meerut",
+                "link": "/matrimonials/meerut-bride-girls/",
+                "metaKeywords": "meerut brides,meerut girls,meerut marriage profiles,meerut matrimonial,meerut matrimony"
+            },
+            {
+                "title": "Moradabad",
+                "link": "/matrimonials/moradabad-bride-girls/",
+                "metaKeywords": "moradabad brides,moradabad girls,moradabad marriage profiles,moradabad matrimonial,moradabad matrimony"
+            },
+            {
+                "title": "Muzaffarnagar",
+                "link": "/matrimonials/muzaffarnagar-bride-girls/",
+                "metaKeywords": "muzaffarnagar brides,muzaffarnagar girls,muzaffarnagar marriage profiles,muzaffarnagar matrimonial,muzaffarnagar matrimony"
+            },
+            {
+                "title": "Panipat",
+                "link": "/matrimonials/panipat-bride-girls/",
+                "metaKeywords": "panipat brides,panipat girls,panipat marriage profiles,panipat matrimonial,panipat matrimony"
+            },
+            {
+                "title": "Patiala",
+                "link": "/matrimonials/patiala-bride-girls/",
+                "metaKeywords": "patiala brides,patiala girls,patiala marriage profiles,patiala matrimonial,patiala matrimony"
+            },
+            {
+                "title": "Rewari",
+                "link": "/matrimonials/rewari-bride-girls/",
+                "metaKeywords": "rewari brides,rewari girls,rewari marriage profiles,rewari matrimonial,rewari matrimony"
+            },
+            {
+                "title": "Rohtak",
+                "link": "/matrimonials/rohtak-bride-girls/",
+                "metaKeywords": "rohtak brides,rohtak girls,rohtak marriage profiles,rohtak matrimonial,rohtak matrimony"
+            },
+            {
+                "title": "Roorkee",
+                "link": "/matrimonials/roorkee-bride-girls/",
+                "metaKeywords": "roorkee brides,roorkee girls,roorkee marriage profiles,roorkee matrimonial,roorkee matrimony"
+            }
+        ]
+    },
+    "byEducation": {
+        "matrimony": [{
+                "title": "IIM",
+                "link": "/matrimonials/iim-matrimony-college/",
+                "metaKeywords": "iim brides,iim groom,iim marriage,iim matrimony"
+            },
+            {
+                "title": "IIT",
+                "link": "/matrimonials/iit-matrimony-college/",
+                "metaKeywords": "iim brides,iim groom,iim marriage,iim matrimony"
+            },
+            {
+                "title": "ISB",
+                "link": "/matrimonials/isb-matrimony-college",
+                "metaKeywords": "isb brides,isb groom,isb marriage,isb matrimony"
+            },
+            {
+                "title": "NIT",
+                "link": "/matrimonials/nit-matrimony-college",
+                "metaKeywords": "nit brides,iim groom,nit marriage,nit matrimony"
+            },
+            {
+                "title": "Xlri",
+                "link": "/matrimonials/xlri-matrimony-college",
+                "metaKeywords": "xlri brides,xlri groom,xlri marriage,xlri matrimony"
+            }
+        ],
+        "groom": [{
+                "title": "IIM",
+                "link": "/matrimonials/iim-groom-boys/",
+                "metaKeywords": "iim brides,iim groom,iim marriage,iim matrimony"
+            },
+            {
+                "title": "IIT",
+                "link": "/matrimonials/iit-groom-boys/",
+                "metaKeywords": "iit brides,iit groom,iit marriage,iit matrimony"
+            },
+            {
+                "title": "ISB",
+                "link": "/matrimonials/isb-groom-boys",
+                "metaKeywords": "isb brides,isb groom,isb marriage,isb matrimony"
+            },
+            {
+                "title": "NIT",
+                "link": "/matrimonials/nit-groom-boys",
+                "metaKeywords": "nit brides,iim groom,nit marriage,nit matrimony"
+            },
+            {
+                "title": "Xlri",
+                "link": "/matrimonials/xlri-groom-boys",
+                "metaKeywords": "xlri brides,xlri groom,xlri marriage,xlri matrimony"
+            }
+
+        ],
+        "bride": [{
+                "title": "IIM",
+                "link": "/matrimonials/iim-brides-girls",
+                "metaKeywords": "iim brides,iim groom,iim marriage,iim matrimony"
+            },
+            {
+                "title": "IIT",
+                "link": "/matrimonials/iit-brides-girls",
+                "metaKeywords": "iit brides,iit groom,iit marriage,iit matrimony"
+            },
+            {
+                "title": "ISB",
+                "link": "/matrimonials/isb-brides-girls",
+                "metaKeywords": "isb brides,isb groom,isb marriage,isb matrimony"
+            },
+            {
+                "title": "NIT",
+                "link": "/matrimonials/nit-brides-girls",
+                "metaKeywords": "nit brides,iim groom,nit marriage,nit matrimony"
+            },
+            {
+                "title": "Xlri",
+                "link": "/matrimonials/xlri-brides-girls",
+                "metaKeywords": "xlri brides,xlri groom,xlri marriage,xlri matrimony"
+            }
+        ]
+    },
+    "byCommunity": {
+        "matrimony": [{
+                "title": "Hindu",
+                "link": "/matrimonials/hindu-matrimony/",
+                "metaKeywords": "hindu brides,hindu groom,hindu marriage,hindu matchmaking,hindu matrimonial,hindu wedding"
+            },
+            {
+                "title": "Jain",
+                "link": "/matrimonials/jain-matrimony/",
+                "metaKeywords": "jain brides,jain groom,jain marriage,jain matchmaking,jain matrimonial,jain wedding"
+            },
+            {
+                "title": "Muslim",
+                "link": "/matrimonials/muslim-matrimony/",
+                "metaKeywords": "muslim brides,muslim groom,muslim marriage,muslim matchmaking,muslim matrimonial,muslim wedding"
+            },
+            {
+                "title": "Christian",
+                "link": "/matrimonials/christian-matrimony/",
+                "metaKeywords": "christian brides,christian groom,christian marriage,christian matchmaking,christian matrimonial,christian wedding"
+            },
+            {
+                "title": "Sikh",
+                "link": "/matrimonials/sikh-matrimony/",
+                "metaKeywords": "sikh brides,sikh groom,sikh marriage,sikh matchmaking,sikh matrimonial,sikh wedding"
+            },
+            {
+                "title": "Parsi",
+                "link": "/matrimonials/parsi-matrimony/",
+                "metaKeywords": "parsi brides,parsi groom,parsi marriage,parsi matchmaking,parsi matrimonial,parsi wedding"
+            },
+            {
+                "title": "Buddhist",
+                "link": "/matrimonials/buddhist-matrimony/",
+                "metaKeywords": "buddhist brides,buddhist groom,buddhist marriage,buddhist matchmaking,buddhist matrimonial,buddhist wedding"
+            },
+            {
+                "title": "Jewish",
+                "link": "/matrimonials/jewish-matrimony/",
+                "metaKeywords": "jewish brides,jewish groom,jewish marriage,jewish matchmaking,jewish matrimonial,jewish wedding"
+            }
+        ],
+        "groom": [{
+                "title": "Hindu",
+                "link": "/matrimonials/hindu-groom-boys/",
+                "metaKeywords": "hindu brides,hindu groom,hindu marriage,hindu matchmaking,hindu matrimonial,hindu wedding"
+            },
+            {
+                "title": "Jain",
+                "link": "/matrimonials/jain-groom-boys/",
+                "metaKeywords": "jain brides,jain groom,jain marriage,jain matchmaking,jain matrimonial,jain wedding"
+            },
+            {
+                "title": "Muslim",
+                "link": "/matrimonials/muslim-groom-boys/",
+                "metaKeywords": "muslim brides,muslim groom,muslim marriage,muslim matchmaking,muslim matrimonial,muslim wedding"
+            },
+            {
+                "title": "Christian",
+                "link": "/matrimonials/christian-groom-boys/",
+                "metaKeywords": "christian brides,christian groom,christian marriage,christian matchmaking,christian matrimonial,christian wedding"
+            },
+            {
+                "title": "Sikh",
+                "link": "/matrimonials/sikh-groom-boys/",
+                "metaKeywords": "sikh brides,sikh groom,sikh marriage,sikh matchmaking,sikh matrimonial,sikh wedding"
+            },
+            {
+                "title": "Parsi",
+                "link": "/matrimonials/parsi-groom-boys/",
+                "metaKeywords": "parsi brides,parsi groom,parsi marriage,parsi matchmaking,parsi matrimonial,parsi wedding"
+            },
+            {
+                "title": "Buddhist",
+                "link": "/matrimonials/buddhist-groom-boys/",
+                "metaKeywords": "buddhist brides,buddhist groom,buddhist marriage,buddhist matchmaking,buddhist matrimonial,buddhist wedding"
+            },
+            {
+                "title": "Jewish",
+                "link": "/matrimonials/jewish-groom-boys/",
+                "metaKeywords": "jewish brides,jewish groom,jewish marriage,jewish matchmaking,jewish matrimonial,jewish wedding"
+            }
+        ],
+        "bride": [{
+                "title": "Hindu",
+                "link": "/matrimonials/hindu-bride-girls/",
+                "metaKeywords": "hindu brides,hindu groom,hindu marriage,hindu matchmaking,hindu matrimonial,hindu wedding"
+            },
+            {
+                "title": "Jain",
+                "link": "/matrimonials/jain-bride-girls/",
+                "metaKeywords": "jain brides,jain groom,jain marriage,jain matchmaking,jain matrimonial,jain wedding"
+            },
+            {
+                "title": "Muslim",
+                "link": "/matrimonials/muslim-bride-girls/",
+                "metaKeywords": "muslim brides,muslim groom,muslim marriage,muslim matchmaking,muslim matrimonial,muslim wedding"
+            },
+            {
+                "title": "Christian",
+                "link": "/matrimonials/christian-bride-girls/",
+                "metaKeywords": "christian brides,christian groom,christian marriage,christian matchmaking,christian matrimonial,christian wedding"
+            },
+            {
+                "title": "Sikh",
+                "link": "/matrimonials/sikh-bride-girls/",
+                "metaKeywords": "sikh brides,sikh groom,sikh marriage,sikh matchmaking,sikh matrimonial,sikh wedding"
+            },
+            {
+                "title": "Parsi",
+                "link": "/matrimonials/parsi-bride-girls/",
+                "metaKeywords": "parsi brides,parsi groom,parsi marriage,parsi matchmaking,parsi matrimonial,parsi wedding"
+            },
+            {
+                "title": "Buddhist",
+                "link": "/matrimonials/buddhist-bride-girls/",
+                "metaKeywords": "buddhist brides,buddhist groom,buddhist marriage,buddhist matchmaking,buddhist matrimonial,buddhist wedding"
+            },
+            {
+                "title": "Jewish",
+                "link": "/matrimonials/jewish-bride-girls/",
+                "metaKeywords": "jewish brides,jewish groom,jewish marriage,jewish matchmaking,jewish matrimonial,jewish wedding"
+            }
+        ]
+    }
+}

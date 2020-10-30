@@ -152,17 +152,29 @@ body {
   font-weight: normal !important;
 }
 
-@cardHeight: 146.84px;
+@cardHeight: 700px;
+.profile-carousel {
+  border-radius: 11px 11px 0 0;
+  height: @cardHeight;
+  position: relative;
+  width: 100%;
+  .carousel-img {
+    height: @cardHeight;
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+@shortlistCardHeight: 220px;
 .image-overlay {
   border-radius: 6px 6px 0 0;
-  height: @cardHeight;
+  height: @shortlistCardHeight;
   overflow: hidden;
   position: relative;
   width: 100%;
   img {
-    height: @cardHeight;
+    height: @shortlistCardHeight;
     width: 100%;
-    z-index: -1;
   }
 }
 
@@ -252,12 +264,16 @@ body {
 }
 
 .profile-detail-list {
-  margin-bottom: 4rem;
+  margin: 0;
   padding: 0;
   li {
+    background-color: #d9d9d9;
     list-style: none;
     padding: 1rem 0.5rem;
     width: 100%;
+  }
+  li:nth-child(odd) {
+    background: #e0e0e0;
   }
   .ant-typography {
     font-size: 16px;
@@ -355,12 +371,6 @@ body {
       padding: 0;
     }
   }
-  .header-report-button {
-    color: #e74c3c;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    margin-right: 1rem;
-  }
 }
 
 .home-footer {
@@ -412,6 +422,7 @@ body {
     font-size: 1.2em;
     font-weight: 500;
     gap: 10px;
+    height: 55px;
     justify-content: center;
     width: 65%;
     .anticon {
@@ -529,7 +540,7 @@ body {
 .user-profile-box {
   align-items: center;
   gap: 1rem;
-  justify-content: flex-start;
+  justify-content: flex-start !important ;
   margin: 1rem 0;
   img {
     border-radius: 100%;
@@ -580,13 +591,6 @@ body {
 // xxl: '1600px',
 
 @media (min-width: 768px) {
-  @cardHeight: 220px;
-  .image-overlay {
-    height: @cardHeight;
-    img {
-      height: @cardHeight;
-    }
-  }
 }
 
 @media (max-width: 768px) {
@@ -599,7 +603,36 @@ body {
   .shortlist-buttons {
     width: 100%;
   }
+  @cardHeight: auto;
+  .profile-carousel {
+    height: @cardHeight;
+    .carousel-img {
+      height: @cardHeight;
+    }
+  }
+
+  @shortlistCardHeight: 180px;
+  .image-overlay {
+    height: @shortlistCardHeight;
+    img {
+      height: @shortlistCardHeight;
+    }
+  }
 }
 
 @media (max-width: 480px) {
+  @cardHeight: 385px;
+  .profile-carousel {
+    height: @cardHeight;
+    .carousel-img {
+      height: @cardHeight;
+    }
+  }
+  @shortlistCardHeight: 160px;
+  .image-overlay {
+    height: @shortlistCardHeight;
+    img {
+      height: @shortlistCardHeight;
+    }
+  }
 }

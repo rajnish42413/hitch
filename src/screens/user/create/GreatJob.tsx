@@ -35,7 +35,7 @@ const GreatJob = (props: any) => {
   return (
     <AuthLayout header={false}>
       <div>
-        <img src={logo} alt="welcomeImage" height="auto" width="50%" />
+        <img src={logo} alt="welcomeImage" height="auto" width="74%" />
         <Typography>
           <Title level={4}>
             Wooho! Great Job!

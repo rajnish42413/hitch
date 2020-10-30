@@ -23,6 +23,7 @@ const MobileVerification = (props: any) => {
   const { search, state } = useLocation();
   const params = queryfie(search);
   const social_data = state;
+  console.log(params);
 
   const prefixSelector = (
     <Form.Item name="countryCode" noStyle initialValue="+91">
@@ -45,6 +46,7 @@ const MobileVerification = (props: any) => {
         phone: phone,
         countryCode: countryCode,
         ref_code: params.ref ? params.ref : '',
+        ...social_data,
       });
       if (data?.user) {
         history.push('/verify-phone-number', data.user);
@@ -54,8 +56,9 @@ const MobileVerification = (props: any) => {
       setBtnLoading(false);
     } catch (error) {
       if (error.response.data?.errors) {
-        const { phone } = error.response?.data?.errors;
+        const { phone, email } = error.response?.data?.errors;
         if (phone) message.warning(phone?.[0]);
+        if (email) message.warning(email?.[0]);
       }
       setBtnLoading(false);
     }

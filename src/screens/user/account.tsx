@@ -158,7 +158,6 @@ const UserAccount = (props: any) => {
     </AppLayout>
   );
 };
-
 const mapStateToProps = ({ user }: IAppState) => {
   return {
     user: user.data,

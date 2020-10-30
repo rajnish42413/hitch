@@ -34,8 +34,8 @@ const ProfileGender = (props: any) => {
             {renderTitle(signAs, 'profile_title', 'gender')}{' '}
           </Typography.Title>
         </Typography>
-        <Form.Item name="gender" initialValue="female">
-          <Select>{renderGender(signAs)}</Select>
+        <Form.Item name="gender" rules={[{ required: true, message: 'Please Select Option!' }]}>
+          <Select placeholder="Select a option">{renderGender(signAs)}</Select>
         </Form.Item>
         <AuthFooter>
           <Button htmlType="submit" block className="btn-dark">

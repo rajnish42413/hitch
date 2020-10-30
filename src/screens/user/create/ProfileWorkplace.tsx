@@ -73,13 +73,19 @@ const ProfileWorkplace = (props: any) => {
     }
     history.push('/user/create/great-job');
   };
+  console.log(user);
 
   return (
     <AuthLayout header={true} classsName="auth-header">
       <Form name="basic" initialValues={{ remember: true }} form={form} onFinish={onFinish}>
         <Typography>
           <Typography.Title level={4}>
-            {renderTitle(user.sub_role, 'workplace_title', user.profile.gender, user.profile.name)}
+            {renderTitle(
+              user.sub_role,
+              'workplace_title',
+              user.profile?.gender,
+              user.profile?.name
+            )}
           </Typography.Title>
         </Typography>
         <Workplace initialValue={detail?.workplace} />
@@ -88,7 +94,12 @@ const ProfileWorkplace = (props: any) => {
           <>
             <Typography>
               <Typography.Title level={4}>
-                {renderTitle(user.sub_role, 'designation_title', user.gender, user.profile.name)}
+                {renderTitle(
+                  user.sub_role,
+                  'designation_title',
+                  user.profile?.gender,
+                  user.profile?.name
+                )}
               </Typography.Title>
             </Typography>
             <Designation initialValue={detail?.designation} />
@@ -99,7 +110,12 @@ const ProfileWorkplace = (props: any) => {
           <>
             <Typography>
               <Typography.Title level={4}>
-                {renderTitle(user.sub_role, 'salary_title', user.gender, user.profile.name)}{' '}
+                {renderTitle(
+                  user.sub_role,
+                  'salary_title',
+                  user.profile?.gender,
+                  user.profile?.name
+                )}{' '}
               </Typography.Title>
             </Typography>
             <Salary initialValue={detail?.salary_range} />

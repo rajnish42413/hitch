@@ -87,9 +87,8 @@ const UserProfile = (props: any) => {
                 <Typography.Title level={4}>{user.name}</Typography.Title>
                 <p>{user?.profile?.detail?.city}</p>
                 <p>
-                  <Tag color={'green'} style={{ textTransform: 'capitalize' }}>
-                    {user.sub_role}
-                  </Tag>
+                  <Tag color={'green'}>{user.sub_role}</Tag>
+                  {/* <Tag>{user.profile.gender}</Tag> */}
                 </p>
               </Typography>
             </div>
@@ -130,6 +129,16 @@ const UserProfile = (props: any) => {
                 </Button>
               </Link>
             </List.Item>
+            {user.role === 'profile' && user.sub_role === 'self' && (
+              <List.Item>
+                <Link to="/profile/questions">
+                  <Button type="text" block>
+                    <Icon component={HelpSvg} style={{ fontSize: '2rem' }} />
+                    Match Calculater Q {'&'} A
+                  </Button>
+                </Link>
+              </List.Item>
+            )}
             <List.Item>
               <Button type="text" block onClick={handleLogout}>
                 <Icon component={OutSvg} style={{ fontSize: '2rem' }} /> Logout

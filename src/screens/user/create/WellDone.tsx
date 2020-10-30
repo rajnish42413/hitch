@@ -12,7 +12,7 @@ const WellDone = (props: any) => {
   return (
     <AuthLayout header={false}>
       <div className="mt-4">
-        <img src={logo} alt="welcomeImage" height="auto" />
+        <img src={logo} alt="welcomeImage" height="auto" width="150px" />
         <Typography>
           <Typography.Title level={4}>
             Well done! Just one more to go. Tell us about your work life

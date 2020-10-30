@@ -99,7 +99,7 @@ const ProfileEducation = (props: any) => {
                 <div style={{ marginBottom: '5rem' }}>
                   {fields.map((field, index: number) => (
                     <div
-                      style={{ padding: '1rem', border: '1px dotted #fff', marginBottom: '2rem' }}
+                      style={{ padding: '1rem', border: '1px dotted #ddd', marginBottom: '2rem' }}
                       key={index}
                     >
                       <MinusCircleOutlined
@@ -160,7 +160,7 @@ interface ICProps {
 const CollegeUpdate = (props: ICProps) => {
   return (
     <div
-      style={{ padding: '1rem', border: '1px dotted #fff', marginBottom: '2rem' }}
+      style={{ padding: '1rem', border: '1px dotted #ddd', marginBottom: '2rem' }}
       key={props.education.id}
     >
       <College initialValue={props.education} />

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Icon from '@ant-design/icons';
-import { Button, message, Modal } from 'antd';
+import { Button, message, Drawer } from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {
   FacebookMessengerShareButton,
   FacebookShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import { ShareAltOutlined } from '@ant-design/icons';
 import { FB_APP_ID } from '@constants/general';
 import { convertToSlug } from '@utils/helpers';
-import { ReactComponent as ShareSvg } from '../assets/icons/share.svg';
+// import { ReactComponent as ShareSvg } from '../assets/icons/share.svg';
 
 interface IProps {
   name: string;
@@ -42,18 +42,14 @@ export default function ShareProfile({ name, profile_id }: IProps) {
 
   return profile_id ? (
     <>
-      <Icon
-        component={ShareSvg}
-        style={{ fontSize: '1rem', color: '#fff' }}
-        onClick={handleShare}
-      />
-      <Modal
+      <ShareAltOutlined style={{ fontSize: '1rem', color: '#fff' }} onClick={handleShare} />
+      <Drawer
         title="Share"
+        placement="bottom"
         visible={webShare}
-        onCancel={() => setWebShare(false)}
-        okButtonProps={{ disabled: true }}
-        cancelButtonProps={{ disabled: true }}
+        onClose={() => setWebShare(false)}
         footer={null}
+        height="50%"
       >
         <CopyToClipboard text={url} onCopy={() => message.success('copied')}>
           <Button block className="mb-1">
@@ -65,19 +61,23 @@ export default function ShareProfile({ name, profile_id }: IProps) {
           url={url}
           title={share_text}
           separator=":: "
-          className="mb-1 btn-block"
+          className="mb-1 btn-block ant-btn"
         >
           Share on Whatsapp
         </WhatsappShareButton>
 
-        <FacebookMessengerShareButton url={url} appId={FB_APP_ID} className="mb-1 btn-block">
+        <FacebookMessengerShareButton
+          url={url}
+          appId={FB_APP_ID}
+          className="mb-1 btn-block ant-btn"
+        >
           {' '}
           Share on FacebookMessenger
         </FacebookMessengerShareButton>
-        <FacebookShareButton quote={`${share_text}`} className="mb-1 btn-block" url={url}>
+        <FacebookShareButton quote={`${share_text}`} className="mb-1 btn-block ant-btn" url={url}>
           Share on Facebook
         </FacebookShareButton>
-      </Modal>
+      </Drawer>
     </>
   ) : (
     <> </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Button, Card, Input, message, Upload, Drawer, Spin } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
@@ -31,6 +31,13 @@ const ImageUploader = (props: IProps) => {
     setChanged(true);
   };
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
   const handleUpdateCaption = async () => {
     const id = image.id;
     if (!id) return id;
@@ -52,17 +59,17 @@ const ImageUploader = (props: IProps) => {
 
   const renderImage = (image?: IImage) => {
     if (!image) return <PlusOutlined style={{ fontSize: '2rem', color: colors['mutted-color'] }} />;
-    return image?.small ? (
-      <Spin tip="Uploading..." spinning={loading}>
+    return image?.medium ? (
+      <Spin tip="Loading..." spinning={loading}>
         <img
           alt={image?.caption}
-          src={image?.small}
+          src={image?.medium}
           className="preview-image-card"
           onClick={() => setUploadOption(true)}
         />
       </Spin>
     ) : (
-      <Spin tip="Uploading..." spinning={loading}>
+      <Spin tip="Loading..." spinning={loading}>
         <Button
           type="text"
           style={{ border: '0.5px dashed #C1C1C1' }}
@@ -122,6 +129,7 @@ const ImageUploader = (props: IProps) => {
             setUploadOption(false);
             setLoading(true);
           }}
+          disableLoading={() => setLoading(false)}
           disableModal={() => setUploadOption(false)}
         />
       }
@@ -140,6 +148,7 @@ const RenderUploadOptions = (props: {
   image?: IImage;
   disable: any;
   disableModal: any;
+  disableLoading: any;
 }) => {
   return (
     <Drawer
@@ -155,6 +164,7 @@ const RenderUploadOptions = (props: {
         updateUser={props.updateUser}
         image={props.image}
         disable={props.disable}
+        disableLoading={props.disableLoading}
       />
     </Drawer>
   );
@@ -166,6 +176,7 @@ interface IUploadButton {
   updateUser: any;
   image?: IImage;
   disable: any;
+  disableLoading: any;
 }
 
 const UploadButton = (IUploadProps: IUploadButton) => {
@@ -193,13 +204,15 @@ const UploadButton = (IUploadProps: IUploadButton) => {
         message.success(`${info.file.name} file uploaded successfully`);
         IUploadProps.updateUser(fileInfo.response);
       } else if (info.file.status === 'error') {
-        if (fileInfo.response?.message) {
-          message.error(`${fileInfo.response?.message}`);
-        }
+        IUploadProps.disableLoading();
         if (fileInfo.response?.errors) {
           const { caption, image } = fileInfo.response?.errors;
           if (image) message.warning(image?.[0]);
           if (caption) message.warning(caption?.[0]);
+        } else {
+          if (fileInfo.response?.message) {
+            message.error(`${fileInfo.response?.message}`);
+          }
         }
       }
     },
@@ -212,9 +225,16 @@ const UploadButton = (IUploadProps: IUploadButton) => {
       format: (percent: any) => `${parseFloat(percent.toFixed(2))}%`,
     },
   };
+  const handleCrop = (): boolean => {
+    setTimeout(() => {
+      return true;
+    }, 500);
+    console.log(true);
+    return true;
+  };
   return (
     <div style={{ marginTop: '1.5rem' }}>
-      <ImgCrop grid>
+      <ImgCrop grid beforeCrop={handleCrop} quality={0.7}>
         <Upload accept=".jpg, .jpeg, .png" {...props}>
           <Button type="text" block className="btn-dark">
             From Media

@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react';
-import { Button, message, Result, Modal, Card, Layout } from 'antd';
+import { Button, message, Result, Modal, Card, Layout, Spin } from 'antd';
 import AppLayout from '../../layouts/app';
 import Icon, { LeftOutlined, RightOutlined, HeartFilled } from '@ant-design/icons';
 import { colors } from '@constants/general';
@@ -22,15 +22,17 @@ const Home = (props: any) => {
   const [loading, setloading] = useState(true);
   const [btnLoading, setBtnLoading] = useState(false);
   const [current, setCurrent] = useState(0);
+  const [nextPage, setPage] = useState('');
   const [suggestion, setSuggestion] = useState(false);
   const isFirstTime = props?.tourVisibal;
   const [tooltip, setTooltip] = useState(isFirstTime ? 'profile-detail' : '');
 
-  const fetchProfiles = async () => {
+  const fetchProfiles = async (url: string) => {
     setloading(true);
-    const { data } = await Axios.get(`profiles`);
+    const { data } = await Axios.get(url);
     if (data) {
       setlist(data?.data);
+      setPage(data.next_page_url);
       setloading(false);
     }
   };
@@ -39,13 +41,16 @@ const Home = (props: any) => {
     if (isFirstTime) {
       props.setTourVisibal(true);
     }
-    fetchProfiles();
+    fetchProfiles('profiles');
   }, [isFirstTime, props]);
 
   const onNext = () => {
     setloading(true);
     setCurrent(nextItem(current, list.length));
     setloading(false);
+    if (current === list.length - 1 && nextPage) {
+      fetchProfiles(nextPage);
+    }
   };
 
   const onPrev = () => {
@@ -61,12 +66,13 @@ const Home = (props: any) => {
       await Axios.post('shortlists', { profile_id: profile_id });
       setTimeout(show, 0);
       message.success('added to shortlists');
+      const data = list.filter((item: any) => item.id !== profile_id);
+      setlist(data);
+      onNext();
       setBtnLoading(false);
-      fetchProfiles();
     } catch (error) {
       setTimeout(show, 0);
       setBtnLoading(false);
-      fetchProfiles();
     }
   };
 
@@ -77,12 +83,13 @@ const Home = (props: any) => {
     try {
       await Axios.post(`user/remove-profile`, { profile_id: profile_id });
       setTimeout(show, 0);
+      const data = list.filter((item: any) => item.id !== profile_id);
+      setlist(data);
+      onNext();
       setBtnLoading(false);
-      fetchProfiles();
     } catch (error) {
       setTimeout(show, 0);
       setBtnLoading(false);
-      fetchProfiles();
     }
   };
 
@@ -92,11 +99,11 @@ const Home = (props: any) => {
         setTooltip('shortlist');
         break;
       case 'shortlist':
-        props.setTourVisibal(false);
-        setTooltip('');
+        setTooltip('profile-detail');
         break;
       case 'profile-detail':
-        setTooltip('shortlist');
+        props.setTourVisibal(false);
+        setTooltip('');
         break;
       case 'profile-name':
         setTooltip('prefrence');
@@ -129,16 +136,62 @@ const Home = (props: any) => {
             />
           )}
           {list[current] ? (
-            <>
-              <UserPagination
-                onNext={onNext}
-                onPrevous={onPrev}
-                suggestion={() => setSuggestion(!suggestion)}
-              />
-              <div data-tut="profile-photo">
-                <UserProfileDetail profile={list[current]} />
-              </div>
+            <Spin spinning={loading}>
+              <div className="user-pagination">
+                <Button
+                  shape="circle"
+                  icon={<LeftOutlined style={{ color: colors['white-color'] }} />}
+                  size="large"
+                  style={{ backgroundColor: '#C1C1C1' }}
+                  onClick={onPrev}
+                  data-tut="second-step"
+                />
 
+                {props.user.role === 'profile' && props.user.sub_role === 'self' ? (
+                  props.questions?.user_answer?.for_ideal ? (
+                    <Link
+                      to={{
+                        pathname: `profile/questions`,
+                        state: list[current],
+                      }}
+                      className="suggestion-box"
+                    >
+                      Calculate Your Matching
+                    </Link>
+                  ) : (
+                    <Link
+                      to={{
+                        pathname: `profile/${list[current]?.id}/match-statics`,
+                        state: list[current],
+                      }}
+                      className="suggestion-box"
+                    >
+                      See Your Jodi!
+                    </Link>
+                  )
+                ) : (
+                  <Button
+                    type="text"
+                    className="suggestion-box"
+                    onClick={() => setSuggestion(!suggestion)}
+                  >
+                    <Icon component={HeartSvg} style={{ fontSize: '25px' }} />
+                    See Your Jodi!
+                  </Button>
+                )}
+
+                <Button
+                  shape="circle"
+                  icon={<RightOutlined style={{ color: colors['white-color'] }} />}
+                  size="large"
+                  style={{ backgroundColor: '#C1C1C1' }}
+                  onClick={onNext}
+                  data-tut="third-step"
+                />
+              </div>
+              <div data-tut="profile-photo" style={{ marginBottom: '3rem' }}>
+                <UserProfileDetail profile={list[current]} shareButton={true} />
+              </div>
               <Layout.Footer className="find-actions-buttons">
                 <div className="main">
                   <div className="actions-buttons">
@@ -190,9 +243,20 @@ const Home = (props: any) => {
                     />{' '}
                     {list[current]?.name} {'&'} {props?.user?.profile?.name}
                   </p>
+                  <Link
+                    to={{
+                      pathname: `profile/${list[current]?.id}/match-statics`,
+                      state: list[current],
+                    }}
+                    className="mt-1"
+                  >
+                    <Button type="primary" block>
+                      Calculate Your Matching
+                    </Button>
+                  </Link>
                 </Card>
               </Modal>
-            </>
+            </Spin>
           ) : (
             <Result
               title={`Currently,No matching profiles available.`}
@@ -210,10 +274,11 @@ const Home = (props: any) => {
     </AppLayout>
   );
 };
-const mapStateToProps = ({ user, tour }: IAppState) => {
+const mapStateToProps = ({ user, tour, questions }: IAppState) => {
   return {
     user: user.data,
     tourVisibal: tour.visible,
+    questions: questions.data,
   };
 };
 
@@ -225,34 +290,6 @@ const mapDispatchToProps = (dipatch: Dispatch<IAction>) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
-const UserPagination = (props: any) => {
-  return (
-    <div className="user-pagination">
-      <Button
-        shape="circle"
-        icon={<LeftOutlined style={{ color: colors['white-color'] }} />}
-        size="large"
-        style={{ backgroundColor: '#C1C1C1' }}
-        onClick={props.onPrevous}
-        data-tut="second-step"
-      />
-      <Button type="text" className="suggestion-box" onClick={props.suggestion}>
-        <Icon component={HeartSvg} style={{ fontSize: '25px' }} />
-        See Your PakkiJodi!
-      </Button>
-
-      <Button
-        shape="circle"
-        icon={<RightOutlined style={{ color: colors['white-color'] }} />}
-        size="large"
-        style={{ backgroundColor: '#C1C1C1' }}
-        onClick={props.onNext}
-        data-tut="third-step"
-      />
-    </div>
-  );
-};
 
 function nextItem(i: number, len: number) {
   i = i + 1;

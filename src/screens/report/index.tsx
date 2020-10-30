@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Layout, message, Typography } from 'antd';
 import Axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -32,6 +32,10 @@ const ReportProfile = (props: any) => {
       setBtnLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!profile_id) history.go(-1);
+  }, [profile_id, history]);
 
   return (
     <AppLayout>

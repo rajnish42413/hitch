@@ -13,14 +13,15 @@ export const getHeightFromValue = (value: any) => {
 
 export const getHeightWithLabelFromValue = (h: any) => {
   if (!h) return;
-  const dec = +(h - Math.floor(h)).toFixed(1) * 10;
+  const dec = (h + '').split('.')[1];
   const height = `${Math.floor(h)}' ${dec}"`;
   return height;
 };
 
 export const getValueFromHeight = (value: any) => {
-  const feet = Math.floor(value * 12);
-  return feet;
+  const dec = +(value + '').split('.')[1];
+  const di = Math.floor(value);
+  return +(di * 12 + dec);
 };
 
 function getFeet(n: number) {
@@ -115,6 +116,9 @@ export const renderTitle = (
   let workplace_title = '';
   let designation_title = '';
   let salary_title = '';
+  signAs = signAs?.toLocaleLowerCase();
+  gender = gender?.toLocaleLowerCase();
+  console.log(gender + ' ' + signAs);
   switch (signAs) {
     case 'father':
       if (gender) gender_name = gender === 'female' ? 'daughter' : 'son';

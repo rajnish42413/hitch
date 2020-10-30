@@ -2,6 +2,7 @@ const TOKEN:string = 'token';
 
 
 const USER = 'user';
+const QUESTION = 'questions';
 const USER_PROFILE_REDIRECT = 'profile_ref_id';
 
 export const get = () =>{
@@ -25,7 +26,6 @@ export const getUser = ():any =>{
    return user;
 }
 
-
 export const storeToken = (value:any) =>{
   localStorage.setItem(TOKEN, value); 
 }
@@ -36,4 +36,13 @@ export const storeUser = (value:any) =>{
 
 export const clearAll= ()=>{
   localStorage.clear();
+}
+
+export const getQuestion = ():any =>{
+  let question = localStorage.getItem(QUESTION);
+  return question;
+}
+
+export const storeQuestion = (value:any) =>{
+  localStorage.setItem(QUESTION, JSON.stringify(value)); 
 }

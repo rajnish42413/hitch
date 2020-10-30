@@ -58,11 +58,12 @@ const ProfileUsers = (props: any) => {
       await Axios.post('user/members', values);
       setTimeout(show, 0);
       setBtnLoading(false);
+      form.resetFields();
       message.success('Invitation send successfully');
     } catch (error) {
       setTimeout(show, 0);
+      setBtnLoading(false);
       if (error.response.data.errors) {
-        setBtnLoading(false);
         const { sub_role, phone } = error.response.data.errors;
         if (sub_role) message.warning(sub_role?.[0]);
         if (phone) message.warning(phone?.[0]);
@@ -176,12 +177,12 @@ const ProfileUsers = (props: any) => {
           <Typography.Title level={5}>Who are you inviting?</Typography.Title>
           <Form.Item name="sub_role" rules={[{ required: true, message: 'Please select member!' }]}>
             <Select placeholder="Select Signing up a">
-              <Select.Option value="Father">Father</Select.Option>
-              <Select.Option value="Mother">Mother</Select.Option>
-              <Select.Option value="Brother">Brother</Select.Option>
-              <Select.Option value="Sister">Sister</Select.Option>
-              <Select.Option value="Self">Self</Select.Option>
-              <Select.Option value="Guardian">Guardian</Select.Option>
+              <Select.Option value="father">Father</Select.Option>
+              <Select.Option value="mother">Mother</Select.Option>
+              <Select.Option value="brother">Brother</Select.Option>
+              <Select.Option value="sister">Sister</Select.Option>
+              <Select.Option value="self">Self</Select.Option>
+              <Select.Option value="guardian">Guardian</Select.Option>
             </Select>
           </Form.Item>
           <Typography.Title level={5}>What’s their name?</Typography.Title>
@@ -219,18 +220,20 @@ const ProfileUsers = (props: any) => {
           </Button>
 
           {add_members_link && share_text && navigator.share && (
-            <button
-              className="btn-dark-text"
-              type="button"
+            <Button
+              className="btn-dark-text mt-1"
+              type="text"
+              block
+              htmlType="button"
               onClick={() => handleShare(share_text, add_members_link)}
             >
               Share Link
-            </button>
+            </Button>
           )}
 
-          {add_members_link && (
+          {add_members_link && !navigator.share && (
             <CopyToClipboard text={add_members_link} onCopy={() => message.success('copied')}>
-              <Button block type="dashed" htmlType="button">
+              <Button block type="text" htmlType="button">
                 Copy Link
               </Button>
             </CopyToClipboard>
