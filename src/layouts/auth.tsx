@@ -3,6 +3,7 @@ import AuthHeader from './auth/header';
 import { Layout } from 'antd';
 import CacheClear from '../components/cacheClear';
 import HelmetConfig from '../components/HelmetConfig';
+import { ITag } from '../schemas/ITag.d';
 import './styles/app.less';
 import './styles/auth.less';
 
@@ -12,28 +13,31 @@ interface Iprops {
   goBack?: boolean;
   header?: boolean;
   classsName?: string;
-  helmet?: boolean;
+  customeTag?: ITag;
+  appendPageTitle?: string;
 }
 export default function AuthLayout({
   style,
   children,
   goBack = true,
   header,
-  classsName,
-  helmet = true,
+  appendPageTitle = '',
+  customeTag,
 }: Iprops) {
   const customStyle = {
     padding: '0 1rem',
   };
   const dom_style = { ...customStyle, ...style };
   return (
-    <Layout className="pj-auth-layout">
-      {helmet && <HelmetConfig />}
-      {header && <AuthHeader goBack={goBack} />}
-      <Layout.Content className="main" style={dom_style}>
-        <CacheClear />
-        {children}
-      </Layout.Content>
-    </Layout>
+    <>
+      <HelmetConfig appendPageName={appendPageTitle} customeTags={customeTag} />
+      <Layout className="pj-auth-layout">
+        {header && <AuthHeader goBack={goBack} />}
+        <Layout.Content className="main" style={dom_style}>
+          <CacheClear />
+          {children}
+        </Layout.Content>
+      </Layout>
+    </>
   );
 }

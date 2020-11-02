@@ -5,7 +5,12 @@ const { Title, Paragraph } = Typography;
 
 export default function Jobs() {
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle="Jobs"
+    >
       <div className="container">
         <Typography>
           <Title>Why PakkiJodi</Title>

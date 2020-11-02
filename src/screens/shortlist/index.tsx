@@ -106,7 +106,7 @@ const Shortlist = (props: any) => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Shortlisted & Likes">
       <TopHeader />
       {loading ? (
         <Loader />

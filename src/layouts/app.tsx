@@ -4,26 +4,31 @@ import './styles/style.less';
 import Layout from 'antd/lib/layout';
 import CacheClear from '../components/cacheClear';
 import HelmetConfig from '../components/HelmetConfig';
+import { ITag } from '../schemas/ITag.d';
 
 interface Iprops {
   backgroundColor?: string;
   children: any;
   mainConatinerClass?: string;
-  helmet?: boolean;
+  customeTag?: ITag;
+  appendPageTitle?: string;
 }
+
 export default function AppLayout({
   mainConatinerClass = '',
-  backgroundColor,
   children,
-  helmet,
+  appendPageTitle = '',
+  customeTag,
 }: Iprops) {
   return (
-    <Layout className="pj-app-layout">
-      <Layout.Content className={`main main-container ${mainConatinerClass}`}>
-        {helmet && <HelmetConfig />}
-        <CacheClear />
-        {children}
-      </Layout.Content>
-    </Layout>
+    <>
+      <HelmetConfig appendPageName={appendPageTitle} customeTags={customeTag} />
+      <Layout className="pj-app-layout">
+        <Layout.Content className={`main main-container ${mainConatinerClass}`}>
+          <CacheClear />
+          {children}
+        </Layout.Content>
+      </Layout>
+    </>
   );
 }

@@ -109,7 +109,7 @@ function CandidateProfile(props: any) {
   const msg = `Hello ${profile.name}, we have a match on PakkiJodi.com`;
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle={profile?.name}>
       <TopHeader
         backHeader={true}
         backHeadertitle={profile?.name}

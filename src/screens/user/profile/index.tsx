@@ -65,7 +65,7 @@ const UserProfile = (props: any) => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle={user?.profile?.name}>
       <TopHeader />
       {user ? (
         <Content>

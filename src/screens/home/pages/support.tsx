@@ -5,7 +5,12 @@ const { Title, Paragraph, Text } = Typography;
 
 export default function Support() {
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle="Support"
+    >
       <div className="container">
         <Typography>
           <Title>Support</Title>

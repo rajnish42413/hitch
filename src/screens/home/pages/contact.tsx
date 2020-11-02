@@ -5,7 +5,12 @@ const { Title, Paragraph } = Typography;
 
 export default function ContactDetail() {
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle="Contact Us"
+    >
       <div className="container">
         <Typography>
           <Title>Contact Us</Title>

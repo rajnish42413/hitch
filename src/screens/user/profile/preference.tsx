@@ -91,7 +91,7 @@ function Preference(props: any) {
   }, [props, tourVisibal]);
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Preference">
       <TopHeader backHeadertitle="Preference" backHeader={true} />
       <Layout.Content>
         {!loading ? (

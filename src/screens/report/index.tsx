@@ -38,7 +38,7 @@ const ReportProfile = (props: any) => {
   }, [profile_id, history]);
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Report">
       <TopHeader backHeadertitle="Report User" backTo="/home" backHeader={true} />
 
       <Layout.Content style={{ padding: '20px' }}>

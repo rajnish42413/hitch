@@ -14,7 +14,7 @@ export default function FAQ() {
     {
       question: 'How much do I have to pay to register on this Matrimonial app',
       answer:
-        'Absolutely nothing! Registration on this Matrimonial app is always FREE!!! Register Now with Shaadi.com and post your matrimonial profile.',
+        'Absolutely nothing! Registration on this Matrimonial app is always FREE!!! Register Now with PakkiJodi.com and post your matrimonial profile.',
     },
     {
       question: 'How long does it take to register and create a matrimonial profile?',

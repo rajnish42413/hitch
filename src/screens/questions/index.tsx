@@ -45,7 +45,7 @@ function UserQuestions(props: any) {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Questions">
       <TopHeader
         backHeader={true}
         rightMenu={

@@ -97,7 +97,7 @@ const ProfileUsers = (props: any) => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Memebers">
       <TopHeader backHeadertitle="Add family members" backTo="/profile" backHeader={true} />
       {props.user && (
         <Content>

@@ -51,7 +51,7 @@ const UserIntro = (props: any) => {
   };
 
   return (
-    <AuthLayout header={edit ? true : false}>
+    <AuthLayout header={edit ? true : false} appendPageTitle="Introduction">
       {user ? (
         <Form
           name="basic"

@@ -178,9 +178,8 @@ const ProfileDetail = ({ user, socialLoading, profileSocial }: IPorifleDetail) =
               <Col span={24}>
                 <Button
                   block
-                  className="mt-2"
+                  className="mt-2 facebook"
                   type="text"
-                  style={{ textTransform: 'capitalize', backgroundColor: '#185EB1' }}
                   href={profileSocial?.facebook}
                   target="_blank"
                   disabled={!profileSocial?.facebook}
@@ -201,15 +200,10 @@ const ProfileDetail = ({ user, socialLoading, profileSocial }: IPorifleDetail) =
 
                 <Button
                   block
-                  className="mt-1"
+                  className="mt-1 linkedin"
                   href={profileSocial.linkedin}
                   target="_blank"
                   disabled={!profileSocial?.linkedin}
-                  style={{
-                    textTransform: 'capitalize',
-                    color: '#000',
-                    backgroundColor: '#0077B5',
-                  }}
                 >
                   {user.name}’s Linkedin
                 </Button>

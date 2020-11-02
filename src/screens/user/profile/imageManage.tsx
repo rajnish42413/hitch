@@ -14,7 +14,7 @@ function UserImageManage(props: any) {
   const location = useLocation();
   const { profile_id, image } = location.state;
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Images">
       <TopHeader backTo="/profile" backHeader={true} />
       <Layout.Content style={{ margin: '20px' }}>
         {profile_id && (

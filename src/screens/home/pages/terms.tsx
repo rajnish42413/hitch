@@ -6,7 +6,12 @@ const { Title, Paragraph } = Typography;
 
 export default function Terms() {
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle="Terms & Conditions"
+    >
       <div className="container">
         <Typography>
           <Title>Terms & Conditions</Title>

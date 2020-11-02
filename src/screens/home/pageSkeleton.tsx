@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { MenuOutlined, HeartFilled } from '@ant-design/icons';
 import './landing.less';
 import HelmetConfig from '../../components/HelmetConfig';
+import { ITag } from '../../schemas/ITag.d';
+
 const PopMenu = React.lazy(() => import('./popMenu'));
 const LoginButtons = React.lazy(() => import('../../components/form/LoginButtons'));
 const logo = require('../../assets/images/pakkijodi-logoH-white.png');
@@ -16,6 +18,8 @@ interface IProps {
   className: string;
   defaultLoginModal?: boolean;
   defaultSideBar?: boolean;
+  pageTitle?: string;
+  customeTag?: ITag;
 }
 const PageSkeleton = React.forwardRef((props: IProps, ref: any) => {
   const [loginModal, setLoginModal] = useState(props.defaultLoginModal);
@@ -23,7 +27,7 @@ const PageSkeleton = React.forwardRef((props: IProps, ref: any) => {
 
   return (
     <main className={props.className}>
-      <HelmetConfig />
+      <HelmetConfig appendPageName={props.pageTitle} customeTags={props.customeTag} />
       <Header
         triggerLoginMoal={() => setLoginModal(!loginModal)}
         triggerSideBar={() => setVisible(!visible)}

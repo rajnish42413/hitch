@@ -9,15 +9,15 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import Loader from '../../components/loader/Loader';
 import { IProfile } from '../../schemas/IProfile';
 import * as authToken from '@utils/userAuth';
-import { Helmet } from 'react-helmet';
 import { convertToSlug } from '@utils/helpers';
+import { ITag } from '../../schemas/ITag.d';
 
 const { Content } = Layout;
 
 export default function PorfileDetail(props: any) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({} as IProfile);
-  const [image, setImage] = useState('');
+  const [tag, settag] = useState({} as ITag);
   const token = authToken.get();
   const { id }: any = useParams();
   const history = useHistory();
@@ -26,7 +26,18 @@ export default function PorfileDetail(props: any) {
   const getData = async () => {
     try {
       const { data } = await Axios.get<IProfile>(`profiles/${profile_id}`);
-      setImage(data?.media?.[0].thumb);
+      const t = {
+        PageName: `${data.name} | PakkiJodi`,
+        URL: `https://www.pakkijodi.com/profiles/${data.id}?name=${convertToSlug(data.name)}`,
+        Title: `${data.name} on PakkiJodi`,
+        MetaKeywords: `${data.name} , Matrimony, Marriage, Free Matrimonial Sites, Match Making`,
+        MetaDescription: `${data.name} on PakkiJodi`,
+        CanonicalTag: 'https://pakkijodi.com/',
+        RobotTag: 'noindex nofollow',
+        alternateHreflangTag: 'https://pakkijodi.com/',
+        image: data?.media?.[0].thumb,
+      };
+      settag(t);
       setProfile(data);
       setLoading(false);
     } catch (error) {
@@ -39,33 +50,9 @@ export default function PorfileDetail(props: any) {
     getData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const alt = profile ? `${profile.name} on PakkiJodi` : '';
-
   return !loading ? (
-    <AppLayout>
-      <Helmet>
-        {profile.name && <title> {profile.name} | PakkiJodi</title>}
-
-        {profile.id && (
-          <meta
-            property="og:url"
-            content={`https://www.pakkijodi.com/profiles/${profile.id}?name=${convertToSlug(
-              profile.name
-            )}`}
-          />
-        )}
-
-        {image && <meta property="og:image" content={image} />}
-        {image && <meta property="og:image:secure_url" content={image} />}
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:type" content="image/jpg" />
-        <meta property="og:image:width" content="300" />
-        <meta property="og:image:height" content="300" />
-        {alt && <meta property="og:image:alt" content={alt} />}
-      </Helmet>
+    <AppLayout customeTag={tag}>
       <TopHeader profile={profile.name ? profile.name : 'Profile Detail'} />
-
       {!token && (
         <Alert
           message="Please Login ! , to perform more action on this profile"

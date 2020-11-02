@@ -59,7 +59,7 @@ function EditProfile(props: any) {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle={profile?.name}>
       <TopHeader backHeader={true} backHeadertitle={'Edit Profile'} backTo="/profile" />
       <Form
         name="basic"

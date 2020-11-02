@@ -62,7 +62,7 @@ function CandidateLikeProfile(props: any) {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle={profile?.name}>
       <TopHeader
         backHeader={true}
         backHeadertitle={profile?.name}

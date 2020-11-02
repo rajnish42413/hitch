@@ -122,7 +122,7 @@ const Home = (props: any) => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Find Your Matches">
       <TopHeader tooltipVisibal={tooltip} nextTooltip={nextTooltip} />
       {loading ? (
         <Loader />

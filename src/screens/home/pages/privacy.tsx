@@ -6,7 +6,12 @@ const { Title, Paragraph } = Typography;
 
 export default function Privacy() {
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle="Privacy Policy"
+    >
       <div className="container">
         <Typography>
           <Title>Privacy Policy</Title>

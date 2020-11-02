@@ -91,10 +91,7 @@ function ProfileMatch(props: any) {
                 />{' '}
                 {profile?.name} {'&'} {match_profile?.name}
               </p>
-              <button type="button" className="mt-1 percent-box">
-                {' '}
-                {statics.matched_percentage} %
-              </button>
+              <div className="mt-1 percent-box">{statics.matched_percentage} %</div>
             </Col>
           </Row>
           <br />

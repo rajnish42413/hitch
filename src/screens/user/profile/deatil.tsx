@@ -48,7 +48,7 @@ const UserDetail = (props: any) => {
   }, []);
 
   return (
-    <AppLayout mainConatinerClass="mb-0">
+    <AppLayout mainConatinerClass="mb-0" appendPageTitle={user?.profile?.name}>
       <TopHeader
         backHeader={true}
         backHeadertitle={user ? user.name : 'Profile Detail'}
@@ -267,9 +267,8 @@ const ProfileDetail = ({ user, socialLoading, profileSocial }: IPorifleDetail) =
                 {profileSocial.facebook && (
                   <Button
                     block
-                    className="mt-2"
+                    className="mt-2 facebook"
                     type="text"
-                    style={{ textTransform: 'capitalize', backgroundColor: '#185EB1' }}
                     href={profileSocial.facebook}
                     target="_blank"
                   >
@@ -292,14 +291,9 @@ const ProfileDetail = ({ user, socialLoading, profileSocial }: IPorifleDetail) =
                 {profileSocial.linkedin && (
                   <Button
                     block
-                    className="mt-1"
+                    className="mt-1 linkedin"
                     href={profileSocial.linkedin}
                     target="_blank"
-                    style={{
-                      textTransform: 'capitalize',
-                      color: '#000',
-                      backgroundColor: '#0077B5',
-                    }}
                   >
                     {profile.name}’s Linkedin
                   </Button>

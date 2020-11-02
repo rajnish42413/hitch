@@ -5,9 +5,9 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import TopHeader from '../find/Header';
 import { IAppState } from '@redux/reducers';
 import { connect } from 'react-redux';
+import Price from '../../components/Price';
 
 const { Content } = Layout;
-const { Title, Paragraph, Text } = Typography;
 
 // const success = () => {
 //   Modal.success({
@@ -19,27 +19,6 @@ const UserAccount = (props: any) => {
   const { user } = props;
 
   const handlePayment = (amount: number, plan: string) => {
-    alert();
-    // var instance = new Razorpay({
-    //   key_id: 'rzp_test_74vbGHcjiyPSZF',
-    //   key_secret: '1Nl1t3O3BXmmRBTgKfzm8uyR',
-    // });
-    // instance.orders
-    //   .create({
-    //     amount: 500,
-    //     currency: 'IRN',
-    //     receipt: 'PJ00347864734',
-    //     payment_capture: 'true',
-    //     notes: '',
-    //   })
-    //   .then((response: any) => {
-    //     // handle success
-    //     console.log(response);
-    //   })
-    //   .catch((error: any) => {
-    //     console.log(error);
-    //   });
-
     let options = {
       key: 'rzp_test_74vbGHcjiyPSZF',
       key_secret: '1Nl1t3O3BXmmRBTgKfzm8uyR',
@@ -72,7 +51,7 @@ const UserAccount = (props: any) => {
   }, []);
 
   return (
-    <AppLayout>
+    <AppLayout appendPageTitle="Account">
       <TopHeader backHeadertitle="Account" backTo="/profile" backHeader={true} />
       <Content style={{ padding: '20px' }}>
         <Typography style={{ padding: '20px', marginTop: 0, textAlign: 'center' }}>
@@ -81,10 +60,12 @@ const UserAccount = (props: any) => {
           </Typography.Title>
         </Typography>
         <Card hoverable={false} className="user-detail-card">
-          <span className="span w-100">4,850</span>
+          <span className="span w-100">
+            <Price amount={2425} withoutDiscount={4850} />
+          </span>
           <span className="span border-none">Unlimited Messages</span>
           <span className="span border-none">3 Users</span>
-          <Button block className="btn-gold-member" onClick={() => handlePayment(4850, 'Gold')}>
+          <Button block className="btn-gold-member" onClick={() => handlePayment(2425, 'Gold')}>
             Continue{' '}
           </Button>
           <Collapse
@@ -92,7 +73,7 @@ const UserAccount = (props: any) => {
             className="user-card-collapase"
             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? -90 : 90} />}
           >
-            <Collapse.Panel header=" " key="1">
+            {/* <Collapse.Panel header=" " key="1">
               <Typography>
                 <Title level={4}>Introduction</Title>
                 <Paragraph>
@@ -111,20 +92,22 @@ const UserAccount = (props: any) => {
                   .
                 </Paragraph>
               </Typography>
-            </Collapse.Panel>
+            </Collapse.Panel> */}
           </Collapse>
         </Card>
         <br /> <br />
         <Typography style={{ padding: '20px', marginTop: 0, textAlign: 'center' }}>
           <Typography.Title level={4}>
-            <span style={{ color: '#C4C4C4' }}>Platinum</span> 3 Months
+            <span style={{ color: '#F1C40F' }}>Platinum</span> 3 Months
           </Typography.Title>
         </Typography>
         <Card hoverable={false} className="user-detail-card">
-          <span className="span w-100">5,950</span>
+          <span className="span w-100">
+            <Price amount={2975} withoutDiscount={5950} />
+          </span>
           <span className="span border-none">Unlimited Messages</span>
           <span className="span border-none">7 Users</span>
-          <Button block className="btn-gold-member" onClick={() => handlePayment(5950, 'Platinum')}>
+          <Button block className="btn-gold-member" onClick={() => handlePayment(2975, 'Platinum')}>
             Continue
           </Button>
           <Collapse
@@ -132,7 +115,7 @@ const UserAccount = (props: any) => {
             className="user-card-collapase"
             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? -90 : 90} />}
           >
-            <Collapse.Panel header=" " key="1">
+            {/* <Collapse.Panel header=" " key="1">
               <Typography>
                 <Title level={4}>Introduction</Title>
                 <Paragraph>
@@ -151,7 +134,7 @@ const UserAccount = (props: any) => {
                   .
                 </Paragraph>
               </Typography>
-            </Collapse.Panel>
+            </Collapse.Panel> */}
           </Collapse>
         </Card>
       </Content>

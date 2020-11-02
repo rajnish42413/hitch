@@ -7,8 +7,14 @@ const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
 export default function FaqHome() {
+  const title = 'FAQ';
   return (
-    <PageSkeleton className="pj-white" defaultLoginModal={false} defaultSideBar={false}>
+    <PageSkeleton
+      className="pj-white"
+      defaultLoginModal={false}
+      defaultSideBar={false}
+      pageTitle={title}
+    >
       <div className="container">
         <Typography>
           <Title>FAQ</Title>
